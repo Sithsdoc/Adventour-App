@@ -1,0 +1,185 @@
+import { StyleSheet, View, Button, Text, Image, TouchableOpacity } from "react-native";
+import { useEffect } from 'react';
+import React, { useState } from "react";
+import { FlatList } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Touchable } from "react-native";
+import QuestionPage from "./QuestionPage";
+import { useRouter } from "expo-router";
+
+export default function HomePage(){
+    const router = useRouter();
+
+    
+    return (
+      <View style={styles.container}>
+      <View style={styles.topSection}>
+        <Image source={require("../image/logo.svg")}/>
+      </View>
+      <View style={styles.separator}/>
+
+      <View style={styles.middleSection}>
+        <Text style={styles.titleText}>Upcoming Events</Text>
+        <View style={styles.box}>
+          <Text style={styles.boxText}>Iron Gwazi</Text>
+          <Text style={styles.boxTime}>Arrive at time x</Text>
+          <Button color="#8E7EFE" title="Details"/>
+          <Button color="#8E7EFE" title="Directions"/>
+        </View>
+      </View>
+      <View style={styles.separator}/>
+
+      <View style={styles.middleSection}>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="shopping-cart" size={30} color="#310082" />
+            <Text style={styles.iconText}>Shopping</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="notifications" size={30} color="#310082"/>
+            <Text style={styles.iconText}>Reminder</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="event" size={30} color="#310082"/>
+            <Text style={styles.iconText}>Shows & Events</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="restaurant" size={30} color="#310082"/>
+            <Text style={styles.iconText}>Dining</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="accessible" size={30} color="#310082"/>
+            <Text style={styles.iconText}>Accessibility</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="attractions" size={30} color="#310082"/>
+            <Text style={styles.iconText}>Top Rides</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <Button color="#310082" title="Start Planning" onPress={() => router.push("/QuestionPage")}/>
+          <Button color="#310082" title="View Map"/>
+        </View>
+      </View>
+
+      <View style={styles.bottomSection}>
+        <Text style={styles.titleText}>Weather</Text>
+      </View>
+        <View style={styles.navbar}>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon name="home" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/QuestionPage")}>
+            <Icon name="assignment" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon name="place" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon name="account-circle" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+        </View>
+        
+    </View>          
+    );
+}
+
+const styles = StyleSheet.create({
+    //CSS for dividing sections
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    topSection: {
+      flex: 1, 
+      alignItems: "center",
+      justifyContent: "center",
+      paddingTop: 10,
+    },
+    middleSection: {
+      flex: 2, 
+      alignItems: "center",
+      justifyContent: "center",
+      paddingTop: 20,
+    },
+    bottomSection: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      paddingBottom: 40, 
+    },
+    //CSS for base text fonts 
+    titleText: {
+      fontSize: 24,
+      fontWeight: "bold",
+      justifyContent: "flex-start",
+      color: "#310082",
+    },
+    sectionText: {
+      fontSize: 18,
+    },
+    //CSS for box content and the separating line
+    box: {
+      width: "90%",
+      backgroundColor: "#310082",
+      padding: 15,
+      borderRadius: 10,
+      shadowColor: "#000",
+      marginTop: 20,
+    },
+    boxText: {
+      fontSize: 16,
+      color:"#FFFFFF",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    boxTime: {
+      fontSize: 13,
+      color:"#FFFFFF",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    separator: {
+      width: "100%", 
+      height: 1, 
+      backgroundColor: "#8E7EFE", 
+      marginTop: 20, 
+    },
+    //CSS for the 6 different icon buttons
+    row: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 20,
+      width: "100%",
+    },
+    iconButton: {
+      alignItems: "center",
+      flex: 1,
+      marginHorizontal: 5,
+    },
+    iconText: {
+      marginTop: 5,
+      fontSize: 12,
+    },
+    //CSS for navbar 
+    navbar: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      backgroundColor: "#8E7EFE",
+      height: 70,
+      width: "100%",
+      position: "absolute",
+      bottom: 0,
+    },
+    navButton: {
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 1,
+    },
+  });
+  
