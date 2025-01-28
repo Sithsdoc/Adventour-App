@@ -34,6 +34,9 @@ type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 function CalendarPage({navigation}: calendarProps){
   return(
     <View style={styles.container}>
+      <TouchableOpacity>
+        <Icon name="arrow_back"/>
+      </TouchableOpacity>      
       <Text style={styles.headerText}>Plan My Day</Text>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
       <Calendar/>
@@ -47,6 +50,9 @@ function TimeScreen({navigation}: timeProps){
     <View style={styles.container}>
 
       <View style={styles.topSection}>
+        <TouchableOpacity>
+          <Icon name="arrow_back"/>
+        </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>At what time do you plan to arrive <br/>and leave the park?</Text>
       </View>
@@ -84,6 +90,9 @@ function PlanScreen({navigation}: planProps){
     <View style={styles.container}>
 
       <View style={styles.topSection}>
+        <TouchableOpacity>
+          <Icon name="arrow_back"/>
+        </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Select one option:</Text>
       </View>
@@ -125,6 +134,9 @@ function FoodScreen({navigation}: foodProps){
     <View style={styles.container}>
 
       <View style={styles.topSection}>
+        <TouchableOpacity>
+          <Icon name="arrow_back"/>
+        </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>What time do you plan on eating?</Text>
       </View>
@@ -164,6 +176,9 @@ function AgeScreen({navigation}: ageProps){
   return(
     <View style={styles.container}>
       <View>
+        <TouchableOpacity>
+          <Icon name="arrow_back"/>
+        </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Age:</Text>
       </View>
@@ -215,6 +230,9 @@ function DisabilityScreen({navigation}: disabilityProps){
     <View style={styles.container}>
 
       <View style={styles.topSection}>
+        <TouchableOpacity>
+          <Icon name="arrow_back"/>
+        </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Accesibility</Text>
       </View>
@@ -260,6 +278,9 @@ function RideScreen({navigation}: rideProps){
     <View style={styles.container}>
 
       <View>
+        <TouchableOpacity>
+          <Icon name="arrow_back"/>
+        </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Choose your ride preferences:</Text>
       </View>
@@ -318,8 +339,6 @@ function NestedScreens(){
 }
 
 export default function QuestionPage() {
-  const router = useRouter();
-
   return( 
       <MainStack.Navigator screenOptions={{ headerShown: false }}>
         <MainStack.Screen

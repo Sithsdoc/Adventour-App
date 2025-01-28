@@ -40,7 +40,7 @@ export default function HomePage(){
             <Icon name="shopping-cart" size={30} color="#310082" />
             <Text style={styles.iconText}>Shopping</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/ReminderPage")}>
             <Icon name="notifications" size={30} color="#310082"/>
             <Text style={styles.iconText}>Reminder</Text>
           </TouchableOpacity>
@@ -64,7 +64,7 @@ export default function HomePage(){
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
-          <Button color="#310082" title="Start Planning" onPress={() => navigation.navigate("PlanMyDay")}/>
+          <Button color="#310082" title="Start Planning" onPress={() => router.push("/QuestionPage")}/>
           <Button color="#310082" title="View Map"/>
         </View>
       </View>
