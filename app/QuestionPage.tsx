@@ -376,7 +376,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
   topSection: {
     flex: 1,
@@ -431,7 +433,6 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10,
   },
   primaryButtonText: {
     fontSize: 18,
@@ -459,7 +460,6 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10,
   },
   skipButtonText: {
     fontSize: 18,
