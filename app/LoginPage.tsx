@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     label: {
-        fontSize: 16,
+        fontSize: 30,
         fontWeight: 'bold',
         color: '#ffffff',
         textAlign: "left",
