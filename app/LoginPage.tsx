@@ -57,17 +57,22 @@ function signup({navigation}: signupProps){
             </View>
 
             <View style={styles.middleSection}>
-            <Text style={styles.label}>Email</Text>
+                <Text style={styles.label}>Email</Text>
                 <TextInput style={styles.input} placeholder="Enter your email" />
                 <Text style={styles.label}>Password</Text>
                 <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
                 <Text style={styles.label}>Re-Enter Password</Text>
                 <TextInput style={styles.input} placeholder="Re-Enter Password"/>
-                <Button title="Sign Up" onPress={() => router.push("/HomePage")}/>
+                <TouchableOpacity style={styles.signButton} onPress={() => router.push("/HomePage")}>
+                    <Text style={styles.signButtonText}>Sign Up</Text>
+                </TouchableOpacity>
             </View>
 
+
             <View>
-                <Button title="Sign Up with Google"/>
+                <TouchableOpacity style={styles.googleButton} onPress={() => console.log("Sign in with Google")}>
+                <Text style={styles.googleButtonText}>Sign in with Google</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -176,5 +181,18 @@ const styles = StyleSheet.create({
         fontWeight: 'black',
         textAlign: 'center',    
     },
-    
+    signButton: {
+        backgroundColor: "#310082", 
+        width:"100%",
+        height:40,
+        borderRadius: 30, 
+        alignItems: "center", 
+        justifyContent: "center", 
+        marginTop: 20,
+    },
+    signButtonText: {
+        color: "#ffffff", 
+        fontSize: 18,
+        fontWeight: "bold",
+    },
 });
