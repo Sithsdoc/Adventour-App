@@ -4,6 +4,7 @@ import HomePage from "./HomePage";
 import QuestionPage from "./QuestionPage";
 import MapPage from "./MapPage";
 import ProfilePage from "./ProfilePage";
+import ReminderPage from "./ReminderPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,12 @@ function loginPage(){
 function homePage(){
   return(
     <HomePage/>
+  );
+}
+
+function reminderPage(){
+  return (
+    <ReminderPage/>
   );
 }
 
@@ -45,6 +52,7 @@ export default function App() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="LoginPage" component={loginPage}/>
       <Stack.Screen name="HomePage" component={homePage}/>
+      <Stack.Screen name="ReminderPage" component={reminderPage}/>
       <Stack.Screen  name="QuestionPage" component={questionPage}/>
       <Stack.Screen name="MapPage" component={mapPage}/>
       <Stack.Screen name="ProfilePage" component={profilePage}/>

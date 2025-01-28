@@ -4,7 +4,6 @@ import { FlatList } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Touchable } from "react-native";
-import QuestionPage from "./QuestionPage";
 import { useRouter } from "expo-router";
 
 export default function HomePage(){

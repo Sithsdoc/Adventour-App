@@ -1,18 +1,26 @@
 import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ReminderPage(){
+  const router = useRouter();
     return(
         <View style={styles.container}>
 
             <View style={styles.topSection}>
-                <Text>Reminder</Text>
-                <TouchableOpacity>
-                    <Icon name="arrow_back"/>
+                <Text style={styles.headerText}>Reminder</Text>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.push("/HomePage")}>
+                    <Icon style={styles.backIcon} name="arrow-back"/>
                 </TouchableOpacity>
                 <Text>Your ride starts in 5 mintues!</Text>
+            </View>
+
+            <View style={styles.middleSection}>
+              <View>
+                <Text>Iron Gwazi</Text>
+                <Text>Arrive by 9:30AM</Text>
+              </View>
             </View>
 
         </View>
@@ -47,6 +55,19 @@ const styles = StyleSheet.create({
       },
       //CSS for texxt
       headerText: {
-
+        fontSize: 24,
+        fontFamily: "Montserrat-Bold",
+        color: "#310082",
+        textAlign: "center",
+      },
+      //css for backicon
+      backButton: {
+        position: "absolute",
+        left: 20,
+        top: 40,
+      },
+      backIcon: {
+        color: "#310082",
+        fontSize: 30,
       },
     });
