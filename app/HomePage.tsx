@@ -92,7 +92,7 @@ export default function HomePage(){
           <TouchableOpacity style={styles.navButton}>
             <Icon name="place" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton}>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
             <Icon name="account-circle" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
         </View>
