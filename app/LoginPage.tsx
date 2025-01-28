@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#ffffff',
         marginBottom: 5,
+        alignItems: "left",
     },
       bottomSection: {
         flex: 1,
