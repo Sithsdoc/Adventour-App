@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#ffffff',
-        justifyContent: "left",
+        textAlign: "left",
         marginBottom: 5,
     },
       bottomSection: {
