@@ -1,22 +1,41 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useRouter } from "expo-router";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 const UserProfile = () => {
+      const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={styles.header}>User Profile</Text>
-      <View style={styles.profileCard}>
-  <Image
-    source={{ uri: 'https://via.placeholder.com/150' }}
-    style={styles.profileImage}
-  />
-  <View style={styles.profileInfo}>
-    <Text style={styles.name}>John Doe</Text>
-    <Text style={styles.email}>john.doe@example.com</Text>
-    <Text style={styles.memberSince}>Member since: January 2023</Text>
-  </View>
-</View>
+    <View style={styles.profileCard}>
+        <Image
+          source={{ uri: 'https://via.placeholder.com/150' }}
+          style={styles.profileImage}
+        />
+      <View style={styles.profileInfo}>
+        <Text style={styles.name}>John Doe</Text>
+        <Text style={styles.email}>john.doe@example.com</Text>
+        <Text style={styles.memberSince}>Member since: January 2023</Text>
+      </View>
+    </View>
+
+        <View style={styles.navbar}>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon name="home" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon name="assignment" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton}>
+            <Icon name="place" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+            <Icon name="account-circle" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+        </View>
+        
     </View>
   );
 };
@@ -32,7 +51,7 @@ export default function ProfilePage(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f5',
+    backgroundColor: '#fff',
     padding: 16,
   },
   header: {
@@ -44,7 +63,7 @@ const styles = StyleSheet.create({
   profileCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#f4f4f5',
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -77,7 +96,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
   },
-  
+  //navbar css
+  navbar: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#8E7EFE",
+    height: 70,
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+  },
+  navButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
 });
 
 

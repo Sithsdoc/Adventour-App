@@ -2,6 +2,7 @@ import React from "react";
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
 import QuestionPage from "./QuestionPage";
+import MapPage from "./MapPage";
 import ProfilePage from "./ProfilePage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -26,6 +27,12 @@ function questionPage(){
   );
 }
 
+function mapPage(){
+  return(
+    <MapPage/>
+  );
+}
+
 function profilePage(){
   return(
     <ProfilePage/>
@@ -39,6 +46,7 @@ export default function App() {
       <Stack.Screen name="LoginPage" component={loginPage}/>
       <Stack.Screen name="HomePage" component={homePage}/>
       <Stack.Screen  name="QuestionPage" component={questionPage}/>
+      <Stack.Screen name="MapPage" component={mapPage}/>
       <Stack.Screen name="ProfilePage" component={profilePage}/>
     </Stack.Navigator>
   );
