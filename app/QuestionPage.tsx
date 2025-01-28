@@ -1,6 +1,6 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //import { FlatList } from "react-native";
@@ -31,7 +31,7 @@ type ageProps = NativeStackScreenProps<RootStackParamList, "AgeScreen">;
 type disabilityProps = NativeStackScreenProps<RootStackParamList, "DisabilityScreen">;
 type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 
-function CalendarPage({ navigation }) {
+function CalendarPage({navigation}: calendarProps) {
   return(
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton}>
@@ -47,12 +47,12 @@ function CalendarPage({ navigation }) {
   );
 }
 
-function TimeScreen({ navigation }) {
+function TimeScreen({navigation}: timeProps) {
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-left" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
@@ -87,7 +87,7 @@ function TimeScreen({ navigation }) {
   );
 }
 
-function PlanScreen({ navigation }) {
+function PlanScreen({navigation}: planProps) {
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -129,7 +129,7 @@ function PlanScreen({ navigation }) {
   );
 }
 
-function FoodScreen({ navigation }) {
+function FoodScreen({navigation}: foodProps) {
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -172,7 +172,7 @@ function FoodScreen({ navigation }) {
   );
 }
 
-function AgeScreen({ navigation }) {
+function AgeScreen({navigation}: ageProps) {
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -226,7 +226,7 @@ function AgeScreen({ navigation }) {
   );
 }
 
-function DisabilityScreen({ navigation }) {
+function DisabilityScreen({navigation}: disabilityProps) {
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -274,7 +274,7 @@ function DisabilityScreen({ navigation }) {
   );
 }
 
-function RideScreen({ navigation }) {
+function RideScreen({navigation}: rideProps) {
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
