@@ -1,6 +1,6 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //import { FlatList } from "react-native";
@@ -31,11 +31,11 @@ type ageProps = NativeStackScreenProps<RootStackParamList, "AgeScreen">;
 type disabilityProps = NativeStackScreenProps<RootStackParamList, "DisabilityScreen">;
 type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 
-function CalendarPage({ navigation }) {
+function CalendarPage({navigation}: calendarProps) {
   return(
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton}>
-        <Icon name="arrow_back" style={styles.backIcon} />
+        <Icon name="arrow-back" style={styles.backIcon} />
       </TouchableOpacity>      
       <Text style={styles.headerText}>Plan My Day</Text>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
@@ -47,13 +47,12 @@ function CalendarPage({ navigation }) {
   );
 }
 
-function TimeScreen({ navigation }) {
+function TimeScreen({navigation}: timeProps) {
   return (
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
@@ -88,13 +87,12 @@ function TimeScreen({ navigation }) {
   );
 }
 
-function PlanScreen({ navigation }) {
+function PlanScreen({navigation}: planProps) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Select one option:</Text>
@@ -131,13 +129,12 @@ function PlanScreen({ navigation }) {
   );
 }
 
-function FoodScreen({ navigation }) {
+function FoodScreen({navigation}: foodProps) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>What time do you plan on eating?</Text>
@@ -175,13 +172,12 @@ function FoodScreen({ navigation }) {
   );
 }
 
-function AgeScreen({ navigation }) {
+function AgeScreen({navigation}: ageProps) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Select your age group:</Text>
@@ -230,13 +226,12 @@ function AgeScreen({ navigation }) {
   );
 }
 
-function DisabilityScreen({ navigation }) {
+function DisabilityScreen({navigation}: disabilityProps) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Accessibility options:</Text>
@@ -279,13 +274,12 @@ function DisabilityScreen({ navigation }) {
   );
 }
 
-function RideScreen({ navigation }) {
+function RideScreen({navigation}: rideProps) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Choose your ride preferences:</Text>
@@ -365,21 +359,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
   },
-  contentBox: {
-    backgroundColor: "#FCFAFF",
-    borderRadius: 20,
-    padding: 20,
-    width: "90%",
-    borderWidth: 2,
-    borderColor: "#C8A6FF",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-  },
   topSection: {
     flex: 1,
     alignItems: "center",
@@ -433,6 +412,7 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 10,
   },
   primaryButtonText: {
     fontSize: 18,

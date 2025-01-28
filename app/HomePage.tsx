@@ -1,6 +1,5 @@
 import { StyleSheet, View, Button, Text, Image, TouchableOpacity } from "react-native";
-import { useEffect } from 'react';
-import React, { useState } from "react";
+import React from "react";
 import { FlatList } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from 'react-native-vector-icons/MaterialIcons';

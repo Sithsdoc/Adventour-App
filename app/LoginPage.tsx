@@ -1,5 +1,5 @@
 import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "expo-router";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
       },
       middleSection: {
         flex: 2, 
-        alignItems: "left",
+        alignItems: "flex-start",
         width:"80%",
         borderRadius:25,
         height:50,
