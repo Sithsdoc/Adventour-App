@@ -114,12 +114,13 @@ const styles = StyleSheet.create({
       height: 190,
       alignSelf: "center",
       marginBottom: 50,
+      marginTop: 20,
     },
     topSection: {
       flex: 1, 
       alignItems: "center",
       justifyContent: "center",
-      paddingTop: 10,
+      paddingTop: 90,
     },
     middleSection: {
       flex: 2, 
