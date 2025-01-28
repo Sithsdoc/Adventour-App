@@ -24,11 +24,11 @@ function login({navigation}: loginProps){
             </View>
 
             <View style={styles.middleSection}>
-                <Text>E-mail</Text>
-                <TextInput placeholder="Enter email"/>
-                <Text>Password</Text>
-                <TextInput placeholder="Enter password"/>
-                <Button title="Log in" onPress={() => router.push("/HomePage")}/>
+                <Text style={styles.label}>Email</Text>
+                <TextInput style={styles.input} placeholder="Enter your email" />
+                <Text style={styles.label}>Password</Text>
+                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
+                <Button title="Log In" onPress={() => router.push("/HomePage")} />
             </View>
 
             <View>
@@ -52,12 +52,12 @@ function signup({navigation}: signupProps){
             </View>
 
             <View style={styles.middleSection}>
-                <Text>E-mail</Text>
-                <TextInput placeholder="Enter E-mail"/>
-                <Text>Password</Text>
-                <TextInput placeholder="Enter Password"/>
-                <Text>Re-Enter Password</Text>
-                <TextInput placeholder="Re-Enter Password"/>
+            <Text style={styles.label}>Email</Text>
+                <TextInput style={styles.input} placeholder="Enter your email" />
+                <Text style={styles.label}>Password</Text>
+                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
+                <Text style={styles.label}>Re-Enter Password</Text>
+                <TextInput style={styles.input} placeholder="Re-Enter Password"/>
                 <Button title="Sign Up" onPress={() => router.push("/HomePage")} />
             </View>
 
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     //CSS for dividing sections
     container: {
       flex: 1,
-      backgroundColor: "#fff",
+      backgroundColor: "#67C5ED",
       alignItems: "center",
       justifyContent: "center",
     },
@@ -102,9 +102,28 @@ const styles = StyleSheet.create({
       middleSection: {
         flex: 2, 
         alignItems: "center",
-        justifyContent: "center",
-        paddingTop: 20,
+        width:"80%",
+        backgroundColor:"#310082",
+        borderRadius:25,
+        height:50,
+        marginBottom:20,
+        justifyContent:"center",
+        padding:20
       },
+      input: {
+        width: '100%',
+        height: 40,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        marginVertical: 10,
+    },
+    label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#ffffff',
+        marginBottom: 5,
+    },
       bottomSection: {
         flex: 1,
         alignItems: "center",
