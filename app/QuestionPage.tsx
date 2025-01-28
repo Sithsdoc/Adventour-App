@@ -50,6 +50,7 @@ function CalendarPage({ navigation }) {
 function TimeScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -90,6 +91,7 @@ function TimeScreen({ navigation }) {
 function PlanScreen({ navigation }) {
   return(
     <View style={styles.container}>
+      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -132,6 +134,7 @@ function PlanScreen({ navigation }) {
 function FoodScreen({ navigation }) {
   return(
     <View style={styles.container}>
+      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -146,9 +149,9 @@ function FoodScreen({ navigation }) {
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("AgeScreen")}>
-          <Text style={styles.secondaryButtonText}>Skip</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.skipButton}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("AgeScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
@@ -175,6 +178,7 @@ function FoodScreen({ navigation }) {
 function AgeScreen({ navigation }) {
   return(
     <View style={styles.container}>
+      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -200,6 +204,9 @@ function AgeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
+      <TouchableOpacity style={styles.skipButton}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("DisabilityScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
@@ -226,6 +233,7 @@ function AgeScreen({ navigation }) {
 function DisabilityScreen({ navigation }) {
   return(
     <View style={styles.container}>
+      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -245,6 +253,9 @@ function DisabilityScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
+      <TouchableOpacity style={styles.skipButton}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("RideScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
@@ -271,6 +282,7 @@ function DisabilityScreen({ navigation }) {
 function RideScreen({ navigation }) {
   return(
     <View style={styles.container}>
+      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -293,6 +305,9 @@ function RideScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
+      <TouchableOpacity style={styles.skipButton}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton}>
           <Text style={styles.primaryButtonText}>Finish</Text>
         </TouchableOpacity>
@@ -349,6 +364,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
+  },
+  contentBox: {
+    backgroundColor: "#FCFAFF",
+    borderRadius: 20,
+    padding: 20,
+    width: "90%",
+    borderWidth: 2,
+    borderColor: "#C8A6FF",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
   },
   topSection: {
     flex: 1,
@@ -423,6 +450,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Montserrat-Bold",
     color: "#310082",
+  },
+  skipButton: {
+    backgroundColor: "#C8A6FF",
+    borderRadius: 10,
+    height: 50,
+    width: 120,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
+  },
+  skipButtonText: {
+    fontSize: 18,
+    fontFamily: "Montserrat-Bold",
+    color: "#FFFFFF",
   },
   backButton: {
     position: "absolute",
