@@ -20,6 +20,9 @@ type RootStackParamList ={
   AgeScreen: undefined,
   DisabilityScreen: undefined,
   RideScreen: undefined,
+  AttractionScreen: undefined,
+  SuggestedScreen: undefined,
+  ItineraryScreen: undefined,
   NestedScreens: undefined,
 }
 
@@ -30,14 +33,15 @@ type foodProps = NativeStackScreenProps<RootStackParamList, "FoodScreen">;
 type ageProps = NativeStackScreenProps<RootStackParamList, "AgeScreen">;
 type disabilityProps = NativeStackScreenProps<RootStackParamList, "DisabilityScreen">;
 type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
+type attractionProps = NativeStackScreenProps<RootStackParamList, "AttractionScreen">;
+type suggestedProps = NativeStackScreenProps<RootStackParamList, "SuggestedScreen">;
+type itineraryProps = NativeStackScreenProps<RootStackParamList, "ItineraryScreen">;
 
 function CalendarPage({navigation}: calendarProps) {
+      const router = useRouter();
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
-        <Icon name="arrow-back" style={styles.backIcon} />
-      </TouchableOpacity>
       <Text style={styles.headerText}>Plan My Day</Text>
       </View> 
       <View style={styles.CalendarmiddleSection}>
@@ -50,16 +54,16 @@ function CalendarPage({navigation}: calendarProps) {
       </TouchableOpacity>
       </View>
       <View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -68,10 +72,11 @@ function CalendarPage({navigation}: calendarProps) {
 }
 
 function TimeScreen({navigation}: timeProps) {
+      const router = useRouter();
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("CalendarPage")}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
@@ -88,17 +93,17 @@ function TimeScreen({navigation}: timeProps) {
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
-<View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -108,20 +113,21 @@ function TimeScreen({navigation}: timeProps) {
 }
 
 function PlanScreen({navigation}: planProps) {
+      const router = useRouter();
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("TimeScreen")}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text> 
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Select one option:</Text>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => navigation.navigate("FoodScreen")}>
           <Text style={styles.selectionButtonText}>Create my customizable Itinerary</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => navigation.navigate("SuggestedScreen")}>
           <Text style={styles.selectionButtonText}>Suggest a Plan</Text>
         </TouchableOpacity>
       </View>
@@ -130,17 +136,17 @@ function PlanScreen({navigation}: planProps) {
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
-<View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -150,13 +156,14 @@ function PlanScreen({navigation}: planProps) {
 }
 
 function FoodScreen({navigation}: foodProps) {
+      const router = useRouter();
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("PlanScreen")}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Plan My Day</Text>
+        <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>What time do you plan on eating?</Text>
@@ -166,24 +173,24 @@ function FoodScreen({navigation}: foodProps) {
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton}>
+      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("AgeScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("AgeScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
-<View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -193,13 +200,14 @@ function FoodScreen({navigation}: foodProps) {
 }
 
 function AgeScreen({navigation}: ageProps) {
+      const router = useRouter();
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("FoodScreen")}/>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Plan My Day</Text>
+        <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Select your age group:</Text>
@@ -220,24 +228,24 @@ function AgeScreen({navigation}: ageProps) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton}>
+      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("DisabilityScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("DisabilityScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
-<View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -247,13 +255,14 @@ function AgeScreen({navigation}: ageProps) {
 }
 
 function DisabilityScreen({navigation}: disabilityProps) {
+      const router = useRouter();
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("AgeScreen")}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Plan My Day</Text>
+        <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Accessibility options:</Text>
@@ -268,24 +277,24 @@ function DisabilityScreen({navigation}: disabilityProps) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton}>
+      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("RideScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("RideScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
-<View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -295,13 +304,14 @@ function DisabilityScreen({navigation}: disabilityProps) {
 }
 
 function RideScreen({navigation}: rideProps) {
+      const router = useRouter();
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("DisabilityScreen")}/>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Plan My Day</Text>
+        <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Choose your ride preferences:</Text>
@@ -319,24 +329,24 @@ function RideScreen({navigation}: rideProps) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton}>
+      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("AttractionScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton}>
-          <Text style={styles.primaryButtonText}>Finish</Text>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("AttractionScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
-<View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton}>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
        <TouchableOpacity style={styles.navButton}>
          <Icon name="assignment" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
          <Icon name="place" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
@@ -345,6 +355,156 @@ function RideScreen({navigation}: rideProps) {
   );
 }
 
+function AttractionScreen({navigation}: attractionProps){
+      const router = useRouter();
+  return (
+    <View style={styles.container}>
+
+      <View style={styles.topSection}>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("RideScreen")}/>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Customizable Itinerary</Text>
+        <Text style={styles.questionText}>Choose your must-go thrill rides:</Text>
+      </View>
+
+      <View style={styles.middleSection}>
+        <View>
+          <TouchableOpacity>
+            <Text>Iron Gwazi</Text>
+            <Text>Plunging riders from a 206 foot-tall peak into a 91-degree drop and reaching top speeds of 76 miles per hour.</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Text>Skeikra</Text>
+            <Text>200 ft from the sky, 90° straight down - ride this extreme roller coaster if you dare.</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Text>Tigris</Text>
+          <Text>Catapult through an exhilarating array of looping twists with forward and backward motion and breath-taking drops.</Text>
+        </View>
+      </View>
+
+      <View style={styles.bottomSection}>
+      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("ItineraryScreen")}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ItineraryScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
+
+    </View>
+  );
+}
+
+function SuggestedScreen({navigation}: suggestedProps){
+  const router = useRouter();
+  return(
+    <View style={styles.container}>
+      <View style={styles.topSection}>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("PlanScreen")}/>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Awesome! Here is the suggested plan</Text>
+        </View>
+
+        <View style={styles.middleSection}>
+        <View>
+          <Text>Cheetah Hunt</Text>
+          <Text>Arrive by 9:30AM</Text>
+        </View>
+        <View>
+          <Text>Kumba</Text>
+          <Text>Arrive by 10:00AM</Text>
+        </View>
+        <View>
+          <Text>Cobra's Curse</Text>
+          <Text>Arrive by 10:30AM</Text>
+        </View>
+      </View>
+
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View> 
+
+    </View>
+  );
+}
+
+function ItineraryScreen({navigation}: itineraryProps){
+    const router = useRouter();
+  return(
+    <View style={styles.container}>
+
+      <View style={styles.topSection}>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("AttractionScreen")}/>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Awesome! Here is your itinerary</Text>
+      </View>
+
+      <View style={styles.middleSection}>
+        <View>
+          <Text>Cheetah Hunt</Text>
+          <Text>Arrive by 9:30AM</Text>
+        </View>
+        <View>
+          <Text>Kumba</Text>
+          <Text>Arrive by 10:00AM</Text>
+        </View>
+        <View>
+          <Text>Cobra's Curse</Text>
+          <Text>Arrive by 10:30AM</Text>
+        </View>
+      </View>
+
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>      
+
+    </View>
+  );
+}
 
 function NestedScreens(){
   return(
@@ -356,6 +516,9 @@ function NestedScreens(){
       <NestedStack.Screen name="AgeScreen" component={AgeScreen}/>
       <NestedStack.Screen name="DisabilityScreen" component={DisabilityScreen}/>
       <NestedStack.Screen name="RideScreen" component={RideScreen}/>
+      <NestedStack.Screen name="AttractionScreen" component={AttractionScreen}/>
+      <NestedStack.Screen name="SuggestedScreen" component={SuggestedScreen}/>
+      <NestedStack.Screen name="ItineraryScreen" component={ItineraryScreen}/>
     </NestedStack.Navigator>
   );
 }
