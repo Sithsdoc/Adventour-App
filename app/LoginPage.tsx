@@ -28,16 +28,22 @@ function login({navigation}: loginProps){
                 <TextInput style={styles.input} placeholder="Enter your email" />
                 <Text style={styles.label}>Password</Text>
                 <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
-                <Button title="Log In" onPress={() => router.push("/HomePage")} />
-            </View>
-
-            <View>
-                <Button title="Sign in with google"/>
-                <Text>Don't have an account?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("signup")}>
-                    <Text style={styles.signUpText}>Sign up</Text>
+                <TouchableOpacity style={styles.loginButton} onPress={() => router.push("/HomePage")}>
+                <Text style={styles.loginButtonText}>Log In</Text>
                 </TouchableOpacity>
             </View>
+
+
+            <View>
+                <TouchableOpacity style={styles.googleButton} onPress={() => console.log("Sign in with Google")}>
+                    <Text style={styles.googleButtonText}>Sign in with Google</Text>
+                </TouchableOpacity>
+                <Text>Don't have an account?</Text>
+                <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate("signup")}>
+                    <Text style={styles.signupButtonText}>Sign up</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>        
     );
 }
@@ -92,12 +98,14 @@ const styles = StyleSheet.create({
       backgroundColor: "#67C5ED",
       alignItems: "center",
       justifyContent: "center",
+      paddingBottom: 50, 
+
     },
     topSection: {
         flex: 1, 
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 10,
+        paddingTop: 50,
       },
       middleSection: {
         flex: 2, 
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
         marginBottom:20,
         justifyContent:"center",
         padding:20,
-        marginTop: -300,
+        marginTop: -200,
       },
       input: {
         width: '100%',
@@ -125,16 +133,37 @@ const styles = StyleSheet.create({
         textAlign: "left",
         marginBottom: 5,
     },
-      bottomSection: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        paddingBottom: 40, 
-      },
-      //CSS for text
-      signUpText: {
-        color: "#310082",
-        fontSize: 20,
-        paddingBottom: 100,
-      },
+    loginButton: {
+        backgroundColor: "#310082", 
+        paddingVertical: 10, 
+        paddingHorizontal: 20, 
+        borderRadius: 5, 
+        alignItems: "center", 
+        justifyContent: "center", 
+        marginTop: 10,
+    },
+    loginButtonText: {
+        color: "#ffffff", 
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    googleButton: { 
+        padding: 10,
+        backgroundColor: '#310082',  
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    googleButtonText: {
+        color: "#ffffff",
+    },
+    signupButton: {
+        padding: 10,
+        backgroundColor: '#310082',  
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    signupButtonText: {
+        color: "#ffffff", 
+    },
+    
 });
