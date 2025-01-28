@@ -34,15 +34,35 @@ type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 function CalendarPage({navigation}: calendarProps) {
   return(
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton}>
+      <View style={styles.topSection}>
+        <TouchableOpacity style={styles.backButton}>
         <Icon name="arrow-back" style={styles.backIcon} />
-      </TouchableOpacity>      
+      </TouchableOpacity>
       <Text style={styles.headerText}>Plan My Day</Text>
+      </View> 
+      <View style={styles.CalendarmiddleSection}>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
-      <Calendar style={styles.calendar}/>
+      <Calendar/>
+      </View> 
+      <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("TimeScreen")}>
         <Text style={styles.primaryButtonText}>Next</Text>
       </TouchableOpacity>
+      </View>
+      <View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
     </View>  
   );
 }
@@ -55,9 +75,9 @@ function TimeScreen({navigation}: timeProps) {
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
       </View>
       <View style={styles.middleSection}>
+      <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
         <Text style={styles.label}>Arriving:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
         <Text style={styles.label}>Leaving:</Text>
@@ -94,10 +114,10 @@ function PlanScreen({navigation}: planProps) {
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
-        <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>Select one option:</Text>
+        <Text style={styles.headerText}>Plan My Day</Text> 
       </View>
       <View style={styles.middleSection}>
+      <Text style={styles.questionText}>Select one option:</Text>
         <TouchableOpacity style={styles.selectionButton}>
           <Text style={styles.selectionButtonText}>Create my customizable Itinerary</Text>
         </TouchableOpacity>
@@ -137,9 +157,9 @@ function FoodScreen({navigation}: foodProps) {
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>What time do you plan on eating?</Text>
       </View>
       <View style={styles.middleSection}>
+      <Text style={styles.questionText}>What time do you plan on eating?</Text>
         <Text style={styles.label}>Breakfast:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
         <Text style={styles.label}>Lunch:</Text>
@@ -180,9 +200,9 @@ function AgeScreen({navigation}: ageProps) {
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>Select your age group:</Text>
       </View>
       <View style={styles.middleSection}>
+      <Text style={styles.questionText}>Select your age group:</Text>
         <TouchableOpacity style={styles.selectionButton}>
           <Text style={styles.selectionButtonText}>Preschoolers</Text>
         </TouchableOpacity>
@@ -234,9 +254,9 @@ function DisabilityScreen({navigation}: disabilityProps) {
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>Accessibility options:</Text>
       </View>
       <View style={styles.middleSection}>
+      <Text style={styles.questionText}>Accessibility options:</Text>
         <TouchableOpacity style={styles.selectionButton}>
           <Text style={styles.selectionButtonText}>Remain in Wheelchair</Text>
         </TouchableOpacity>
@@ -282,9 +302,9 @@ function RideScreen({navigation}: rideProps) {
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>Choose your ride preferences:</Text>
       </View>
       <View style={styles.middleSection}>
+      <Text style={styles.questionText}>Choose your ride preferences:</Text>
         <TouchableOpacity style={styles.selectionButton}>
           <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
@@ -356,30 +376,67 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
-    justifyContent: "center",
     paddingHorizontal: 20,
+    paddingBottom: 20, // Ensure space above navbar
   },
   topSection: {
-    flex: 1,
+    width: "100%",
+    paddingTop: 40,
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    paddingTop: 20,
+    paddingBottom: 30,
   },
   middleSection: {
-    flex: 2,
+    flex: 1,
+    width: "90%",
+    backgroundColor: "#FCFAFF",
+    padding: 20,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#C8A6FF",
+    elevation: 5,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 5,
+    alignSelf: "center",
+    paddingTop: 10,
+  },
+  CalendarmiddleSection: {
+    flex: 1,
+    width: "90%",
+    backgroundColor: "#FFFFFF",
+    padding: 20,
+    elevation: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 5,
+    alignSelf: "center",
+    paddingTop: 10,
+  },
+  optionBox: {
     width: "100%",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    paddingVertical: 15,
+    alignItems: "center",
+    marginVertical: 5,
+    borderWidth: 2,
+    borderColor: "#C8A6FF",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   bottomSection: {
-    flex: 1,
+    flexDirection: "row",
+    width: "90%",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
+    marginBottom: 70, // Keep above navbar
   },
   headerText: {
-    fontSize: 32,
+    fontSize: 24,
     fontFamily: "Montserrat-Bold",
     color: "#310082",
     textAlign: "center",
@@ -393,26 +450,30 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputBox: {
-    width: 300,
-    height: 60,
-    backgroundColor: "#E4D7FF",
-    borderRadius: 10,
+    width: "100%",
+    height: 55,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 8,
     borderWidth: 2,
-    borderColor: "#310082",
+    borderColor: "#C8A6FF",
     paddingHorizontal: 10,
     fontSize: 18,
     fontFamily: "Atkinson Hyperlegible",
     textAlign: "center",
     marginVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   primaryButton: {
     backgroundColor: "#310082",
     borderRadius: 10,
-    height: 50,
-    width: 120,
+    height: 40,
+    width: 90,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 10,
   },
   primaryButtonText: {
     fontSize: 18,
@@ -420,11 +481,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   selectionButton: {
-    backgroundColor: "#E4D7FF",
+    backgroundColor: "#FCFAFF",
     borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
     padding: 15,
-    borderWidth: 2,
-    borderColor: "#310082",
+    borderWidth: 1,
+    borderColor: "#8E7EFE",
     marginVertical: 5,
     alignItems: "center",
   },
@@ -436,8 +501,8 @@ const styles = StyleSheet.create({
   skipButton: {
     backgroundColor: "#C8A6FF",
     borderRadius: 10,
-    height: 50,
-    width: 120,
+    height: 40,
+    width: 90,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -455,7 +520,6 @@ const styles = StyleSheet.create({
     color: "#310082",
     fontSize: 30,
   },
-  //CSS for navbar 
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -470,5 +534,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
-  
 });
+
