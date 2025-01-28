@@ -78,9 +78,9 @@ function TimeScreen({navigation}: timeProps) {
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
-        <Text style={styles.label}>Arriving:</Text>
+        <Text>Arriving:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
-        <Text style={styles.label}>Leaving:</Text>
+        <Text>Leaving:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
@@ -160,9 +160,9 @@ function FoodScreen({navigation}: foodProps) {
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>What time do you plan on eating?</Text>
-        <Text style={styles.label}>Breakfast:</Text>
+        <Text>Breakfast:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
-        <Text style={styles.label}>Lunch:</Text>
+        <Text>Lunch:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
