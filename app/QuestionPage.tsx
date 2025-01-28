@@ -35,7 +35,7 @@ function CalendarPage({navigation}: calendarProps) {
   return(
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton}>
-        <Icon name="arrow_back" style={styles.backIcon} />
+        <Icon name="arrow-back" style={styles.backIcon} />
       </TouchableOpacity>      
       <Text style={styles.headerText}>Plan My Day</Text>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
@@ -53,7 +53,7 @@ function TimeScreen({navigation}: timeProps) {
       <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-left" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
@@ -94,7 +94,7 @@ function PlanScreen({navigation}: planProps) {
       <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Select one option:</Text>
@@ -137,7 +137,7 @@ function FoodScreen({navigation}: foodProps) {
       <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>What time do you plan on eating?</Text>
@@ -181,7 +181,7 @@ function AgeScreen({navigation}: ageProps) {
       <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Select your age group:</Text>
@@ -236,7 +236,7 @@ function DisabilityScreen({navigation}: disabilityProps) {
       <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Accessibility options:</Text>
@@ -285,7 +285,7 @@ function RideScreen({navigation}: rideProps) {
       <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow_back" style={styles.backIcon} />
+          <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Choose your ride preferences:</Text>
