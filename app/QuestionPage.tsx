@@ -50,7 +50,6 @@ function CalendarPage({ navigation }) {
 function TimeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -91,7 +90,6 @@ function TimeScreen({ navigation }) {
 function PlanScreen({ navigation }) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -134,7 +132,6 @@ function PlanScreen({ navigation }) {
 function FoodScreen({ navigation }) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -178,7 +175,6 @@ function FoodScreen({ navigation }) {
 function AgeScreen({ navigation }) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -233,7 +229,6 @@ function AgeScreen({ navigation }) {
 function DisabilityScreen({ navigation }) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -282,7 +277,6 @@ function DisabilityScreen({ navigation }) {
 function RideScreen({ navigation }) {
   return(
     <View style={styles.container}>
-      <View style={styles.contentBox}></View>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
           <Icon name="arrow_back" style={styles.backIcon} />
@@ -365,22 +359,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
   },
-  contentBox: {
-    backgroundColor: "#FCFAFF",
-    borderRadius: 20,
-    padding: 20,
-    width: "90%",
-    borderWidth: 2,
-    borderColor: "#C8A6FF",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 0.9,
-    paddingVertical: 30,
-  },
   topSection: {
     flex: 1,
     alignItems: "center",
@@ -395,11 +373,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   bottomSection: {
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      width: "100%",
-      paddingHorizontal: 20,
-      paddingBottom: 10,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
   headerText: {
     fontSize: 32,
@@ -432,9 +409,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#310082",
     borderRadius: 10,
     height: 50,
-    width: "45%",
+    width: 120,
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 10,
   },
   primaryButtonText: {
     fontSize: 18,
@@ -459,7 +437,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C8A6FF",
     borderRadius: 10,
     height: 50,
-    width: "45%",
+    width: 120,
     alignItems: "center",
     justifyContent: "center",
   },
