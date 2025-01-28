@@ -15,7 +15,7 @@ export default function HomePage(){
     return (
       <View style={styles.container}>
       <View style={styles.topSection}>
-        <Image source={require("../image/logo.svg")}/>
+        <Image source={require("../image/logo.svg")} style={styles.logo}/>
       </View>
       <View style={styles.separator}/>
 
@@ -24,8 +24,12 @@ export default function HomePage(){
         <View style={styles.box}>
           <Text style={styles.boxText}>Iron Gwazi</Text>
           <Text style={styles.boxTime}>Arrive at time x</Text>
-          <Button color="#8E7EFE" title="Details"/>
-          <Button color="#8E7EFE" title="Directions"/>
+          <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Details</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Directions</Text>
+            </TouchableOpacity>
         </View>
       </View>
       <View style={styles.separator}/>
@@ -60,19 +64,30 @@ export default function HomePage(){
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
-          <Button color="#310082" title="Start Planning" onPress={() => router.push("/QuestionPage")}/>
+          <Button color="#310082" title="Start Planning" onPress={() => navigation.navigate("PlanMyDay")}/>
           <Button color="#310082" title="View Map"/>
         </View>
       </View>
 
       <View style={styles.bottomSection}>
-        <Text style={styles.titleText}>Weather</Text>
+      <Text style={styles.weatherTitle}>Weather</Text>
+        <View style={styles.weatherContainer}>
+          <View style={styles.weatherBox}>
+            <Icon name="wb-sunny" size={50} color="#FFFFFF" />
+            <Text style={styles.boxText}>Sunny</Text>
+          </View>
+          <View style={styles.weatherBox}>
+            <Icon name="cloud" size={50} color="#FFFFFF" />
+            <Text style={styles.boxText}>Cloudy</Text>
+  </View>
+  
+</View>
       </View>
         <View style={styles.navbar}>
           <TouchableOpacity style={styles.navButton}>
             <Icon name="home" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/QuestionPage")}>
+          <TouchableOpacity style={styles.navButton}>
             <Icon name="assignment" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navButton}>
@@ -83,8 +98,8 @@ export default function HomePage(){
           </TouchableOpacity>
         </View>
         
-    </View>          
-    );
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -94,6 +109,12 @@ const styles = StyleSheet.create({
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
+    },
+    logo: {
+      width: 370,
+      height: 190,
+      alignSelf: "center",
+      marginBottom: 50,
     },
     topSection: {
       flex: 1, 
@@ -115,6 +136,7 @@ const styles = StyleSheet.create({
     },
     //CSS for base text fonts 
     titleText: {
+      fontFamily: "Montserrat",
       fontSize: 24,
       fontWeight: "bold",
       justifyContent: "flex-start",
@@ -131,18 +153,36 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       shadowColor: "#000",
       marginTop: 20,
+      alignItems: "center",
+      justifyContent: "center",
     },
     boxText: {
+      fontWeight: "bold",
+      fontFamily: "Montserrat",
       fontSize: 16,
       color:"#FFFFFF",
-      justifyContent: "center",
-      alignItems: "center",
+      textAlign: "center",
     },
     boxTime: {
       fontSize: 13,
+      fontFamily: "Atkinson Hyperlegible",
       color:"#FFFFFF",
       justifyContent: "center",
       alignItems: "center",
+    },
+    button: {
+      backgroundColor: "#8E7EFE",
+      width: "100%",
+      height: 40,
+      borderRadius: 10,
+      marginTop: 10,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    buttonText: {
+      color: "#FFFFFF",
+      fontSize: 16,
+      fontWeight: "bold",
     },
     separator: {
       width: "100%", 
@@ -166,6 +206,32 @@ const styles = StyleSheet.create({
       marginTop: 5,
       fontSize: 12,
     },
+    //CSS for Weather Boxes 
+    weatherTitle: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginTop: 60, // Adjust this value to move the title down
+    },
+    weatherContainer: {
+      flexDirection: "row", 
+      justifyContent: "space-between", 
+      alignItems: "center", 
+      padding: 10, 
+      marginTop: 25, 
+      borderRadius: 10,
+    },
+    weatherBox: {
+      width: 600,
+      height: "100%",
+      backgroundColor: "#310082",
+      padding: 15,
+      borderRadius: 10,
+      shadowColor: "#000",
+      marginTop: 20,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    
     //CSS for navbar 
     navbar: {
       flexDirection: "row",
