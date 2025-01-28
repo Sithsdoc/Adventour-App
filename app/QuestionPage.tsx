@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
   selectionButtonText: {
     fontSize: 18,
     fontFamily: "Montserrat-Bold",
-    color: "#310082",
+    color: "#000000",
   },
   skipButton: {
     backgroundColor: "#C8A6FF",
