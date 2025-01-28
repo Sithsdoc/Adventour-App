@@ -31,298 +31,291 @@ type ageProps = NativeStackScreenProps<RootStackParamList, "AgeScreen">;
 type disabilityProps = NativeStackScreenProps<RootStackParamList, "DisabilityScreen">;
 type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 
-function CalendarPage({navigation}: calendarProps){
+function CalendarPage({ navigation }) {
   return(
     <View style={styles.container}>
-      <TouchableOpacity>
-        <Icon name="arrow_back"/>
+      <TouchableOpacity style={styles.backButton}>
+        <Icon name="arrow_back" style={styles.backIcon} />
       </TouchableOpacity>      
       <Text style={styles.headerText}>Plan My Day</Text>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
-      <Calendar/>
-      <Button title="Next" onPress={() => navigation.navigate("TimeScreen")}/>
+      <Calendar style={styles.calendar}/>
+      <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("TimeScreen")}>
+        <Text style={styles.primaryButtonText}>Next</Text>
+      </TouchableOpacity>
     </View>  
   );
 }
 
-function TimeScreen({navigation}: timeProps){
+function TimeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-
       <View style={styles.topSection}>
-        <TouchableOpacity>
-          <Icon name="arrow_back"/>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow_back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>At what time do you plan to arrive <br/>and leave the park?</Text>
+        <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
       </View>
       <View style={styles.middleSection}>
-        <Text>Arriving:</Text>
+        <Text style={styles.label}>Arriving:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
-        <Text>Leaving:</Text>
+        <Text style={styles.label}>Leaving:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
-        <Button color="#310082" title="Next" onPress={() => navigation.navigate("PlanScreen")}/>
-      </View>
-
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="home" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="assignment" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="place" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="account-circle" color="#C8A6FF" size={30}/>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("PlanScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
+<View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
 
     </View>
   );
 }
 
-function PlanScreen({navigation}: planProps){
+function PlanScreen({ navigation }) {
   return(
     <View style={styles.container}>
-
       <View style={styles.topSection}>
-        <TouchableOpacity>
-          <Icon name="arrow_back"/>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow_back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Select one option:</Text>
       </View>
-
       <View style={styles.middleSection}>
-        <TouchableOpacity>
-          <Text>Create my customizable Itinerary</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Create my customizable Itinerary</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Suggestable Plan</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Suggest a Plan</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.bottomSection}>
-        <Button title="Next" onPress={() => navigation.navigate("FoodScreen")}/>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("FoodScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="home" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="assignment" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="place" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="account-circle" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-      </View>      
+<View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
 
     </View>
   );
 }
 
-function FoodScreen({navigation}: foodProps){
+function FoodScreen({ navigation }) {
   return(
     <View style={styles.container}>
-
       <View style={styles.topSection}>
-        <TouchableOpacity>
-          <Icon name="arrow_back"/>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow_back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>What time do you plan on eating?</Text>
       </View>
-
       <View style={styles.middleSection}>
-        <Text>Breakfast:</Text>
+        <Text style={styles.label}>Breakfast:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
-        <Text>Lunch:</Text>
+        <Text style={styles.label}>Lunch:</Text>
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
-
       <View style={styles.bottomSection}>
-        <Button title="Skip" onPress={() => navigation.navigate("AgeScreen")}/>
-        <Button title="Next" onPress={() => navigation.navigate("AgeScreen")}/>
-      </View>
-
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="home" color="#C8A6FF" size={30}/>
+        <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.navigate("AgeScreen")}>
+          <Text style={styles.secondaryButtonText}>Skip</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="assignment" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="place" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="account-circle" color="#C8A6FF" size={30}/>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("AgeScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
+<View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
 
     </View>
   );
 }
 
-function AgeScreen({navigation}: ageProps){
+function AgeScreen({ navigation }) {
   return(
     <View style={styles.container}>
-      <View>
-        <TouchableOpacity>
-          <Icon name="arrow_back"/>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>Age:</Text>
-      </View>
-
-      <View>
-        <TouchableOpacity>
-          <Text>Preschoolers</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Children</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Teenagers</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Adults</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>All ages</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View>
-        <Button title="Skip" onPress={() => navigation.navigate("DisabilityScreen")}/>        
-        <Button title="Next" onPress={() => navigation.navigate("DisabilityScreen")}/>
-      </View>
-
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="home" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="assignment" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="place" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="account-circle" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-      </View>      
-
-    </View>
-  );
-}
-
-function DisabilityScreen({navigation}: disabilityProps){
-  return(
-    <View style={styles.container}>
-
       <View style={styles.topSection}>
-        <TouchableOpacity>
-          <Icon name="arrow_back"/>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow_back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
-        <Text style={styles.questionText}>Accesibility</Text>
+        <Text style={styles.questionText}>Select your age group:</Text>
       </View>
-
       <View style={styles.middleSection}>
-        <TouchableOpacity>
-          <Text>Remain in wheelchair</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Preschoolers</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Include shuttles</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Children</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Service animals</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Teenagers</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Adults</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>All Ages</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.bottomSection}>
-        <Button title="Next" onPress={() => navigation.navigate("RideScreen")}/>
-        <Button title="Skip" onPress={() => navigation.navigate("RideScreen")}/>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("DisabilityScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="home" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="assignment" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="place" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="account-circle" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-      </View> 
+<View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
 
     </View>
   );
 }
 
-function RideScreen({navigation}: rideProps){
+function DisabilityScreen({ navigation }) {
   return(
     <View style={styles.container}>
+      <View style={styles.topSection}>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow_back" style={styles.backIcon} />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Plan My Day</Text>
+        <Text style={styles.questionText}>Accessibility options:</Text>
+      </View>
+      <View style={styles.middleSection}>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Remain in Wheelchair</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Include Shuttles</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Service Animals</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.bottomSection}>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("RideScreen")}>
+          <Text style={styles.primaryButtonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+<View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
 
-      <View>
-        <TouchableOpacity>
-          <Icon name="arrow_back"/>
+    </View>
+  );
+}
+
+function RideScreen({ navigation }) {
+  return(
+    <View style={styles.container}>
+      <View style={styles.topSection}>
+        <TouchableOpacity style={styles.backButton}>
+          <Icon name="arrow_back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Plan My Day</Text>
         <Text style={styles.questionText}>Choose your ride preferences:</Text>
       </View>
-
-      <View>
-        <TouchableOpacity>
-          <Text>Thrill rides</Text>
+      <View style={styles.middleSection}>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Slow rides</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Slow Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Water rides</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Water Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Animal experiences</Text>
+        <TouchableOpacity style={styles.selectionButton}>
+          <Text style={styles.selectionButtonText}>Animal Experiences</Text>
         </TouchableOpacity>
       </View>
-
-      <View>
-        <Button title="Skip" onPress={() => navigation.navigate("DisabilityScreen")}/>        
-        <Button title="Next" onPress={() => navigation.navigate("DisabilityScreen")}/>
+      <View style={styles.bottomSection}>
+        <TouchableOpacity style={styles.primaryButton}>
+          <Text style={styles.primaryButtonText}>Finish</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="home" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="assignment" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="place" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Icon name="account-circle" color="#C8A6FF" size={30}/>
-        </TouchableOpacity>
-      </View> 
+<View style={styles.navbar}>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="home" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="assignment" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="place" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.navButton}>
+         <Icon name="account-circle" color="#C8A6FF" size={30}/>
+       </TouchableOpacity>
+     </View>
 
     </View>
   );
 }
+
 
 function NestedScreens(){
   return(
@@ -352,43 +345,93 @@ export default function QuestionPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 20,
   },
-  //sections for the screen
   topSection: {
-    flex: 1, 
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 10,
+    width: "100%",
+    paddingTop: 20,
   },
   middleSection: {
-    flex: 2, 
+    flex: 2,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 20,
+    width: "100%",
   },
   bottomSection: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 40, 
+    width: "100%",
   },
-  //Text Css
   headerText: {
-    fontSize: 40,
+    fontSize: 32,
+    fontFamily: "Montserrat-Bold",
     color: "#310082",
+    textAlign: "center",
   },
   questionText: {
+    fontSize: 18,
+    fontFamily: "Atkinson Hyperlegible",
     fontWeight: "bold",
-    fontSize: 20,
+    color: "#000",
+    textAlign: "center",
+    marginVertical: 10,
   },
-  //CSS for text input
   inputBox: {
-    width: 274,
-    height: 78,
-    backgroundColor: "#C8A6FF",
+    width: 300,
+    height: 60,
+    backgroundColor: "#E4D7FF",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#310082",
+    paddingHorizontal: 10,
+    fontSize: 18,
+    fontFamily: "Atkinson Hyperlegible",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  primaryButton: {
+    backgroundColor: "#310082",
+    borderRadius: 10,
+    height: 50,
+    width: 120,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
+  },
+  primaryButtonText: {
+    fontSize: 18,
+    fontFamily: "Montserrat-Bold",
+    color: "#FFFFFF",
+  },
+  selectionButton: {
+    backgroundColor: "#E4D7FF",
+    borderRadius: 10,
+    padding: 15,
+    borderWidth: 2,
+    borderColor: "#310082",
+    marginVertical: 5,
+    alignItems: "center",
+  },
+  selectionButtonText: {
+    fontSize: 18,
+    fontFamily: "Montserrat-Bold",
+    color: "#310082",
+  },
+  backButton: {
+    position: "absolute",
+    left: 20,
+    top: 40,
+  },
+  backIcon: {
+    color: "#310082",
+    fontSize: 30,
   },
   //CSS for navbar 
   navbar: {
