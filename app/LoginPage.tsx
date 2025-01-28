@@ -58,7 +58,7 @@ function signup({navigation}: signupProps){
                 <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
                 <Text style={styles.label}>Re-Enter Password</Text>
                 <TextInput style={styles.input} placeholder="Re-Enter Password"/>
-                <Button title="Sign Up" onPress={() => router.push("/HomePage")} />
+                <Button title="Sign Up" onPress={() => router.push("/HomePage")}/>
             </View>
 
             <View>
@@ -101,13 +101,14 @@ const styles = StyleSheet.create({
       },
       middleSection: {
         flex: 2, 
-        alignItems: "center",
+        alignItems: "left",
         width:"80%",
         borderRadius:25,
         height:50,
         marginBottom:20,
         justifyContent:"center",
-        padding:20
+        padding:20,
+        marginTop: -300,
       },
       input: {
         width: '100%',
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     label: {
-        fontSize: 30,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#ffffff',
         textAlign: "left",
