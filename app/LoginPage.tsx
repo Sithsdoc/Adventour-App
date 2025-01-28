@@ -38,7 +38,6 @@ function login({navigation}: loginProps){
                 <TouchableOpacity style={styles.googleButton} onPress={() => console.log("Sign in with Google")}>
                     <Text style={styles.googleButtonText}>Sign in with Google</Text>
                 </TouchableOpacity>
-                <Text>Don't have an account?</Text>
                 <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate("signup")}>
                     <Text style={styles.signupButtonText}>Sign up</Text>
                 </TouchableOpacity>
@@ -98,19 +97,19 @@ const styles = StyleSheet.create({
       backgroundColor: "#67C5ED",
       alignItems: "center",
       justifyContent: "center",
-      paddingBottom: 50, 
+      paddingBottom: 30, 
 
     },
     topSection: {
         flex: 1, 
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 50,
+        paddingTop: 30,
       },
       middleSection: {
         flex: 2, 
         alignItems: "flex-start",
-        width:"80%",
+        width:"90%",
         borderRadius:25,
         height:50,
         marginBottom:20,
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     label: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#ffffff',
         textAlign: "left",
@@ -135,9 +134,9 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         backgroundColor: "#310082", 
-        paddingVertical: 15, 
-        paddingHorizontal: 110, 
-        borderRadius: 5, 
+        width:"100%",
+        height:40,
+        borderRadius: 30, 
         alignItems: "center", 
         justifyContent: "center", 
         marginTop: 20,
@@ -151,30 +150,30 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',  
         fontSize: 18,        
         fontWeight: 'bold',
-        paddingVertical: 15,  
-        paddingHorizontal: 30,
-        borderRadius: 5,      
+        paddingVertical: 10,  
+        paddingHorizontal: 90,
+        borderRadius: 30,      
         marginTop: 20,       
     },
     googleButtonText: {
         color: "black",
         fontSize: 18,  
-        fontWeight: 'bold',
+        fontWeight: 'black',
         textAlign: 'center', 
     },
     signupButton: {
         backgroundColor: '#ffffff',  
         fontSize: 18,            
         fontWeight: 'bold',
-        paddingVertical: 15,     
+        paddingVertical: 10,     
         paddingHorizontal: 30,   
-        borderRadius: 5,         
+        borderRadius: 30,         
         marginTop: 20,          
     },
     signupButtonText: {
         color: "#black", 
         fontSize: 18,           
-        fontWeight: 'bold',
+        fontWeight: 'black',
         textAlign: 'center',    
     },
     
