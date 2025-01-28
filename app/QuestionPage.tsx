@@ -378,7 +378,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     alignItems: "center",
     justifyContent: "space-between",
-    flex: 0.8,
+    flex: 0.9,
+    paddingVertical: 30,
   },
   topSection: {
     flex: 1,
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
   },
   bottomSection: {
       flexDirection: "row",
-      justifyContent: "space-between",
+      justifyContent: "space-evenly",
       width: "100%",
       paddingHorizontal: 20,
       paddingBottom: 10,
