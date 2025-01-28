@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     label: {
-        fontSize: 16,
+        fontSize: 30,
         fontWeight: 'bold',
         color: '#ffffff',
+        justifyContent: "left",
         marginBottom: 5,
-        alignItems: "left",
     },
       bottomSection: {
         flex: 1,
