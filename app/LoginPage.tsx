@@ -53,7 +53,7 @@ function signup({navigation}: signupProps){
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <Image source={require("../image/logo.svg")}/>
-                <Text>Sign Up</Text>
+                <Text style={styles.label}>Sign Up</Text>
             </View>
 
             <View style={styles.middleSection}>
