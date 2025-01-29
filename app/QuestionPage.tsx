@@ -475,44 +475,54 @@ function ItineraryScreen({navigation}: itineraryProps){
     const router = useRouter();
   return(
     <View style={styles.container}>
-
-      <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("AttractionScreen")}/>
+      
+      {/* Top Section */}
+      <View style={styles.itintopSection}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back" style={styles.backIcon}/>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Awesome! Here is your itinerary</Text>
+        <Text style={styles.itinheaderText}>Awesome! Here is your itinerary</Text>
       </View>
 
-      <View style={styles.middleSection}>
-        <View>
-          <Text>Cheetah Hunt</Text>
-          <Text>Arrive by 9:30AM</Text>
-        </View>
-        <View>
-          <Text>Kumba</Text>
-          <Text>Arrive by 10:00AM</Text>
-        </View>
-        <View>
-          <Text>Cobra's Curse</Text>
-          <Text>Arrive by 10:30AM</Text>
-        </View>
+      {/* Middle Section */}
+      <View style={styles.itinmiddleSection}>
+        {[ 
+          { image: require("../image/CheetaHunt.png"), name: "Cheetah Hunt", arrival: "9:30AM" },
+          { image: require("../image/Kumba.png"), name: "Kumba", arrival: "10:00AM" },
+          { image: require("../image/CobraCurse.png"), name: "Cobra’s Curse", arrival: "10:30AM" },
+          { image: require("../image/Phoenix.png"), name: "Phoenix Rising", arrival: "11:00AM" }
+        ].map((ride, index) => (
+          <View key={index} style={styles.itineraryContainer}>
+            <Image source={ride.image} style={styles.itineraryImage} />
+            <View style={styles.itinTextContainer}>
+              <Text style={styles.itinselectionButtonText}>{ride.name}</Text>
+              <Text style={styles.itinrideDescription}>Arrive by {ride.arrival}</Text>
+              <TouchableOpacity style={styles.directionsButton}>
+                <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity>
+              <Icon name="delete" style={styles.deleteIcon} />
+            </TouchableOpacity>
+          </View>
+        ))}
       </View>
 
+      {/* Navbar */}
       <View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
-         <Icon name="home" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
-         <Icon name="assignment" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
-         <Icon name="place" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
-         <Icon name="account-circle" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-     </View>      
-
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
+          <Icon name="home" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton}>
+          <Icon name="assignment" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+          <Icon name="place" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+          <Icon name="account-circle" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -743,6 +753,92 @@ const styles = StyleSheet.create({
     fontSize: 12, 
     color: "#666",
     flexShrink: 1, 
+  },
+  itintopSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 40,
+  },
+  itinmiddleSection: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: "#FCFAFF",
+    padding: 20,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: "#C8A6FF",
+    elevation: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 5,
+    alignSelf: "center",
+    paddingTop: 10,
+    marginTop: 30,
+},
+  itinheaderText: {
+    fontSize: 30,
+    fontFamily: "Montserrat-Bold",
+    color: "#310082",
+    textAlign: "center",
+    flexShrink: 1,
+    marginLeft: 10, // Prevents overlap with back button
+  },
+  itineraryContainer: {
+    width: "100%", 
+    flexDirection: "row", 
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 17,
+    alignItems: "center",
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: "#C8A6FF",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  itineraryImage: {
+    width: 80, 
+    height: 80, 
+    borderRadius: 50,
+    resizeMode: "cover",
+  },
+  itinTextContainer: {
+    flex: 1, 
+    paddingLeft: 15, 
+    justifyContent: "center",
+  },
+  itinselectionButtonText: {
+    fontSize: 16, 
+    fontFamily: "Montserrat-Bold",
+    color: "#000",
+  },
+  itinrideDescription: {
+    fontSize: 14, 
+    color: "#666",
+    marginVertical: 5,
+  },
+  directionsButton: {
+    backgroundColor: "#8E7EFE",
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    minWidth: 130, // Ensure enough width for text
+  },
+  directionsButtonText: {
+    fontSize: 13,
+    fontFamily: "Montserrat-Bold",
+    color: "#FFFFFF",
+    textAlign: "center",
+  },
+  deleteIcon: {
+    fontSize: 24,
+    color: "#6C4AB6",
   },
   navbar: {
     flexDirection: "row",
