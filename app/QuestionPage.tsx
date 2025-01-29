@@ -712,7 +712,7 @@ const styles = StyleSheet.create({
     top: 40,
   },
   backIcon: {
-    color: "#310082",
+    color: "#000000",
     fontSize: 30,
   },
   ridemiddleSection: {
