@@ -1,7 +1,8 @@
 import { StyleSheet, View, Button, Text, Image, TouchableOpacity } from "react-native";
-import React from "react"; 
+import React, { useState } from "react"; 
 import { Picker } from '@react-native-picker/picker';
-import Collapsible from 'react-native-collapsible';
+//import Collapsible from 'react-native-collapsible';
+import Accordion from 'react-native-collapsible/Accordion';
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Touchable } from "react-native";
@@ -18,10 +19,152 @@ type RootStackParamList ={
 
 type mainProps = NativeStackScreenProps<RootStackParamList, "MainPage">;
 
+function ThrillFilter(){
+    return(
+    <View>
+        <View>
+            <Text>Thrill factor</Text>
+        </View>
+        <View>
+            <TouchableOpacity>
+                <Text>Big Drops</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Small Drops</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Thrill Rides</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Slow Rides</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Water Rides</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Animal Encounters</Text>
+            </TouchableOpacity>
+        </View>
+    </View>
+    );
+}
+
+function AgeFilter(){
+    return(
+    <View>
+        <View>
+            <Text>Age</Text>
+        </View>
+        <View>
+            <TouchableOpacity>
+                <Text>Preschoolers</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Kids</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Teenagers</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Adults</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>All Ages</Text>
+            </TouchableOpacity>
+        </View>
+    </View>
+    );
+}
+
+function HeightFilter(){
+    return(
+        <View>
+            <View>
+                <Text>Height</Text>
+            </View>
+            <View>
+                <TouchableOpacity>
+                    <Text>32"(82cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>35"(89cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>38"(97cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>40"(102cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>42"(107cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>44"(113cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>48"(122cm)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>All Height</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
 function MainPage({navigation}: mainProps){
+    const [activeSections, setActiveSections] = useState<number[]>([])
+    const [selectedValue, setSelectedValue] = useState("");
+    const Sections = ["Filter"]
+
+    const renderContent = () => {
+        return(
+        <View>
+            <ThrillFilter/>
+            <AgeFilter/>
+            <HeightFilter/>
+        </View>
+    );
+}
+
+    const renderHeader = () => {
+        return (
+            <View>
+                <Text>Filter</Text>
+            </View>
+        );
+    }
+
+    const updateState = (sections: number[]) => {
+        setActiveSections(sections);
+    }
     return(
         <View style={styles.container}>
-            <Text>The next pain in my a**</Text>
+            <View style={styles.topSection}>
+                <View>
+                    <Accordion 
+                    activeSections={activeSections}
+                    sections={Sections}
+                    renderContent={renderContent}
+                    renderHeader={renderHeader}
+                    onChange={updateState}
+                    />
+                </View>
+                <View>
+                    <Picker selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
+                        <Picker.Item label="Wait Times" value={"waitTimes"}/>
+                        <Picker.Item label="Attractions" value={"attractions"}/>
+                        <Picker.Item label="Dining" value={"dining"}/>
+                        <Picker.Item label="Restrooms" value={"restrooms"}/>
+                        <Picker.Item label="Shows" value={"shows"}/>
+                    </Picker>
+                </View>
+                <View>
+                    <TouchableOpacity>
+                        <Text>Show list</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
     );
 }
