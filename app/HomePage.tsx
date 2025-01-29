@@ -68,7 +68,7 @@ export default function HomePage(){
       </View>
 
       <View style={styles.bottomSection}>
-      <Text style={styles.weatherTitle}>Weather</Text>
+        <Text style={styles.weatherTitle}>Weather</Text>
         <View style={styles.weatherContainer}>
           <View style={styles.weatherBox}>
             <Icon name="wb-sunny" size={50} color="#FFFFFF" />
@@ -77,7 +77,7 @@ export default function HomePage(){
           <View style={styles.weatherBox}>
             <Icon name="cloud" size={50} color="#FFFFFF" />
             <Text style={styles.boxText}>Cloudy</Text>
-  </View>
+      </View>
   
 </View>
       </View>

@@ -131,11 +131,7 @@ function PlanScreen({navigation}: planProps) {
           <Text style={styles.selectionButtonText}>Suggest a Plan</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("FoodScreen")}>
-          <Text style={styles.primaryButtonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
+
       <View style={styles.navbar}>
        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
          <Icon name="home" color="#C8A6FF" size={30}/>
