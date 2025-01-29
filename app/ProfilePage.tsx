@@ -19,6 +19,30 @@ const UserProfile = () => {
         <Text style={styles.email}>john.doe@example.com</Text>
         <Text style={styles.memberSince}>Member since: January 2023</Text>
       </View>
+      <View style={styles.settingsSection}>
+  <Text style={styles.settingsHeader}>Account Settings</Text>
+  <View style={styles.settingRow}>
+    <Text style={styles.settingLabel}>Full Name</Text>
+    <Text style={styles.settingValue}>John Doe</Text>
+  </View>
+  <View style={styles.settingRow}>
+    <Text style={styles.settingLabel}>Email</Text>
+    <Text style={styles.settingValue}>john.doe@example.com</Text>
+  </View>
+  <View style={styles.settingRow}>
+    <Text style={styles.settingLabel}>Phone Number</Text>
+    <Text style={styles.settingValue}>+1 234 567 890</Text>
+  </View>
+  <View style={styles.settingRow}>
+    <Text style={styles.settingLabel}>Preferred Language</Text>
+    <Text style={styles.settingValue}>English</Text>
+  </View>
+</View>
+<TouchableOpacity style={styles.editButton}>
+  <Text style={styles.editButtonText}>Edit</Text>
+</TouchableOpacity>
+
+
     </View>
 
         <View style={styles.navbar}>
@@ -60,6 +84,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
+  //Profile Card Css
   profileCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -96,6 +121,51 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
   },
+  //setttings css
+  settingsSection: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  settingsHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  settingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  settingLabel: {
+    fontSize: 14,
+    color: '#6b7280',
+  },
+  settingValue: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  //Edit button css
+  editButton: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#3b82f6',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginTop: 16,
+  },
+  editButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  
   //navbar css
   navbar: {
     flexDirection: "row",
