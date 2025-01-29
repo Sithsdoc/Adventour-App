@@ -35,8 +35,8 @@ export default function HomePage(){
       <View style={styles.middleSection}>
         <View style={styles.row}>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="shopping-cart" size={30} color="#310082" />
-            <Text style={styles.iconText}>Shopping</Text>
+            <Icon name="history" size={30} color="#310082" />
+            <Text style={styles.iconText}>History</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/ReminderPage")}>
             <Icon name="notifications" size={30} color="#310082"/>
@@ -67,20 +67,6 @@ export default function HomePage(){
         </View>
       </View>
 
-      <View style={styles.bottomSection}>
-        <Text style={styles.weatherTitle}>Weather</Text>
-        <View style={styles.weatherContainer}>
-          <View style={styles.weatherBox}>
-            <Icon name="wb-sunny" size={50} color="#FFFFFF" />
-            <Text style={styles.boxText}>Sunny</Text>
-          </View>
-          <View style={styles.weatherBox}>
-            <Icon name="cloud" size={50} color="#FFFFFF" />
-            <Text style={styles.boxText}>Cloudy</Text>
-      </View>
-  
-</View>
-      </View>
         <View style={styles.navbar}>
           <TouchableOpacity style={styles.navButton}>
             <Icon name="home" color="#C8A6FF" size={30}/>
