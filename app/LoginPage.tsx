@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#67C5ED",
-        alignItems: "center",
+      alignItems: "center",
       justifyContent: "center",
       paddingBottom: 30, 
 
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     },
     signButtonText: {
         color: "#ffffff", 
-        fontSize: 19,
+        fontSize: 18,
         fontWeight: "bold",
     },
 });
