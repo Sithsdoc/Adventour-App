@@ -430,45 +430,56 @@ function SuggestedScreen({navigation}: suggestedProps){
   const router = useRouter();
   return(
     <View style={styles.container}>
-      <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("PlanScreen")}/>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Awesome! Here is the suggested plan</Text>
-        </View>
-
-        <View style={styles.middleSection}>
-        <View>
-          <Text>Cheetah Hunt</Text>
-          <Text>Arrive by 9:30AM</Text>
-        </View>
-        <View>
-          <Text>Kumba</Text>
-          <Text>Arrive by 10:00AM</Text>
-        </View>
-        <View>
-          <Text>Cobra's Curse</Text>
-          <Text>Arrive by 10:30AM</Text>
-        </View>
-      </View>
-
-      <View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
-         <Icon name="home" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
-         <Icon name="assignment" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
-         <Icon name="place" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
-         <Icon name="account-circle" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-     </View> 
-
+      
+    {/* Top Section */}
+    <View style={styles.itintopSection}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Icon name="arrow-back" style={styles.backIcon}/>
+      </TouchableOpacity>
+      <Text style={styles.suggestheaderText}>Awesome! Here is the suggested plan</Text>
     </View>
-  );
+
+    {/* Middle Section */}
+    <View style={styles.itinmiddleSection}>
+      {[ 
+        { image: require("../image/IronGwazi.png"), name: "Iron Gwazi", arrival: "9:30AM" },
+        { image: require("../image/Kumba.png"), name: "Kumba", arrival: "10:00AM" },
+        { image: require("../image/Phoenix.png"), name: "Phoenix Rising", arrival: "10:30AM" },
+        { image: require("../image/CheetaHunt.png"), name: "Cheetah Hunt", arrival: "11:00AM" }
+      ].map((ride, index) => (
+        <View key={index} style={styles.itineraryContainer}>
+          <Image source={ride.image} style={styles.itineraryImage} />
+          <View style={styles.itinTextContainer}>
+            <Text style={styles.itinselectionButtonText}>{ride.name}</Text>
+            <Text style={styles.itinrideDescription}>Arrive by {ride.arrival}</Text>
+            <TouchableOpacity style={styles.directionsButton}>
+              <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity>
+            <Icon name="delete" style={styles.deleteIcon} />
+          </TouchableOpacity>
+        </View>
+      ))}
+    </View>
+
+    {/* Navbar */}
+    <View style={styles.navbar}>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
+        <Icon name="home" color="#C8A6FF" size={30}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton}>
+        <Icon name="assignment" color="#C8A6FF" size={30}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+        <Icon name="place" color="#C8A6FF" size={30}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+        <Icon name="account-circle" color="#C8A6FF" size={30}/>
+      </TouchableOpacity>
+    </View>
+  </View>
+);
 }
 
 function ItineraryScreen({navigation}: itineraryProps){
@@ -753,6 +764,14 @@ const styles = StyleSheet.create({
     fontSize: 12, 
     color: "#666",
     flexShrink: 1, 
+  },
+  suggestheaderText: {
+    fontSize: 30,
+    fontFamily: "Montserrat-Bold",
+    color: "#310082",
+    textAlign: "center",
+    flexShrink: 1,
+    marginLeft: 20, // Prevents overlap with back button
   },
   itintopSection: {
     flexDirection: "row",
