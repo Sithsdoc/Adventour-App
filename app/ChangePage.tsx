@@ -3,7 +3,7 @@ import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput } fr
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function PaymentPage(){
+export default function ChangePage(){
     const router = useRouter();
  
     return (
@@ -13,19 +13,21 @@ export default function PaymentPage(){
                           <Icon name="arrow-back" style={styles.backIcon}/>
                         </TouchableOpacity>
                       </View>
-            <Text style={styles.header}>Payment Information</Text>
-            <Text>Card Information</Text>
+            <Text style={styles.header}>Change Password</Text>
+            <Text>Current Password</Text>
             <TextInput style={styles.input} />
+            <Text>New Password</Text>
             <TextInput style={styles.input} />
+            <Text>Confirm New Password</Text>
             <TextInput style={styles.input} />
         
             <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.editButtonText}>Save Payment Method</Text>
+          <Text style={styles.editButtonText}>Save Changes</Text>
         </TouchableOpacity>
 
         </View>
         
-    )
+    );
 }
 
 const styles = StyleSheet.create({

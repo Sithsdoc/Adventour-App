@@ -46,7 +46,7 @@ const UserProfile = () => {
     <Text style={styles.editButtonText}>Manage Payment Method</Text>
 </TouchableOpacity>
 
-<TouchableOpacity style={styles.pMethod}>
+<TouchableOpacity style={styles.pMethod} onPress={() => router.push("/ChangePage")}>
     <Text style={styles.editButtonText}>Change Password</Text>
 </TouchableOpacity>
 
