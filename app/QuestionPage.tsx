@@ -359,58 +359,69 @@ function AttractionScreen({navigation}: attractionProps){
       const router = useRouter();
   return (
     <View style={styles.container}>
-
+      
+      {/* Top Section */}
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("RideScreen")}/>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("RideScreen")}>
+          <Icon name="arrow-back" style={styles.backIcon}/>
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
+      </View>
+
+      {/* Middle Section */}
+      <View style={styles.ridemiddleSection}>
         <Text style={styles.questionText}>Choose your must-go thrill rides:</Text>
+        
+        <View style={styles.optionContainer}>
+          <Image source={require("../image/IronGwazi.png")} style={styles.rideImage} />
+          <View style={styles.rideTextContainer}>
+            <Text style={styles.selectionButtonText}>Iron Gwazi</Text>
+            <Text style={styles.rideDescription}>Plunging riders from a 206 foot-tall peak into a 91-degree drop and reaching top speeds of 76 miles per hour.</Text>
+          </View>
+        </View>
+
+        <View style={styles.optionContainer}>
+          <Image source={require("../image/Sheikra.png")} style={styles.rideImage} />
+          <View style={styles.rideTextContainer}>
+            <Text style={styles.selectionButtonText}>Sheikra</Text>
+            <Text style={styles.rideDescription}>200 ft from the sky, 90° straight down - ride this extreme roller coaster if you dare.</Text>
+          </View>
+        </View>
+
+        <View style={styles.optionContainer}>
+          <Image source={require("../image/Tigris.png")} style={styles.rideImage} />
+          <View style={styles.rideTextContainer}>
+            <Text style={styles.selectionButtonText}>Tigris</Text>
+            <Text style={styles.rideDescription}>Catapult through an exhilarating array of looping twists with forward and backward motion and breath-taking drops.</Text>
+          </View>
+        </View>
       </View>
 
-      <View style={styles.middleSection}>
-        <View>
-          <TouchableOpacity>
-            <Text>Iron Gwazi</Text>
-            <Text>Plunging riders from a 206 foot-tall peak into a 91-degree drop and reaching top speeds of 76 miles per hour.</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity>
-            <Text>Skeikra</Text>
-            <Text>200 ft from the sky, 90° straight down - ride this extreme roller coaster if you dare.</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <Text>Tigris</Text>
-          <Text>Catapult through an exhilarating array of looping twists with forward and backward motion and breath-taking drops.</Text>
-        </View>
-      </View>
-
+      {/* Bottom Section */}
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("ItineraryScreen")}>
-            <Text style={styles.skipButtonText}>Skip</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("ItineraryScreen")}>
+          <Text style={styles.skipButtonText}>SKIP</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ItineraryScreen")}>
-          <Text style={styles.primaryButtonText}>Next</Text>
+          <Text style={styles.primaryButtonText}>NEXT</Text>
         </TouchableOpacity>
       </View>
 
+      {/* Navbar */}
       <View style={styles.navbar}>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
-         <Icon name="home" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton}>
-         <Icon name="assignment" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
-         <Icon name="place" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
-         <Icon name="account-circle" color="#C8A6FF" size={30}/>
-       </TouchableOpacity>
-     </View>
-
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
+          <Icon name="home" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton}>
+          <Icon name="assignment" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+          <Icon name="place" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+          <Icon name="account-circle" color="#C8A6FF" size={30}/>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -682,6 +693,56 @@ const styles = StyleSheet.create({
   backIcon: {
     color: "#310082",
     fontSize: 30,
+  },
+  ridemiddleSection: {
+    width: "90%",
+    backgroundColor: "#FCFAFF",
+    padding: 20,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#C8A6FF",
+    elevation: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    alignSelf: "center",
+  },
+  optionContainer: {
+    width: "100%", 
+    flexDirection: "row", 
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 5,
+    alignItems: "center",
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: "#8E7EFE",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  rideImage: {
+    width: 100, 
+    height: 80, 
+    borderRadius: 8,
+    resizeMode: "cover",
+  },
+  rideTextContainer: {
+    flex: 1, 
+    paddingLeft: 15, 
+    justifyContent: "center",
+  },
+  rideselectionButtonText: {
+    fontSize: 16, 
+    fontFamily: "Montserrat-Bold",
+    color: "#000",
+  },
+  rideDescription: {
+    fontSize: 12, 
+    color: "#666",
+    flexShrink: 1, 
   },
   navbar: {
     flexDirection: "row",
