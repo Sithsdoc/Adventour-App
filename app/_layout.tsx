@@ -5,6 +5,7 @@ import QuestionPage from "./QuestionPage";
 import MapPage from "./MapPage";
 import ProfilePage from "./ProfilePage";
 import ReminderPage from "./ReminderPage";
+import PaymentPage from "./PaymentPage"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -43,7 +44,13 @@ function mapPage(){
 function profilePage(){
   return(
     <ProfilePage/>
-  )
+  );
+}
+
+function paymentPage(){
+  return(
+    <PaymentPage/>
+  );
 }
 
 export default function App() {
@@ -56,6 +63,7 @@ export default function App() {
       <Stack.Screen  name="QuestionPage" component={questionPage}/>
       <Stack.Screen name="MapPage" component={mapPage}/>
       <Stack.Screen name="ProfilePage" component={profilePage}/>
+      <Stack.Screen name="PaymentPage" component={paymentPage}/>
     </Stack.Navigator>
   );
 
