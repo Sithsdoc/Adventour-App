@@ -6,6 +6,7 @@ import MapPage from "./MapPage";
 import ProfilePage from "./ProfilePage";
 import ReminderPage from "./ReminderPage";
 import PaymentPage from "./PaymentPage"
+import ChangePage from "./ChangePage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -53,6 +54,12 @@ function paymentPage(){
   );
 }
 
+function changePage(){
+  return(
+    <ChangePage/>
+  );
+}
+
 export default function App() {
 
   return (
@@ -64,6 +71,7 @@ export default function App() {
       <Stack.Screen name="MapPage" component={mapPage}/>
       <Stack.Screen name="ProfilePage" component={profilePage}/>
       <Stack.Screen name="PaymentPage" component={paymentPage}/>
+      <Stack.Screen name="ChangePage" component={changePage}/>
     </Stack.Navigator>
   );
 
