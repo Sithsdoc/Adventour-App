@@ -35,7 +35,7 @@ export default function HomePage(){
       <View style={styles.middleSection}>
         <View style={styles.row}>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="history" size={30} color="#310082" onPress={() => router.push("/HistoryPage")}/>
+            <Icon name="history" size={30} color="#310082" />
             <Text style={styles.iconText}>History</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/ReminderPage")}>
@@ -43,27 +43,27 @@ export default function HomePage(){
             <Text style={styles.iconText}>Reminder</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="event" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
+            <Icon name="event" size={30} color="#310082"/>
             <Text style={styles.iconText}>Shows & Events</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="restaurant" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
+            <Icon name="restaurant" size={30} color="#310082"/>
             <Text style={styles.iconText}>Dining</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="accessible" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
+            <Icon name="accessible" size={30} color="#310082"/>
             <Text style={styles.iconText}>Accessibility</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="attractions" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
+            <Icon name="attractions" size={30} color="#310082"/>
             <Text style={styles.iconText}>Top Rides</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <Button color="#310082" title="Start Planning" onPress={() => router.push("/QuestionPage")}/>
-          <Button color="#310082" title="View Map" onPress={() => router.push("/MapPage")}/>
+          <Button color="#310082" title="View Map"/>
         </View>
       </View>
 
@@ -72,7 +72,7 @@ export default function HomePage(){
             <Icon name="home" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navButton}>
-            <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
+            <Icon name="assignment" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
             <Icon name="place" color="#C8A6FF" size={30}/>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     logo: {
       width: 370,
-      height: 200,
+      height: 190,
       alignSelf: "center",
       marginBottom: 50,
       marginTop: 20,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     //CSS for base text fonts 
     titleText: {
-      fontFamily: "Atkinson",
+      fontFamily: "Montserrat",
       fontSize: 24,
       fontWeight: "bold",
       justifyContent: "flex-start",
