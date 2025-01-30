@@ -46,7 +46,6 @@ const UserProfile = () => {
         </View>
       </View>
 
-      {/* Payment Information Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Payment Information</Text>
         <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/PaymentPage")}>
@@ -82,13 +81,13 @@ const UserProfile = () => {
       </View>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
           <Icon name="home" color="#C8A6FF" size={30} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/QuestionPage")}>
           <Icon name="assignment" color="#C8A6FF" size={30} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
+        <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
           <Icon name="place" color="#C8A6FF" size={30} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
