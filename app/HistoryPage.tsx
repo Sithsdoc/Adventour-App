@@ -7,7 +7,7 @@ export default function HistoryPage(){
     const router = useRouter();
     return(
         <View style={styles.container}>
-            <View>
+            <View style={styles.topSection}>
                 <TouchableOpacity style={styles.backButton} onPress={() => router.push("/HomePage")}>
                     <Icon style={styles.backIcon} name="arrow-back" />
                 </TouchableOpacity>                
@@ -21,10 +21,22 @@ export default function HistoryPage(){
                 </View>
                 <View style={styles.historyItem}>
                     <Text style={styles.date}>10/16/24</Text>
-                    <Text style={styles.hours}>10 hours</Text>
+                    <Text style={styles.hours}>7 hours</Text>
                 </View>
                 <View style={styles.historyItem}>
                     <Text style={styles.date}>09/14/24</Text>
+                    <Text style={styles.hours}>5 hours</Text>
+                </View>
+                <View style={styles.historyItem}>
+                    <Text style={styles.date}>09/11/24</Text>
+                    <Text style={styles.hours}>8 hours</Text>
+                </View>
+                <View style={styles.historyItem}>
+                    <Text style={styles.date}>08/16/24</Text>
+                    <Text style={styles.hours}>2 hours</Text>
+                </View>
+                <View style={styles.historyItem}>
+                    <Text style={styles.date}>07/14/24</Text>
                     <Text style={styles.hours}>5 hours</Text>
                 </View>
             </View>
@@ -55,11 +67,28 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         paddingTop: 30,
     },
+    topSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center', 
+        width: '100%',
+        paddingTop: 20, 
+    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#000',
-        marginTop: 10,
+        marginLeft: 30, 
+    },
+    backButton: {
+        position: "absolute",
+        top: 10, 
+        left: 40, 
+        zIndex: 10,
+    },
+    backIcon: {
+        color: "#000000",
+        fontSize: 30,
     },
     middleSection: {
         flex: 1, 
@@ -75,10 +104,10 @@ const styles = StyleSheet.create({
         width: '80%',
         padding: 10,
         marginBottom: 15,
-        backgroundColor: '8E7EFE',  // purple background
+        backgroundColor: 'white',  
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#8E7EFE',  // purple stroke
+        borderColor: '#8E7EFE',  
     },
     date: {
         color: 'black',
@@ -89,15 +118,6 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 16,
         fontWeight: '600',
-    },
-    backButton: {
-        position: "absolute",
-        left: -1,
-        top: 10,
-    },
-    backIcon: {
-        color: "#000000",
-        fontSize: 30,
     },
     navbar: {
         flexDirection: "row",

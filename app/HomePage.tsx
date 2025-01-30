@@ -34,7 +34,7 @@ export default function HomePage(){
 
       <View style={styles.middleSection}>
         <View style={styles.row}>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/HistoryPage")}>
             <Icon name="history" size={30} color="#310082" />
             <Text style={styles.iconText}>History</Text>
           </TouchableOpacity>
