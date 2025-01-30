@@ -84,8 +84,10 @@ function MainPage({navigation}: mainProps) {
 
     const renderHeader = () => {
         return (
+            <View style={{ width: "auto", alignSelf: "flex-start" }}>
             <View style={styles.mainFilterButton}>
                 <Text>Filter</Text>
+            </View>
             </View>
         );
     };
@@ -97,7 +99,7 @@ function MainPage({navigation}: mainProps) {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topSection}>
-                <View>
+                <View style={{width: "auto", alignSelf: "flex-start"}}>
                     <Accordion 
                         activeSections={activeSections}
                         sections={Sections}
@@ -298,7 +300,7 @@ function ListPage({route, navigation}: listProps){
  
  
             <View style={styles.topSection}>
-                <View >
+                <View style={{width: "auto", alignSelf: "flex-start"}}>
                     <Accordion
                     activeSections={activeSections}
                     sections={Sections}
@@ -400,11 +402,12 @@ export default function MapPage(){
             backgroundColor: "#fff",
         },
         topSection: {
-            flexDirection: "row",  // Align items in a row
-            justifyContent: "space-between",  // Even spacing
-            alignItems: "center",  // Ensure vertical alignment
-            width: "100%",  // Prevents overflow
-            paddingHorizontal: 10,  // Adds space from edges
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",  // Prevents it from stretching everything
+            width: "100%",  // Ensures it doesn't take unnecessary space
+            paddingHorizontal: 10,
+            gap: 10,  // Adds spacing between elements
         },
         mainHeaderText: {
             fontSize: 22,
@@ -412,8 +415,15 @@ export default function MapPage(){
             color: "#200082",
         },
         mainFilterButton: {
-            flex: 1,
-            alignItems: "flex-start",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            backgroundColor: "#FFFFFF",
+            borderRadius: 5,
+            width: "auto",  // Ensure it only takes as much space as needed
+            minWidth: 80,  // Optional: Set a reasonable min width
+            alignSelf: "flex-start",  // Ensures it doesn't expand
         },
         listButton: {
             paddingHorizontal: 10,
