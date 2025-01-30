@@ -2,11 +2,23 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 
-export default function PaymentPage() {
-  const router = useRouter();
 
-  return (
+type RootStackParamList ={
+  PaymentPage: undefined;
+  ProfilePage: undefined;
+  ChangePage: undefined;
+};
+
+type paymentProps = NativeStackScreenProps<RootStackParamList, "PaymentPage">;
+
+const MainStack =  createNativeStackNavigator<RootStackParamList>();
+const NestedStack = createNativeStackNavigator<RootStackParamList>();
+
+function PaymentPage({navigation}: paymentProps){
+    const router = useRouter();
+  return(
     <View style={styles.container}>
      
       <View style={styles.headerContainer}>
@@ -122,3 +134,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default PaymentPage;
