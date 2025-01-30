@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "flex-start",  // Ensure the content starts at the top
-    paddingBottom: 70,  // Added padding at the bottom to avoid touching the navbar
+    justifyContent: "flex-start",  
+    paddingBottom: 70,  
   },
   logo: {
     width: 370,
@@ -152,38 +152,38 @@ const styles = StyleSheet.create({
     color:"#FFFFFF",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,  // Added margin-bottom to create space
+    marginBottom: 20,  
   },
   button: {
     backgroundColor: "#310082",
-    height: 50,  // Same height for both buttons
-    width: "80%",  // Set both buttons to have the same width (80% of the parent width)
+    height: 50,  
+    width: "80%",  
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10, // Space between buttons
+    marginBottom: 10, 
   },
   detailsButton: {
-    backgroundColor: "#8E7EFE",  // Specific color for "Details" button
+    backgroundColor: "#8E7EFE",  
   },
   directionsButton: {
-    backgroundColor: "#8E7EFE",  // Specific color for "Directions" button
+    backgroundColor: "#8E7EFE",  
   },
   equalButton: {
     backgroundColor: "#310082",
-    height: 50, // Same height for both buttons
-    width: "70%", // Adjust width to make them the same length
+    height: 50, 
+    width: "70%", 
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 10,  // Adds space between the buttons
+    marginHorizontal: 10,  
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center", // Ensures the text is centered
-    flexShrink: 1, // Prevents text from overflowing and makes it fit in one line
+    textAlign: "center", 
+    flexShrink: 1, 
   },
   separator: {
     width: "100%", 
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    justifyContent: "center",  // Centers the buttons in the row
+    justifyContent: "center",  
     marginBottom: 20,
     width: "100%",
   },
