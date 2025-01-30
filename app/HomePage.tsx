@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     //CSS for base text fonts 
     titleText: {
-      fontFamily: "Montserrat",
+      fontFamily: "Atkinson",
       fontSize: 24,
       fontWeight: "bold",
       justifyContent: "flex-start",
