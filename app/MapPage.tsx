@@ -6,7 +6,6 @@ import Accordion from 'react-native-collapsible/Accordion';
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Touchable } from "react-native";
-import QuestionPage from "./QuestionPage";
 import { useRouter } from "expo-router";
 
 const MainStack =  createNativeStackNavigator<RootStackParamList>();
@@ -14,10 +13,12 @@ const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
 type RootStackParamList ={
     MainPage: undefined,
+    ListPage: undefined,
     NestedScreens: undefined,
 }
 
 type mainProps = NativeStackScreenProps<RootStackParamList, "MainPage">;
+type listProps = NativeStackScreenProps<RootStackParamList, "ListPage">;
 
 function ThrillFilter(){
     return(
@@ -112,14 +113,23 @@ function HeightFilter(){
     );
 }
 
+function ListPage({navigation}: listProps){
+    return(
+        <View style={styles.container}>
+
+        </View>
+    );
+}
+
 function MainPage({navigation}: mainProps){
+    const router = useRouter();
     const [activeSections, setActiveSections] = useState<number[]>([])
     const [selectedValue, setSelectedValue] = useState("");
     const Sections = ["Filter"]
 
     const renderContent = () => {
         return(
-        <View>
+        <View style={styles.dropdownContainer}>
             <ThrillFilter/>
             <AgeFilter/>
             <HeightFilter/>
@@ -129,7 +139,7 @@ function MainPage({navigation}: mainProps){
 
     const renderHeader = () => {
         return (
-            <View>
+            <View style={styles.filterButton}>
                 <Text>Filter</Text>
             </View>
         );
@@ -141,7 +151,7 @@ function MainPage({navigation}: mainProps){
     return(
         <View style={styles.container}>
             <View style={styles.topSection}>
-                <View>
+                <View >
                     <Accordion 
                     activeSections={activeSections}
                     sections={Sections}
@@ -150,7 +160,7 @@ function MainPage({navigation}: mainProps){
                     onChange={updateState}
                     />
                 </View>
-                <View>
+                <View style={styles.picker}>
                     <Picker selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
                         <Picker.Item label="Wait Times" value={"waitTimes"}/>
                         <Picker.Item label="Attractions" value={"attractions"}/>
@@ -160,11 +170,32 @@ function MainPage({navigation}: mainProps){
                     </Picker>
                 </View>
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("ListPage")}>
                         <Text>Show list</Text>
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <View style={styles.middleSection}>
+                <Image source={require("../image/gardens.png")} />
+            </View>
+
+
+            <View style={styles.navbar}>
+                <TouchableOpacity style={styles.navButton}>
+                    <Icon name="home" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton}>
+                    <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
+                </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+            <Icon name="place" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+            <Icon name="account-circle" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+        </View>
+
         </View>
     );
 }
@@ -196,8 +227,12 @@ const styles = StyleSheet.create({
     topSection: {
       flex: 1, 
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-between",
+      flexDirection: "row",
       paddingTop: 10,
+      paddingHorizontal: 10,
+      zIndex: 10,
+      width: "100%",
     },
     middleSection: {
       flex: 2, 
@@ -211,4 +246,54 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       paddingBottom: 40, 
     },
+    //picker, collapsible, and list css
+    filterButton: {
+        flex: 1,
+        alignItems: "flex-start",
+        position: "absolute",
+    },
+    picker: {
+        flex: 2,
+        alignItems: "center",
+    },
+    listButton: {
+        flex: 1,
+        alignItems: "flex-end",
+    },
+    dropdownContainer: {
+        //position: 'absolute',
+        top: 50, 
+        left: 10,
+        right: 10,
+        zIndex: 1000, 
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5, 
+      },
+      //css for image
+      image: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "cover",
+      },
+    //navbar css
+    navbar: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "#8E7EFE",
+        height: 70,
+        width: "100%",
+        position: "absolute",
+        bottom: 0,
+      },
+      navButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+      },
 });

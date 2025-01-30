@@ -7,7 +7,7 @@ export default function ReminderPage(){
   const router = useRouter();
     return(
       <View style={remindStyles.container}>
-      {/* Top Section */}
+     
       <View style={remindStyles.topSection}>
         <View style={remindStyles.headerContainer}>
           <TouchableOpacity style={remindStyles.backButton} onPress={() => router.push("/HomePage")}>
@@ -18,7 +18,7 @@ export default function ReminderPage(){
         <Text style={remindStyles.subHeaderText}>Your ride starts in 5 minutes!</Text>
       </View>
 
-      {/* Middle Section - Ride Info */}
+      
       <View style={remindStyles.middleSection}>
         <View style={remindStyles.card}>
           <Image source={require("../image/IronGwazi.png")} style={remindStyles.rideImage} />
@@ -32,7 +32,7 @@ export default function ReminderPage(){
         </View>
       </View>
 
-       {/* Bottom Navigation Placeholder */}
+      
       <View style={remindStyles.navbar}>
         <TouchableOpacity style={remindStyles.navButton} onPress={() => router.push("/HomePage")}>
           <Icon name="home" color="#C8A6FF" size={30}/>

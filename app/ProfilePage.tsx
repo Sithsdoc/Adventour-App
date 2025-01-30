@@ -9,9 +9,9 @@ const UserProfile = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>User Profile</Text>
-    <View style={styles.profileCard}>
+    <View>
         <Image
-          source={{ uri: 'https://via.placeholder.com/150' }}
+          source={require("../image/profileDefault.jpg")} 
           style={styles.profileImage}
         />
       <View style={styles.profileInfo}>
@@ -31,7 +31,7 @@ const UserProfile = () => {
   </View>
   <View style={styles.settingRow}>
     <Text style={styles.settingLabel}>Phone Number</Text>
-    <Text style={styles.settingValue}>+1 234 567 890</Text>
+    <Text style={styles.settingValue}>+1 234 567 8930</Text>
   </View>
   <View style={styles.settingRow}>
     <Text style={styles.settingLabel}>Preferred Language</Text>
@@ -42,6 +42,21 @@ const UserProfile = () => {
   <Text style={styles.editButtonText}>Edit</Text>
 </TouchableOpacity>
 
+<TouchableOpacity style={styles.pMethod} onPress={() => router.push("/PaymentPage")}>
+    <Text style={styles.editButtonText}>Manage Payment Method</Text>
+</TouchableOpacity>
+
+<TouchableOpacity style={styles.pMethod} onPress={() => router.push("/ChangePage")}>
+    <Text style={styles.editButtonText}>Change Password</Text>
+</TouchableOpacity>
+
+<TouchableOpacity style={styles.pMethod} onPress={() => router.push("/LoginPage")}>
+    <Text style={styles.editButtonText} >Delete My Account</Text>
+</TouchableOpacity>
+
+<TouchableOpacity style={styles.pMethod}>
+    <Text style={styles.editButtonText} onPress={() => router.push("/LoginPage")}>Log Out</Text>
+</TouchableOpacity>
 
     </View>
 
@@ -165,7 +180,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  
+  //Buttons css
+  pMethod:{
+    backgroundColor: '#3b82f6',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginTop: 16,
+  },
   //navbar css
   navbar: {
     flexDirection: "row",
@@ -181,6 +203,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
+
+
 });
 
 
