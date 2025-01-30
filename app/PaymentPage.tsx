@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   passwordSection: {
-    marginTop: 40,
+    marginTop: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 16,
@@ -203,15 +203,19 @@ const styles = StyleSheet.create({
     borderColor: '#d1d5db', 
   },
   saveButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#310082',
+    borderRadius: 8,
+    paddingHorizontal: 98,  
+    paddingVertical: 12,   
+    marginTop: 20, 
   },
   saveButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontFamily: 'Montserrat', 
+    fontSize: 24,  
+    fontWeight: 'bold',
+    textAlign: 'center',  
   },
 });
 
