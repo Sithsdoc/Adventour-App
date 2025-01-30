@@ -20,140 +20,93 @@ type RootStackParamList ={
 type mainProps = NativeStackScreenProps<RootStackParamList, "MainPage">;
 type listProps = NativeStackScreenProps<RootStackParamList, "ListPage">;
 
-function ThrillFilter(){
-    return(
-    <View>
-        <View>
-            <Text>Thrill factor</Text>
-        </View>
-        <View>
-            <TouchableOpacity>
-                <Text>Big Drops</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Small Drops</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Thrill Rides</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Slow Rides</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Water Rides</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Animal Encounters</Text>
-            </TouchableOpacity>
-        </View>
-    </View>
-    );
-}
-
-function AgeFilter(){
-    return(
-    <View>
-        <View>
-            <Text>Age</Text>
-        </View>
-        <View>
-            <TouchableOpacity>
-                <Text>Preschoolers</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Kids</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Teenagers</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>Adults</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>All Ages</Text>
-            </TouchableOpacity>
-        </View>
-    </View>
-    );
-}
-
-function HeightFilter(){
-    return(
-        <View>
-            <View>
-                <Text>Height</Text>
+function ThrillFilter() {
+    return (
+        <View style={styles.filterContainer}>
+            <Text style={styles.filterTitle}>Thrill Factor</Text>
+            <View style={styles.filterOptionsContainer}>
+                {['Big Drops', 'Small Drops', 'Thrill Rides', 'Slow Rides', 'Water Rides', 'Animal Encounters'].map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
             </View>
-            <View>
-                <TouchableOpacity>
-                    <Text>32"(82cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>35"(89cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>38"(97cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>40"(102cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>42"(107cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>44"(113cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>48"(122cm)</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text>All Height</Text>
-                </TouchableOpacity>
+        </View>
+    );
+}
+
+function AgeFilter() {
+    return (
+        <View style={styles.filterContainer}>
+            <Text style={styles.filterTitle}>Age</Text>
+            <View style={styles.filterOptionsContainer}>
+                {['Preschoolers', 'Kids', 'Tweens', 'Teens', 'Adults', 'All Ages'].map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+}
+
+function HeightFilter() {
+    return (
+        <View style={styles.filterContainer}>
+            <Text style={styles.filterTitle}>Height</Text>
+            <View style={styles.filterOptionsContainer}>
+                {['32" (82cm)', '35" (89cm)', '38" (97cm)', '40" (102cm)', '42" (107cm)', '44" (113cm)', '48" (122cm)', 'Any Height'].map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
             </View>
         </View>
     );
 }
 
 
-function MainPage({navigation}: mainProps){
+function MainPage({navigation}: mainProps) {
     const router = useRouter();
-    const [activeSections, setActiveSections] = useState<number[]>([])
+    const [activeSections, setActiveSections] = useState<number[]>([]);
     const [selectedValue, setSelectedValue] = useState("waitTimes");
-    const Sections = ["Filter"]
+    const Sections = ["Filter"];
 
     const renderContent = () => {
-        return(
-        <View style={styles.dropdownContainer}>
-            <ThrillFilter/>
-            <AgeFilter/>
-            <HeightFilter/>
-        </View>
-    );
-}
+        return (
+            <View style={styles.DropdownContainer}>
+                <ThrillFilter/>
+                <AgeFilter/>
+                <HeightFilter/>
+            </View>
+        );
+    };
 
     const renderHeader = () => {
         return (
-            <View style={styles.filterButton}>
+            <View style={styles.mainFilterButton}>
                 <Text>Filter</Text>
             </View>
         );
-    }
+    };
 
     const updateState = (sections: number[]) => {
         setActiveSections(sections);
-    }
-    return(
-        <View style={styles.container}>
+    };
+
+    return (
+        <View style={styles.mainContainer}>
             <View style={styles.topSection}>
-                <View >
+                <View>
                     <Accordion 
-                    activeSections={activeSections}
-                    sections={Sections}
-                    renderContent={renderContent}
-                    renderHeader={renderHeader}
-                    onChange={updateState}
+                        activeSections={activeSections}
+                        sections={Sections}
+                        renderContent={renderContent}
+                        renderHeader={renderHeader}
+                        onChange={updateState}
                     />
                 </View>
-                <View style={styles.picker}>
+                <View style={styles.mainPicker}>
                     <Picker selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
                         <Picker.Item label="Wait Times" value={"waitTimes"}/>
                         <Picker.Item label="Attractions" value={"attractions"}/>
@@ -169,10 +122,9 @@ function MainPage({navigation}: mainProps){
                 </View>
             </View>
 
-            <View style={styles.middleSection}>
-                <Image source={require("../image/gardens.png")} />
+            <View style={styles.mainMiddleSection}>
+                <Image source={require("../image/gardens.png")} style={styles.mainImage} />
             </View>
-
 
             <View style={styles.navbar}>
                 <TouchableOpacity style={styles.navButton}>
@@ -187,8 +139,7 @@ function MainPage({navigation}: mainProps){
                 <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
                     <Icon name="account-circle" color="#C8A6FF" size={30}/>
                 </TouchableOpacity>
-             </View>
-
+            </View>
         </View>
     );
 }
@@ -201,122 +152,154 @@ function ListPage({route, navigation}: listProps){
     const listContent = () => {
         switch(selectedValue) {
             case "waitTimes":
-                return(
-                    <View>
-                        <View>
-                            <Text>Cheetah Hunt</Text>
-                            <Text> 30 min wait</Text>
-                        </View>
-                        <View>
-                            <Text>Kumba</Text>
-                            <Text>90 min wait</Text>
-                        </View>
-                        <View>
-                            <Text>Corbra's Curse</Text>
-                            <Text>Closed</Text>
-                        </View>
+            return (
+                <View style={styles.ContentContainer}>
+                    <View style={styles.listItem}>
+                        <Text style={styles.listTitle}>Cheetah Hunt</Text>
+                        <Text style={styles.listSubtitle}> 30 min wait</Text>
                     </View>
-                );
+                    <View style={styles.listItem}>
+                        <Text style={styles.listTitle}>Kumba</Text>
+                        <Text style={styles.listSubtitle}> 90 min wait</Text>
+                    </View>
+                    <View style={styles.listItem}>
+                        <Text style={styles.listTitle}>Cobra's Curse</Text>
+                        <Text style={styles.listClosed}> Closed</Text>
+                    </View>
+                </View>
+            );
             case "attractions":
-                return(
+                return (
                     <View>
-                        <View>
-                            <Text>Cheetah Hunt</Text>
-                            <Text>Thrilling triple-launch roller coaster</Text>
+                        <View style={styles.listCard}>
+                            <Image source={require("../image/CheetaHunt.png")} style={styles.listImage} />
+                            <View style={styles.listTextContainer}>
+                            <Text style={styles.listTitle}>Cheetah Hunt</Text>
+                            <Text style={styles.listSubtitle}>Thrilling triple-launch roller coaster</Text>
                         </View>
-                        <View>
-                            <Text>Kumba</Text>
-                            <Text>Legendary Florida steel coaster ride that roars</Text>
+                        </View>
+                        <View style={styles.listCard}>
+                            <Image source={require("../image/Kumba.png")} style={styles.listImage} />
+                            <View style={styles.listTextContainer}>
+                            <Text style={styles.listTitle}>Kumba</Text>
+                            <Text style={styles.listSubtitle}>Legendary Florida steel coaster ride that roars</Text>
                          </View>
-                        <View>
-                            <Text>Pheonix Rising</Text>
-                            <Text>Experience a fiery blaze of immersive, family-friendly excitement as you soar above the Serengeti Plain and drop into fun-filled twists and turns</Text>
+                         </View>
+                        <View style={styles.listCard}>
+                            <Image source={require("../image/Phoenix.png")} style={styles.listImage} />
+                            <View style={styles.listTextContainer}>
+                            <Text style={styles.listTitle}>Phoenix Rising</Text>
+                            <Text style={styles.listSubtitle}>Experience a fiery blaze of immersive, family-friendly excitement as you soar above the Serengeti Plain and drop into fun-filled twists and turns</Text>
+                        </View>
                         </View>
                     </View>
                 );
-            case "dining":
-                return(
-                    <View>
+                case "dining":
+                    return (
                         <View>
-                            <Text>Chick-fil-A</Text>
-                            <Text>$ American</Text>
+                            <View style={styles.listCard}>
+                                <Image source={require("../image/chickfila.png")} style={styles.listImage} />
+                                <View style={styles.listTextContainer}>
+                                <Text style={styles.listTitle}>Chick-fil-A</Text>
+                                <Text style={styles.listSubtitle}>$ American</Text>
+                            </View>
+                            </View>
+                            <View style={styles.listCard}>
+                                <Image source={require("../image/zambia.png")} style={styles.listImage} />
+                                <View style={styles.listTextContainer}>
+                                <Text style={styles.listTitle}>Zambia Smokehouse</Text>
+                                <Text style={styles.listSubtitle}>$$ American, French</Text>
+                            </View>
+                            </View>
+                            <View style={styles.listCard}>
+                                <Image source={require("../image/morrocandelights.png")} style={styles.listImage} />
+                                <View style={styles.listTextContainer}>
+                                <Text style={styles.listTitle}>Moroccan Delights</Text>
+                                <Text style={styles.listSubtitle}>$ American, Italian</Text>
+                            </View>
+                            </View>
                         </View>
-                        <View>
-                            <Text>Zambia Smokehouse</Text>
-                            <Text>$$ American, French</Text>
-                        </View>
-                        <View>
-                            <Text>Moroccan Delights</Text>
-                            <Text>$ American, Italian</Text>
-                        </View>
-                    </View>
-                );
-            case "restrooms":
-                return(
-                    <View>
-                        <View>
-                            <Text>Near Entrance</Text>
-                        </View>
-                        <View>
-                            <Text>Near Iron Gwazi</Text>
-                        </View>
-                        <View>
-                            <Text>Near Cheetah</Text>
-                        </View>
-                    </View>
-                );
-            case "shows":
-                return(
-                    <View>
-                        <View>
-                            <Text>Christmas on Ice</Text>
-                            <Text>Indoor, Seasonal</Text>
-                        </View>
-                        <View>
-                            <Text>Holiday in the Sky Fireworks Show</Text>
-                            <Text>Outdoor, Seasonal</Text>
-                        </View>
-                        <View>
-                            <Text>Animal Tales</Text>
-                            <Text>Presentation, Indoor</Text>
-                        </View>
-                    </View>
-                );
+                    );
+                    case "restrooms":
+                        return (
+                            <View>
+                                <View style={styles.listItem}>
+                                    <Text style={styles.listTitle}>Near Entrance</Text>
+                                </View>
+                                <View style={styles.listItem}>
+                                    <Text style={styles.listTitle}>Near Iron Gwazi</Text>
+                                </View>
+                                <View style={styles.listItem}>
+                                    <Text style={styles.listTitle}>Near Cheetah</Text>
+                                </View>
+                            </View>
+                        );
+                        case "shows":
+                            return (
+                                <View>
+                                    <View style={styles.listCard}>
+                                        <Image source={require("../image/iceshow.png")} style={styles.listImage} />
+                                        <View style={styles.listTextContainer}>
+                                        <Text style={styles.listTitle}>Christmas on Ice</Text>
+                                        <Text style={styles.listSubtitle}>Indoor, Seasonal</Text>
+                                    </View>
+                                    </View>
+                                    <View style={styles.listCard}>
+                                        <Image source={require("../image/fireworks.png")} style={styles.listImage} />
+                                        <View style={styles.listTextContainer}>
+                                        <Text style={styles.listTitle}>Holiday in the Sky Fireworks Show</Text>
+                                        <Text style={styles.listSubtitle}>Outdoor, Seasonal</Text>
+                                    </View>
+                                    </View>
+                                    <View style={styles.listCard}>
+                                        <Image source={require("../image/animaltales.png")} style={styles.listImage} />
+                                        <View style={styles.listTextContainer}>
+                                        <Text style={styles.listTitle}>Animal Tales</Text>
+                                        <Text style={styles.listSubtitle}>Presentation, Indoor</Text>
+                                    </View>
+                                    </View>
+                                </View>
+                            );
             default:
                 return(
                     <Text>No vlaue selected</Text>
                 );
         }
     }
-
+ 
+ 
     const renderContent = () => {
         return(
-        <View style={styles.dropdownContainer}>
+        <View style={styles.DropdownContainer}>
             <ThrillFilter/>
             <AgeFilter/>
             <HeightFilter/>
         </View>
     );
-}
-
+ }
+ 
+ 
     const renderHeader = () => {
         return (
-            <View style={styles.filterButton}>
+            <View style={styles.mainFilterButton}>
                 <Text>Filter</Text>
             </View>
         );
     }
-
+ 
+ 
     const updateState = (sections: number[]) => {
         setActiveSections(sections);
     }
-
+ 
+ 
     return(
-        <View style={styles.container}>
-
+        <View style={styles.listContainer}>
+ 
+ 
             <View style={styles.topSection}>
                 <View >
-                    <Accordion 
+                    <Accordion
                     activeSections={activeSections}
                     sections={Sections}
                     renderContent={renderContent}
@@ -324,7 +307,7 @@ function ListPage({route, navigation}: listProps){
                     onChange={updateState}
                     />
                 </View>
-                <View style={styles.picker}>
+                <View style={styles.mainPicker}>
                     <Picker selectedValue={selectedValue} >
                         <Picker.Item label="Wait Times" value={"waitTimes"}/>
                         <Picker.Item label="Attractions" value={"attractions"}/>
@@ -339,12 +322,15 @@ function ListPage({route, navigation}: listProps){
                     </TouchableOpacity>
                 </View>
             </View>
-
-            <View style={styles.middleSection}>
+ 
+ 
+            <View style={styles.listMiddleSection}>
                 {listContent()}
             </View>
-
-
+ 
+ 
+ 
+ 
             <View style={styles.navbar}>
                 <TouchableOpacity style={styles.navButton}>
                     <Icon name="home" color="#C8A6FF" size={30}/>
@@ -361,7 +347,8 @@ function ListPage({route, navigation}: listProps){
              </View>
         </View>
     );
-}
+ }
+ 
 
 function NestedScreens(){
     return(
@@ -380,84 +367,175 @@ export default function MapPage(){
     );
 }
 
-const styles = StyleSheet.create({
+
     //CSS for dividing sections
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    topSection: {
-      flex: 1, 
-      alignItems: "center",
-      justifyContent: "space-between",
-      flexDirection: "row",
-      paddingTop: 10,
-      paddingHorizontal: 10,
-      zIndex: 10,
-      width: "100%",
-    },
-    middleSection: {
-      flex: 2, 
-      alignItems: "center",
-      justifyContent: "center",
-      paddingTop: 20,
-    },
-    bottomSection: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      paddingBottom: 40, 
-    },
-    //picker, collapsible, and list css
-    filterButton: {
-        flex: 1,
-        alignItems: "flex-start",
-        position: "absolute",
-    },
-    picker: {
-        flex: 2,
-        alignItems: "center",
-    },
-    listButton: {
-        flex: 1,
-        alignItems: "flex-end",
-    },
-    dropdownContainer: {
-        //position: 'absolute',
-        top: 50, 
-        left: 10,
-        right: 10,
-        zIndex: 1000, 
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 5, 
-      },
-      //css for image
-      image: {
-        width: "100%",
-        height: "100%",
-        resizeMode: "cover",
-      },
-    //navbar css
-    navbar: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        backgroundColor: "#8E7EFE",
-        height: 70,
-        width: "100%",
-        position: "absolute",
-        bottom: 0,
-      },
-      navButton: {
-        alignItems: "center",
-        justifyContent: "center",
-        flex: 1,
-      },
-});
+    const styles = StyleSheet.create({
+        filterContainer: {
+            padding: 20,
+            backgroundColor: 'white',
+        },
+        filterTitle: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginBottom: 10,
+        },
+        filterOptionsContainer: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+        },
+        filterButton: {
+            paddingHorizontal: 15,
+            paddingVertical: 8,
+            margin: 5,
+            borderWidth: 1,
+            borderColor: 'purple',
+            borderRadius: 20,
+        },
+        filterButtonText: {
+            color: 'purple',
+            fontSize: 16,
+        },
+        mainContainer: {
+            flex: 1,
+            backgroundColor: "#fff",
+        },
+        topSection: {
+            flexDirection: "row",  // Align items in a row
+            justifyContent: "space-between",  // Even spacing
+            alignItems: "center",  // Ensure vertical alignment
+            width: "100%",  // Prevents overflow
+            paddingHorizontal: 10,  // Adds space from edges
+        },
+        mainHeaderText: {
+            fontSize: 22,
+            fontWeight: "bold",
+            color: "#200082",
+        },
+        mainFilterButton: {
+            flex: 1,
+            alignItems: "flex-start",
+        },
+        listButton: {
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            backgroundColor: "#5539CC",
+            borderRadius: 5,
+            flexShrink: 1,  // Prevents it from stretching too far
+        },
+        mainMiddleSection: {
+            flex: 8,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+        },
+        mainImage: {
+            width: "100%",
+            height: "100%",
+            resizeMode: "cover",
+        },
+        mainPicker: {
+            width: 150,  // Set fixed width to make it visible
+            marginHorizontal: 10,  // Space it from the Filter button
+            fontSize: 16,
+            fontWeight: "bold",
+            color: "#200082",
+        },
+        DropdownContainer: {
+            top: 10,
+            left: '10%',
+            width: '30%', // Reduce width
+            backgroundColor: '#fff',
+            padding: 1, // Reduce padding
+            borderRadius: 5,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+            elevation: 5,
+        },
+        mainWaitTimeBox: {
+            position: "absolute",
+            backgroundColor: "black",
+            padding: 10,
+            borderRadius: 5,
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        mainWaitTimeText: {
+            color: "white",
+            fontSize: 16,
+            fontWeight: "bold",
+            textAlign: "center",
+        },
+        navbar: {
+            flexDirection: "row",
+            justifyContent: "space-around",
+            backgroundColor: "#8E7EFE",
+            height: 70,
+            width: "100%",
+            position: "absolute",
+            bottom: 0,
+        },
+        navButton: {
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
+        },
+        listContainer: { 
+            flex: 1, 
+            backgroundColor: '#FFFFFF' 
+        },
+        listMiddleSection: { 
+            flex: 1, 
+            padding: 10 
+        },
+        listItem: { 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            padding: 10, 
+            borderBottomWidth: 1, 
+            borderBottomColor: '#CCC' 
+        },
+        listImage: { 
+            width: 50, 
+            height: 50, 
+            borderRadius: 25, 
+            marginRight: 10 
+        },
+        listTitle: { 
+            fontSize: 16, 
+            fontWeight: 'bold', 
+            color: '#000' 
+        },
+        listSubtitle: { 
+            fontSize: 14, 
+            color: '#666' 
+        },
+        listNoValue: { 
+            textAlign: 'center', 
+            padding: 20, 
+            fontSize: 16, 
+            color: '#999' 
+        },
+        listClosed: {
+            fontSize: 14,
+            color: 'red',
+            fontWeight: 'bold',
+        },
+        ContentContainer: {
+            padding: 10,
+        },
+        listCard: { 
+            backgroundColor: '#F9F9F9', 
+            borderRadius: 10, 
+            padding: 15, 
+            marginVertical: 5, 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            borderBottomWidth: 1, 
+            borderBottomColor: '#CCC' 
+        },
+        listTextContainer: { 
+            flex: 1 
+        },
+    });
