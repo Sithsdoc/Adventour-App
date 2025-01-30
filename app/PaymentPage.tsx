@@ -65,7 +65,7 @@ function EnterPage({navigation}: enterProps){
       <TextInput style={styles.formLabel} placeholder="Cardholder Name" />
       <TextInput style={styles.formLabel} placeholder="Expiry Date" keyboardType="numeric" />
       <TextInput style={styles.formLabel} placeholder="CVV" keyboardType="numeric" secureTextEntry />
-      <TouchableOpacity style={styles.saveButton} onPress={() => router.push("/PaymentPage")}>
+      <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate("OverviewPage")}>
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
       </View>
