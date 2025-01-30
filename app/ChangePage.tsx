@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1, // This helps center the text when the back button is on the left
+    flex: 1, 
   },
   backButton: {
     padding: 10,
