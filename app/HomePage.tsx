@@ -42,28 +42,28 @@ export default function HomePage(){
             <Icon name="notifications" size={30} color="#310082"/>
             <Text style={styles.iconText}>Reminder</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
             <Icon name="event" size={30} color="#310082"/>
             <Text style={styles.iconText}>Shows & Events</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
             <Icon name="restaurant" size={30} color="#310082"/>
             <Text style={styles.iconText}>Dining</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
             <Icon name="accessible" size={30} color="#310082"/>
             <Text style={styles.iconText}>Accessibility</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
             <Icon name="attractions" size={30} color="#310082"/>
             <Text style={styles.iconText}>Top Rides</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <Button color="#310082" title="Start Planning" onPress={() => router.push("/QuestionPage")}/>
-          <Button color="#310082" title="View Map"/>
+          <Button color="#310082" title="View Map" onPress={() => router.push("/MapPage")}/>
         </View>
       </View>
 
@@ -71,7 +71,7 @@ export default function HomePage(){
           <TouchableOpacity style={styles.navButton}>
             <Icon name="home" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton}>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/QuestionPage")}>
             <Icon name="assignment" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
