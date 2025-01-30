@@ -20,17 +20,93 @@ type RootStackParamList ={
 type mainProps = NativeStackScreenProps<RootStackParamList, "MainPage">;
 type listProps = NativeStackScreenProps<RootStackParamList, "ListPage">;
 
+function ThrillFilter() {
+    return (
+        <View style={styles.filterContainer}>
+            <Text style={styles.filterTitle}>Thrill Factor</Text>
+            <View style={styles.filterOptionsContainer}>
+                {['Big Drops', 'Small Drops', 'Thrill Rides', 'Slow Rides', 'Water Rides', 'Animal Encounters'].map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+}
+
+function AgeFilter() {
+    return (
+        <View style={styles.filterContainer}>
+            <Text style={styles.filterTitle}>Age</Text>
+            <View style={styles.filterOptionsContainer}>
+                {['Preschoolers', 'Kids', 'Tweens', 'Teens', 'Adults', 'All Ages'].map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+}
+
+function HeightFilter() {
+    return (
+        <View style={styles.filterContainer}>
+            <Text style={styles.filterTitle}>Height</Text>
+            <View style={styles.filterOptionsContainer}>
+                {['32" (82cm)', '35" (89cm)', '38" (97cm)', '40" (102cm)', '42" (107cm)', '44" (113cm)', '48" (122cm)', 'Any Height'].map((item, index) => (
+                    <TouchableOpacity key={index} style={styles.filterButton}>
+                        <Text style={styles.filterButtonText}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+}
 
 
 function MainPage({navigation}: mainProps) {
     const router = useRouter();
+    const [activeSections, setActiveSections] = useState<number[]>([]);
     const [selectedValue, setSelectedValue] = useState("waitTimes");
+    const Sections = ["Filter"];
+
+    const renderContent = () => {
+        return (
+            <View style={styles.DropdownContainer}>
+                <ThrillFilter/>
+                <AgeFilter/>
+                <HeightFilter/>
+            </View>
+        );
+    };
+
+    const renderHeader = () => {
+        return (
+            <View style={{ width: "auto", alignSelf: "flex-start" }}>
+            <View style={styles.mainFilterButton}>
+                <Text>Filter</Text>
+            </View>
+            </View>
+        );
+    };
+
+    const updateState = (sections: number[]) => {
+        setActiveSections(sections);
+    };
 
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topSection}>
                 <View style={{width: "auto", alignSelf: "flex-start"}}>
-                    <Text>Filter</Text>
+                    <Accordion 
+                        activeSections={activeSections}
+                        sections={Sections}
+                        renderContent={renderContent}
+                        renderHeader={renderHeader}
+                        onChange={updateState}
+                    />
                 </View>
                 <View style={styles.mainPicker}>
                     <Picker selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
@@ -72,6 +148,8 @@ function MainPage({navigation}: mainProps) {
 
 function ListPage({route, navigation}: listProps){
     const {selectedValue} = route.params;
+    const [activeSections, setActiveSections] = useState<number[]>([])
+    const Sections = ["Filter"]
     const router = useRouter();
     const listContent = () => {
         switch(selectedValue) {
@@ -191,12 +269,45 @@ function ListPage({route, navigation}: listProps){
         }
     }
  
+ 
+    const renderContent = () => {
+        return(
+        <View style={styles.DropdownContainer}>
+            <ThrillFilter/>
+            <AgeFilter/>
+            <HeightFilter/>
+        </View>
+    );
+ }
+ 
+ 
+    const renderHeader = () => {
+        return (
+            <View style={styles.mainFilterButton}>
+                <Text>Filter</Text>
+            </View>
+        );
+    }
+ 
+ 
+    const updateState = (sections: number[]) => {
+        setActiveSections(sections);
+    }
+ 
+ 
     return(
         <View style={styles.listContainer}>
  
+ 
             <View style={styles.topSection}>
                 <View style={{width: "auto", alignSelf: "flex-start"}}>
-                    <Text>Filter</Text>
+                    <Accordion
+                    activeSections={activeSections}
+                    sections={Sections}
+                    renderContent={renderContent}
+                    renderHeader={renderHeader}
+                    onChange={updateState}
+                    />
                 </View>
                 <View style={styles.mainPicker}>
                     <Picker selectedValue={selectedValue} >
