@@ -72,7 +72,7 @@ export default function HomePage(){
             <Icon name="home" color="#C8A6FF" size={30}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navButton}>
-            <Icon name="assignment" color="#C8A6FF" size={30}/>
+            <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
             <Icon name="place" color="#C8A6FF" size={30}/>

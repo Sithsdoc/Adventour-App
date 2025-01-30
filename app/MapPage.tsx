@@ -6,7 +6,6 @@ import Accordion from 'react-native-collapsible/Accordion';
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Touchable } from "react-native";
-import QuestionPage from "./QuestionPage";
 import { useRouter } from "expo-router";
 
 const MainStack =  createNativeStackNavigator<RootStackParamList>();
@@ -14,10 +13,12 @@ const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
 type RootStackParamList ={
     MainPage: undefined,
+    ListPage: undefined,
     NestedScreens: undefined,
 }
 
 type mainProps = NativeStackScreenProps<RootStackParamList, "MainPage">;
+type listProps = NativeStackScreenProps<RootStackParamList, "ListPage">;
 
 function ThrillFilter(){
     return(
@@ -112,7 +113,16 @@ function HeightFilter(){
     );
 }
 
+function ListPage({navigation}: listProps){
+    return(
+        <View style={styles.container}>
+
+        </View>
+    );
+}
+
 function MainPage({navigation}: mainProps){
+    const router = useRouter();
     const [activeSections, setActiveSections] = useState<number[]>([])
     const [selectedValue, setSelectedValue] = useState("");
     const Sections = ["Filter"]
@@ -165,6 +175,27 @@ function MainPage({navigation}: mainProps){
                     </TouchableOpacity>
                 </View>
             </View>
+
+            <View style={styles.middleSection}>
+                <Image source={require("../image/gardens.png")}/>
+            </View>
+
+
+            <View style={styles.navbar}>
+                <TouchableOpacity style={styles.navButton}>
+                    <Icon name="home" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton}>
+                    <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
+                </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+            <Icon name="place" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+            <Icon name="account-circle" color="#C8A6FF" size={30}/>
+          </TouchableOpacity>
+        </View>
+
         </View>
     );
 }
@@ -211,4 +242,18 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       paddingBottom: 40, 
     },
+    navbar: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "#8E7EFE",
+        height: 70,
+        width: "100%",
+        position: "absolute",
+        bottom: 0,
+      },
+      navButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+      },
 });
