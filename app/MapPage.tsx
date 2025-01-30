@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Touchable } from "react-native";
 import { useRouter } from "expo-router";
 
+
 const MainStack =  createNativeStackNavigator<RootStackParamList>();
 const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,7 +44,7 @@ function MainPage({navigation}: mainProps) {
                 </View>
                 <View>
                     <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("ListPage", {selectedValue})}>
-                        <Text>Show list</Text>
+                        <Text style={styles.listButtonText}>Show list</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -77,18 +78,24 @@ function ListPage({route, navigation}: listProps){
         switch(selectedValue) {
             case "waitTimes":
             return (
-                <View style={styles.ContentContainer}>
-                    <View style={styles.listItem}>
+                <View>
+                <View style={styles.listCard}>
+                    <View style={styles.listTextContainer}>
                         <Text style={styles.listTitle}>Cheetah Hunt</Text>
                         <Text style={styles.listSubtitle}> 30 min wait</Text>
                     </View>
-                    <View style={styles.listItem}>
+                    </View>
+                    <View style={styles.listCard}>
+                    <View style={styles.listTextContainer}>
                         <Text style={styles.listTitle}>Kumba</Text>
                         <Text style={styles.listSubtitle}> 90 min wait</Text>
                     </View>
-                    <View style={styles.listItem}>
+                    </View>
+                    <View style={styles.listCard}>
+                    <View style={styles.listTextContainer}>
                         <Text style={styles.listTitle}>Cobra's Curse</Text>
                         <Text style={styles.listClosed}> Closed</Text>
+                    </View>
                     </View>
                 </View>
             );
@@ -209,7 +216,7 @@ function ListPage({route, navigation}: listProps){
                 </View>
                 <View>
                     <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("MainPage")}>
-                        <Text>Show list</Text>
+                        <Text style={styles.listButtonText}>Show list</Text> 
                     </TouchableOpacity>
                 </View>
             </View>
@@ -261,31 +268,6 @@ export default function MapPage(){
 
     //CSS for dividing sections
     const styles = StyleSheet.create({
-        filterContainer: {
-            padding: 20,
-            backgroundColor: 'white',
-        },
-        filterTitle: {
-            fontSize: 18,
-            fontWeight: 'bold',
-            marginBottom: 10,
-        },
-        filterOptionsContainer: {
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-        },
-        filterButton: {
-            paddingHorizontal: 15,
-            paddingVertical: 8,
-            margin: 5,
-            borderWidth: 1,
-            borderColor: 'purple',
-            borderRadius: 20,
-        },
-        filterButtonText: {
-            color: 'purple',
-            fontSize: 16,
-        },
         mainContainer: {
             flex: 1,
             backgroundColor: "#fff",
@@ -317,9 +299,12 @@ export default function MapPage(){
         listButton: {
             paddingHorizontal: 10,
             paddingVertical: 5,
-            backgroundColor: "#5539CC",
+            backgroundColor: "#1C088A",
             borderRadius: 5,
             flexShrink: 1,  // Prevents it from stretching too far
+        },
+        listButtonText: {
+            color: "#fff",
         },
         mainMiddleSection: {
             flex: 8,
@@ -396,18 +381,18 @@ export default function MapPage(){
             borderBottomColor: '#CCC' 
         },
         listImage: { 
-            width: 50, 
-            height: 50, 
-            borderRadius: 25, 
-            marginRight: 10 
+            width: 70,  // Increase size
+            height: 70, // Increase size
+            borderRadius: 35, 
+            marginRight: 15 // More spacing from text
         },
         listTitle: { 
-            fontSize: 16, 
+            fontSize: 20, // Increase font size
             fontWeight: 'bold', 
-            color: '#000' 
+            color: '#000'
         },
-        listSubtitle: { 
-            fontSize: 14, 
+        listSubtitle: {  
+            fontSize: 16, // Increase font size
             color: '#666' 
         },
         listNoValue: { 
@@ -426,13 +411,13 @@ export default function MapPage(){
         },
         listCard: { 
             backgroundColor: '#F9F9F9', 
-            borderRadius: 10, 
-            padding: 15, 
-            marginVertical: 5, 
+            borderRadius: 15, // Increase for rounded look
+            padding: 20, // Increase padding for larger size
+            marginVertical: 8, // Increase spacing between cards
             flexDirection: 'row', 
             alignItems: 'center', 
             borderBottomWidth: 1, 
-            borderBottomColor: '#CCC' 
+            borderBottomColor: '#CCC'
         },
         listTextContainer: { 
             flex: 1 
