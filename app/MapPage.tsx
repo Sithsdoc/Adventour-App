@@ -129,7 +129,7 @@ function MainPage({navigation}: mainProps){
 
     const renderContent = () => {
         return(
-        <View>
+        <View style={styles.dropdownContainer}>
             <ThrillFilter/>
             <AgeFilter/>
             <HeightFilter/>
@@ -139,7 +139,7 @@ function MainPage({navigation}: mainProps){
 
     const renderHeader = () => {
         return (
-            <View>
+            <View style={styles.filterButton}>
                 <Text>Filter</Text>
             </View>
         );
@@ -151,7 +151,7 @@ function MainPage({navigation}: mainProps){
     return(
         <View style={styles.container}>
             <View style={styles.topSection}>
-                <View>
+                <View >
                     <Accordion 
                     activeSections={activeSections}
                     sections={Sections}
@@ -160,7 +160,7 @@ function MainPage({navigation}: mainProps){
                     onChange={updateState}
                     />
                 </View>
-                <View>
+                <View style={styles.picker}>
                     <Picker selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
                         <Picker.Item label="Wait Times" value={"waitTimes"}/>
                         <Picker.Item label="Attractions" value={"attractions"}/>
@@ -170,14 +170,14 @@ function MainPage({navigation}: mainProps){
                     </Picker>
                 </View>
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("ListPage")}>
                         <Text>Show list</Text>
                     </TouchableOpacity>
                 </View>
             </View>
 
             <View style={styles.middleSection}>
-                <Image source={require("../image/gardens.png")}/>
+                <Image source={require("../image/gardens.png")} />
             </View>
 
 
@@ -227,8 +227,12 @@ const styles = StyleSheet.create({
     topSection: {
       flex: 1, 
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-between",
+      flexDirection: "row",
       paddingTop: 10,
+      paddingHorizontal: 10,
+      zIndex: 10,
+      width: "100%",
     },
     middleSection: {
       flex: 2, 
@@ -242,6 +246,42 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       paddingBottom: 40, 
     },
+    //picker, collapsible, and list css
+    filterButton: {
+        flex: 1,
+        alignItems: "flex-start",
+        position: "absolute",
+    },
+    picker: {
+        flex: 2,
+        alignItems: "center",
+    },
+    listButton: {
+        flex: 1,
+        alignItems: "flex-end",
+    },
+    dropdownContainer: {
+        //position: 'absolute',
+        top: 50, 
+        left: 10,
+        right: 10,
+        zIndex: 1000, 
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5, 
+      },
+      //css for image
+      image: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "cover",
+      },
+    //navbar css
     navbar: {
         flexDirection: "row",
         justifyContent: "space-around",
