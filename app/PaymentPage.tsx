@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -45,7 +45,7 @@ function OverviewPage({navigation}: overviewProps){
         </View>
       </View>
 
-      <TouchableOpacity style={styles.addPaymentCardButton}>
+      <TouchableOpacity style={styles.addPaymentCardButton} onPress={() => navigation.navigate("EnterPage")}>
         <Text style={styles.addPaymentCardButtonText}>Add Payment Card</Text>
       </TouchableOpacity>
     </View>
@@ -53,9 +53,22 @@ function OverviewPage({navigation}: overviewProps){
 }
 
 function EnterPage({navigation}: enterProps){
+  const router = useRouter();
   return(
     <View style={styles.container}>
-      <Text>Placeholder text</Text>
+       <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("OverviewPage")}>
+          <Icon name="arrow-back" style={styles.backIcon} />
+        </TouchableOpacity>
+      <Text style={styles.header}>Add Payment Card</Text>
+      <View style={styles.passwordSection}>
+      <TextInput style={styles.formLabel} placeholder="Card Number" keyboardType="numeric" />
+      <TextInput style={styles.formLabel} placeholder="Cardholder Name" />
+      <TextInput style={styles.formLabel} placeholder="Expiry Date" keyboardType="numeric" />
+      <TextInput style={styles.formLabel} placeholder="CVV" keyboardType="numeric" secureTextEntry />
+      <TouchableOpacity style={styles.saveButton} onPress={() => router.push("/PaymentPage")}>
+        <Text style={styles.saveButtonText}>Save</Text>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -102,6 +115,26 @@ const styles = StyleSheet.create({
   backIcon: {
     color: "#000000",
     fontSize: 30,
+  },
+  passwordSection: {
+    marginTop: 40,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: '#8E7EFE', 
+  },
+  formLabel: {
+    fontSize: 18,
+    fontFamily: 'Atkinson Hyperlegible',  
+    fontWeight: 'bold',
+    color: '#6b7280',
+    marginVertical: 8,
   },
   savedPaymentMethodSection: {
     marginTop: 40,
@@ -158,6 +191,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',  
     fontSize: 24, 
     fontWeight: 'bold',
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: '#d1d5db', 
+  },
+  saveButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
