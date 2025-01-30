@@ -23,8 +23,7 @@ const UserProfile = () => {
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>
             </View>
-          
-           
+
             <View style={styles.infoRow}>
               <Text style={styles.email}>john.doe@example.com</Text>
               <TouchableOpacity>
@@ -32,7 +31,6 @@ const UserProfile = () => {
               </TouchableOpacity>
             </View>
 
-           
             <View style={styles.infoRow}>
               <Text style={styles.phoneNumber}>+300 254 7895</Text>
               <TouchableOpacity>
@@ -53,7 +51,6 @@ const UserProfile = () => {
         </TouchableOpacity>
       </View>
 
-      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Security</Text>
         <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/ChangePage")}>
@@ -64,14 +61,12 @@ const UserProfile = () => {
         </TouchableOpacity>
       </View>
 
-     
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/LoginPage")}>
           <Text style={styles.editButtonText}>Log Out</Text>
         </TouchableOpacity>
 
-        
         <TouchableOpacity style={[styles.pMethod, styles.deleteButton]} onPress={() => router.push("/LoginPage")}>
           <Text style={styles.editButtonText}>Delete My Account</Text>
         </TouchableOpacity>
@@ -104,14 +99,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 16,
-    paddingBottom: 100,  // Added padding to avoid navbar overlap with content
-
+    paddingBottom: 100,  
+    fontFamily: "Atkinson Hyperlegible",  
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
+    fontFamily: "Montserrat",  
   },
 
   // Profile Section
@@ -129,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%', 
   },
-  
+
   // Profile details container with purple border
   profileDetailsContainer: {
     width: '100%',  
@@ -151,16 +147,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     flex: 1, 
+    fontFamily: "Atkinson Hyperlegible",  
   },
   email: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#6b7280',
     flex: 1, 
+    fontFamily: "Atkinson Hyperlegible",  
   },
   phoneNumber: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#6b7280',
     flex: 1, 
+    fontFamily: "Atkinson Hyperlegible",  
   },
 
   // Sections Styling
@@ -168,10 +167,11 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
     color: '#333',
+    fontFamily: "Montserrat",  
   },
 
   // Payment Method, Change Password, and Account buttons
@@ -190,6 +190,8 @@ const styles = StyleSheet.create({
   editButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: "Atkinson Hyperlegible",
+    fontSize: 20,  
   },
 
   // Delete My Account Button

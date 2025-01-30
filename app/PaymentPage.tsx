@@ -8,7 +8,7 @@ export default function PaymentPage() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section with Back Button */}
+     
       <View style={styles.headerContainer}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")}>
           <Icon name="arrow-back" style={styles.backIcon} />
@@ -16,7 +16,7 @@ export default function PaymentPage() {
         <Text style={styles.header}>Payment Information</Text>
       </View>
 
-      {/* Saved Payment Method Section */}
+     
       <View style={styles.savedPaymentMethodSection}>
         <Text style={styles.savedPaymentMethodTitle}>Saved Payment Method</Text>
         <View style={styles.savedCardInfo}>
@@ -33,7 +33,7 @@ export default function PaymentPage() {
         </View>
       </View>
 
-      {/* Add Payment Card Button below Saved Payment Method Section */}
+      
       <TouchableOpacity style={styles.addPaymentCardButton}>
         <Text style={styles.addPaymentCardButtonText}>Add Payment Card</Text>
       </TouchableOpacity>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'left',
-    marginLeft: 10, // Adjust space between back icon and title
+    marginLeft: 10, 
     flex: 1,
   },
   backButton: {
@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
   savedPaymentMethodTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 16, // Added margin to create space between title and card info
+    marginBottom: 16, 
   },
   savedCardInfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Ensures the card number and the icons are at opposite ends
+    justifyContent: 'space-between', 
     alignItems: 'center',
     marginBottom: 16,
   },
