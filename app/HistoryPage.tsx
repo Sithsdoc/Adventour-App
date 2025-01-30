@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start",
         paddingTop: 30,
+        fontFamily: "Montserrat", 
     },
     topSection: {
         flexDirection: 'row',
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         marginLeft: 30, 
+        fontFamily: "Montserrat", 
     },
     backButton: {
         position: "absolute",
@@ -107,17 +109,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',  
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#8E7EFE',  
+        borderColor: '#8E7EFE', 
     },
     date: {
         color: 'black',
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '600',
+        fontFamily: "Montserrat", 
     },
     hours: {
         color: 'black',
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '600',
+        fontFamily: "Montserrat", 
     },
     navbar: {
         flexDirection: "row",

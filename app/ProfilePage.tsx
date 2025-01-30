@@ -10,24 +10,20 @@ const UserProfile = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Profile</Text>
 
-      {/* Profile Image Section */}
       <View style={styles.profileSection}>
         <Image
           source={require("../image/ProfilePicture.jpg")}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
-          {/* Section with purple stroke around name, email, and phone */}
           <View style={styles.profileDetailsContainer}>
-            {/* Name Section */}
             <View style={styles.infoRow}>
               <Text style={styles.name}>John Doe</Text>
               <TouchableOpacity>
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>
             </View>
-          
-            {/* Email Section */}
+
             <View style={styles.infoRow}>
               <Text style={styles.email}>john.doe@example.com</Text>
               <TouchableOpacity>
@@ -35,7 +31,6 @@ const UserProfile = () => {
               </TouchableOpacity>
             </View>
 
-            {/* Phone Number Section */}
             <View style={styles.infoRow}>
               <Text style={styles.phoneNumber}>+300 254 7895</Text>
               <TouchableOpacity>
@@ -56,7 +51,6 @@ const UserProfile = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Security Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Security</Text>
         <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/ChangePage")}>
@@ -67,14 +61,12 @@ const UserProfile = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Account Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/LoginPage")}>
           <Text style={styles.editButtonText}>Log Out</Text>
         </TouchableOpacity>
 
-        {/* Delete My Account button now below Log Out button */}
         <TouchableOpacity style={[styles.pMethod, styles.deleteButton]} onPress={() => router.push("/LoginPage")}>
           <Text style={styles.editButtonText}>Delete My Account</Text>
         </TouchableOpacity>
@@ -107,61 +99,67 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 16,
+    paddingBottom: 100,  
+    fontFamily: "Atkinson Hyperlegible",  
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
+    fontFamily: "Montserrat",  
   },
 
   // Profile Section
   profileSection: {
     alignItems: 'center',
-    marginBottom: 30,  // Adds space below the profile section
+    marginBottom: 30,  
   },
   profileImage: {
-    width: 120,  // Adjust size for better appearance
-    height: 120, // Adjust size for better appearance
+    width: 120,  
+    height: 120, 
     borderRadius: 60,
-    marginBottom: 10,  // Adds space between image and text
+    marginBottom: 10,  
   },
   profileInfo: {
     alignItems: 'center',
-    width: '100%', // Ensures full width for the profile info container
+    width: '100%', 
   },
-  
+
   // Profile details container with purple border
   profileDetailsContainer: {
-    width: '100%',  // Full width container
-    borderWidth: 2, // Adds a border
-    borderColor: '#8E7EFE', // Purple border
-    borderRadius: 12, // Rounded corners
-    padding: 16, // Padding inside the container
+    width: '100%',  
+    borderWidth: 2, 
+    borderColor: '#8E7EFE', 
+    borderRadius: 12, 
+    padding: 16, 
   },
 
   // Info Row for name, email, phone number
   infoRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Spaces out the text and the edit icon
+    justifyContent: 'space-between', 
     alignItems: 'center',
-    width: '100%', // Full width to ensure the items are spaced out properly
-    marginBottom: 10, // Adds space between rows
+    width: '100%', 
+    marginBottom: 10, 
   },
   name: {
     fontSize: 18,
     fontWeight: 'bold',
-    flex: 1, // Ensures name takes up remaining space
+    flex: 1, 
+    fontFamily: "Atkinson Hyperlegible",  
   },
   email: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#6b7280',
-    flex: 1, // Ensures email takes up remaining space
+    flex: 1, 
+    fontFamily: "Atkinson Hyperlegible",  
   },
   phoneNumber: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#6b7280',
-    flex: 1, // Ensures phone number takes up remaining space
+    flex: 1, 
+    fontFamily: "Atkinson Hyperlegible",  
   },
 
   // Sections Styling
@@ -169,18 +167,19 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
     color: '#333',
+    fontFamily: "Montserrat",  
   },
 
   // Payment Method, Change Password, and Account buttons
   pMethod: {
-    backgroundColor: '#8E7EFE', // Purple theme
+    backgroundColor: '#8E7EFE', 
     borderRadius: 8,
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
     marginTop: 10,
   },
   buttonRow: {
@@ -191,22 +190,26 @@ const styles = StyleSheet.create({
   editButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: "Atkinson Hyperlegible",
+    fontSize: 20,  
   },
 
   // Delete My Account Button
   deleteButton: {
-    backgroundColor: '#EF4444', // Red background for Delete button
+    backgroundColor: '#EF4444', 
   },
 
   // Navbar Styling
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: "#8E7EFE", // Purple theme
+    backgroundColor: "#8E7EFE",
     height: 70,
-    width: "100%",
+    width: "100%",  
     position: "absolute",
     bottom: 0,
+    left: 0,  
+    right: 0, 
   },
   navButton: {
     alignItems: "center",
