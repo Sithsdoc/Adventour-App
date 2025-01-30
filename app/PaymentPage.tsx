@@ -16,7 +16,6 @@ export default function PaymentPage() {
         <Text style={styles.header}>Payment Information</Text>
       </View>
 
-     
       <View style={styles.savedPaymentMethodSection}>
         <Text style={styles.savedPaymentMethodTitle}>Saved Payment Method</Text>
         <View style={styles.savedCardInfo}>
@@ -33,7 +32,6 @@ export default function PaymentPage() {
         </View>
       </View>
 
-      
       <TouchableOpacity style={styles.addPaymentCardButton}>
         <Text style={styles.addPaymentCardButtonText}>Add Payment Card</Text>
       </TouchableOpacity>
@@ -54,6 +52,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
+    fontFamily: 'Montserrat',  
     fontWeight: 'bold',
     textAlign: 'left',
     marginLeft: 10, 
@@ -81,6 +80,7 @@ const styles = StyleSheet.create({
   },
   savedPaymentMethodTitle: {
     fontSize: 18,
+    fontFamily: 'Atkinson Hyperlegible', 
     fontWeight: 'bold',
     marginBottom: 16, 
   },
@@ -91,8 +91,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   savedCardText: {
-    fontSize: 16,
+    fontSize: 20,  
     color: '#6b7280',
+    fontFamily: 'Atkinson Hyperlegible',
   },
   editIcon: {
     padding: 4,
@@ -110,12 +111,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#310082',
     borderRadius: 8,
-    paddingHorizontal: 125,
+    paddingHorizontal: 90,  
     paddingVertical: 12,
     marginTop: 20, 
   },
   addPaymentCardButtonText: {
     color: '#fff',
+    fontFamily: 'Montserrat',  
+    fontSize: 24, 
     fontWeight: 'bold',
   },
 });

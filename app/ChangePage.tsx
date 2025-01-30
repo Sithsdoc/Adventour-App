@@ -15,7 +15,6 @@ export default function ChangePage() {
         <Text style={styles.header}>Change Password</Text>
       </View>
 
-
       <View style={styles.passwordSection}>
         <Text style={styles.formLabel}>Current Password</Text>
         <TextInput style={styles.input} secureTextEntry={true} />
@@ -25,7 +24,6 @@ export default function ChangePage() {
 
         <Text style={styles.formLabel}>Confirm New Password</Text>
         <TextInput style={styles.input} secureTextEntry={true} />
-
 
         <TouchableOpacity style={styles.saveButton}>
           <Text style={styles.saveButtonText}>Save Changes</Text>
@@ -48,6 +46,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
+    fontFamily: 'Montserrat',  
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1, 
@@ -60,7 +59,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   formLabel: {
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: 'Atkinson Hyperlegible',  
     fontWeight: 'bold',
     color: '#6b7280',
     marginVertical: 8,
@@ -92,12 +92,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#310082',
     borderRadius: 8,
-    paddingHorizontal: 125,
-    paddingVertical: 8,
+    paddingHorizontal: 98,  
+    paddingVertical: 12,   
     marginTop: 20, 
   },
   saveButtonText: {
     color: '#fff',
+    fontFamily: 'Montserrat', 
+    fontSize: 24,  
     fontWeight: 'bold',
+    textAlign: 'center',  
   },
 });

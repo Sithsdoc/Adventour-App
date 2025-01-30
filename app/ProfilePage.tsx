@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E7EFE', 
     borderRadius: 8,
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 12,
     marginTop: 10,
   },
   buttonRow: {
