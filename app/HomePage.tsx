@@ -35,7 +35,7 @@ export default function HomePage(){
       <View style={styles.middleSection}>
         <View style={styles.row}>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="history" size={30} color="#310082" />
+            <Icon name="history" size={30} color="#310082" onPress={() => router.push("/HistoryPage")}/>
             <Text style={styles.iconText}>History</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/ReminderPage")}>
@@ -43,27 +43,27 @@ export default function HomePage(){
             <Text style={styles.iconText}>Reminder</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="event" size={30} color="#310082"/>
+            <Icon name="event" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
             <Text style={styles.iconText}>Shows & Events</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="restaurant" size={30} color="#310082"/>
+            <Icon name="restaurant" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
             <Text style={styles.iconText}>Dining</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="accessible" size={30} color="#310082"/>
+            <Icon name="accessible" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
             <Text style={styles.iconText}>Accessibility</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="attractions" size={30} color="#310082"/>
+            <Icon name="attractions" size={30} color="#310082" onPress={() => router.push("/MapPage")}/>
             <Text style={styles.iconText}>Top Rides</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <Button color="#310082" title="Start Planning" onPress={() => router.push("/QuestionPage")}/>
-          <Button color="#310082" title="View Map"/>
+          <Button color="#310082" title="View Map" onPress={() => router.push("/MapPage")}/>
         </View>
       </View>
 

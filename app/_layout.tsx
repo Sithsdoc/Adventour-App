@@ -7,6 +7,7 @@ import ProfilePage from "./ProfilePage";
 import ReminderPage from "./ReminderPage";
 import PaymentPage from "./PaymentPage"
 import ChangePage from "./ChangePage";
+import HistoryPage from "./HistoryPage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,12 @@ function homePage(){
 function reminderPage(){
   return (
     <ReminderPage/>
+  );
+}
+
+function historyPage(){
+  return(
+    <HistoryPage/>
   );
 }
 
@@ -67,6 +74,7 @@ export default function App() {
       <Stack.Screen name="LoginPage" component={loginPage}/>
       <Stack.Screen name="HomePage" component={homePage}/>
       <Stack.Screen name="ReminderPage" component={reminderPage}/>
+      <Stack.Screen name="HistoryPage" component={historyPage}/>
       <Stack.Screen  name="QuestionPage" component={questionPage}/>
       <Stack.Screen name="MapPage" component={mapPage}/>
       <Stack.Screen name="ProfilePage" component={profilePage}/>
