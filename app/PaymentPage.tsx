@@ -6,18 +6,19 @@ import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScree
 
 
 type RootStackParamList ={
-  PaymentPage: undefined;
-  ProfilePage: undefined;
-  ChangePage: undefined;
+  OverviewPage: undefined,
+  EnterPage: undefined,
+  NestedScreens: undefined,
 };
 
-type paymentProps = NativeStackScreenProps<RootStackParamList, "PaymentPage">;
+type overviewProps = NativeStackScreenProps<RootStackParamList, "OverviewPage">;
+type enterProps = NativeStackScreenProps<RootStackParamList, "EnterPage">;
 
 const MainStack =  createNativeStackNavigator<RootStackParamList>();
 const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
-function PaymentPage({navigation}: paymentProps){
-    const router = useRouter();
+function OverviewPage({navigation}: overviewProps){
+  const router = useRouter();
   return(
     <View style={styles.container}>
      
@@ -48,6 +49,31 @@ function PaymentPage({navigation}: paymentProps){
         <Text style={styles.addPaymentCardButtonText}>Add Payment Card</Text>
       </TouchableOpacity>
     </View>
+  );
+}
+
+function EnterPage({navigation}: enterProps){
+  return(
+    <View style={styles.container}>
+      <Text>Placeholder text</Text>
+    </View>
+  );
+}
+
+function NestedScreens(){
+  return(
+    <NestedStack.Navigator screenOptions={{ headerShown: false }}>
+      <NestedStack.Screen name="OverviewPage" component={OverviewPage}/>
+      <NestedStack.Screen name="EnterPage" component={EnterPage}/>
+    </NestedStack.Navigator>
+  );
+}
+export default function PaymentPage(){
+    
+  return(
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name="NestedScreens" component={NestedScreens}/>
+    </MainStack.Navigator>
   );
 }
 
@@ -135,4 +161,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PaymentPage;
