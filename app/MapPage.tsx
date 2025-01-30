@@ -175,7 +175,7 @@ function MainPage({navigation}: mainProps){
 
 
             <View style={styles.navbar}>
-                <TouchableOpacity style={styles.navButton}>
+                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
                     <Icon name="home" color="#C8A6FF" size={30}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.navButton}>
@@ -347,7 +347,7 @@ function ListPage({route, navigation}: listProps){
 
             <View style={styles.navbar}>
                 <TouchableOpacity style={styles.navButton}>
-                    <Icon name="home" color="#C8A6FF" size={30}/>
+                    <Icon name="home" color="#C8A6FF" size={30} onPress={() => router.push("/HomePage")}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.navButton}>
                     <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
