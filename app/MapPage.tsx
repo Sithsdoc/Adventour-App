@@ -13,7 +13,7 @@ const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
 type RootStackParamList ={
     MainPage: undefined,
-    ListPage: undefined,
+    ListPage: { selectedValue: string},
     NestedScreens: undefined,
 }
 
@@ -113,18 +113,11 @@ function HeightFilter(){
     );
 }
 
-function ListPage({navigation}: listProps){
-    return(
-        <View style={styles.container}>
-
-        </View>
-    );
-}
 
 function MainPage({navigation}: mainProps){
     const router = useRouter();
     const [activeSections, setActiveSections] = useState<number[]>([])
-    const [selectedValue, setSelectedValue] = useState("");
+    const [selectedValue, setSelectedValue] = useState("waitTimes");
     const Sections = ["Filter"]
 
     const renderContent = () => {
@@ -170,7 +163,7 @@ function MainPage({navigation}: mainProps){
                     </Picker>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("ListPage")}>
+                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("ListPage", {selectedValue})}>
                         <Text>Show list</Text>
                     </TouchableOpacity>
                 </View>
@@ -188,14 +181,184 @@ function MainPage({navigation}: mainProps){
                 <TouchableOpacity style={styles.navButton}>
                     <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
                 </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
-            <Icon name="place" color="#C8A6FF" size={30}/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
-            <Icon name="account-circle" color="#C8A6FF" size={30}/>
-          </TouchableOpacity>
-        </View>
+                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+                    <Icon name="place" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+                    <Icon name="account-circle" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+             </View>
 
+        </View>
+    );
+}
+
+function ListPage({route, navigation}: listProps){
+    const {selectedValue} = route.params;
+    const [activeSections, setActiveSections] = useState<number[]>([])
+    const Sections = ["Filter"]
+    const router = useRouter();
+    const listContent = () => {
+        switch(selectedValue) {
+            case "waitTimes":
+                return(
+                    <View>
+                        <View>
+                            <Text>Cheetah Hunt</Text>
+                            <Text> 30 min wait</Text>
+                        </View>
+                        <View>
+                            <Text>Kumba</Text>
+                            <Text>90 min wait</Text>
+                        </View>
+                        <View>
+                            <Text>Corbra's Curse</Text>
+                            <Text>Closed</Text>
+                        </View>
+                    </View>
+                );
+            case "attractions":
+                return(
+                    <View>
+                        <View>
+                            <Text>Cheetah Hunt</Text>
+                            <Text>Thrilling triple-launch roller coaster</Text>
+                        </View>
+                        <View>
+                            <Text>Kumba</Text>
+                            <Text>Legendary Florida steel coaster ride that roars</Text>
+                         </View>
+                        <View>
+                            <Text>Pheonix Rising</Text>
+                            <Text>Experience a fiery blaze of immersive, family-friendly excitement as you soar above the Serengeti Plain and drop into fun-filled twists and turns</Text>
+                        </View>
+                    </View>
+                );
+            case "dining":
+                return(
+                    <View>
+                        <View>
+                            <Text>Chick-fil-A</Text>
+                            <Text>$ American</Text>
+                        </View>
+                        <View>
+                            <Text>Zambia Smokehouse</Text>
+                            <Text>$$ American, French</Text>
+                        </View>
+                        <View>
+                            <Text>Moroccan Delights</Text>
+                            <Text>$ American, Italian</Text>
+                        </View>
+                    </View>
+                );
+            case "restrooms":
+                return(
+                    <View>
+                        <View>
+                            <Text>Near Entrance</Text>
+                        </View>
+                        <View>
+                            <Text>Near Iron Gwazi</Text>
+                        </View>
+                        <View>
+                            <Text>Near Cheetah</Text>
+                        </View>
+                    </View>
+                );
+            case "shows":
+                return(
+                    <View>
+                        <View>
+                            <Text>Christmas on Ice</Text>
+                            <Text>Indoor, Seasonal</Text>
+                        </View>
+                        <View>
+                            <Text>Holiday in the Sky Fireworks Show</Text>
+                            <Text>Outdoor, Seasonal</Text>
+                        </View>
+                        <View>
+                            <Text>Animal Tales</Text>
+                            <Text>Presentation, Indoor</Text>
+                        </View>
+                    </View>
+                );
+            default:
+                return(
+                    <Text>No vlaue selected</Text>
+                );
+        }
+    }
+
+    const renderContent = () => {
+        return(
+        <View style={styles.dropdownContainer}>
+            <ThrillFilter/>
+            <AgeFilter/>
+            <HeightFilter/>
+        </View>
+    );
+}
+
+    const renderHeader = () => {
+        return (
+            <View style={styles.filterButton}>
+                <Text>Filter</Text>
+            </View>
+        );
+    }
+
+    const updateState = (sections: number[]) => {
+        setActiveSections(sections);
+    }
+
+    return(
+        <View style={styles.container}>
+
+            <View style={styles.topSection}>
+                <View >
+                    <Accordion 
+                    activeSections={activeSections}
+                    sections={Sections}
+                    renderContent={renderContent}
+                    renderHeader={renderHeader}
+                    onChange={updateState}
+                    />
+                </View>
+                <View style={styles.picker}>
+                    <Picker selectedValue={selectedValue} >
+                        <Picker.Item label="Wait Times" value={"waitTimes"}/>
+                        <Picker.Item label="Attractions" value={"attractions"}/>
+                        <Picker.Item label="Dining" value={"dining"}/>
+                        <Picker.Item label="Restrooms" value={"restrooms"}/>
+                        <Picker.Item label="Shows" value={"shows"}/>
+                    </Picker>
+                </View>
+                <View>
+                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("MainPage")}>
+                        <Text>Show list</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={styles.middleSection}>
+                {listContent()}
+            </View>
+
+
+            <View style={styles.navbar}>
+                <TouchableOpacity style={styles.navButton}>
+                    <Icon name="home" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton}>
+                    <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
+                    <Icon name="place" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
+                    <Icon name="account-circle" color="#C8A6FF" size={30}/>
+                </TouchableOpacity>
+             </View>
         </View>
     );
 }
@@ -204,6 +367,7 @@ function NestedScreens(){
     return(
         <NestedStack.Navigator screenOptions={{ headerShown: false }}>
             <NestedStack.Screen name="MainPage" component={MainPage}/>
+            <NestedStack.Screen name="ListPage" component={ListPage}/>
         </NestedStack.Navigator>
     );
 }
