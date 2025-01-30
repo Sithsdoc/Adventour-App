@@ -8,7 +8,6 @@ export default function ChangePage() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section with Back Button */}
       <View style={styles.headerContainer}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")}>
           <Icon name="arrow-back" style={styles.backIcon} />
@@ -16,7 +15,7 @@ export default function ChangePage() {
         <Text style={styles.header}>Change Password</Text>
       </View>
 
-      {/* Change Password Section with Purple Stroke */}
+
       <View style={styles.passwordSection}>
         <Text style={styles.formLabel}>Current Password</Text>
         <TextInput style={styles.input} secureTextEntry={true} />
@@ -27,7 +26,7 @@ export default function ChangePage() {
         <Text style={styles.formLabel}>Confirm New Password</Text>
         <TextInput style={styles.input} secureTextEntry={true} />
 
-        {/* Save Changes Button inside the same section */}
+
         <TouchableOpacity style={styles.saveButton}>
           <Text style={styles.saveButtonText}>Save Changes</Text>
         </TouchableOpacity>
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     borderWidth: 1,
-    borderColor: '#d1d5db', // Light gray border for input fields
+    borderColor: '#d1d5db', 
   },
   passwordSection: {
     marginTop: 40,
@@ -86,8 +85,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     elevation: 4,
-    borderWidth: 2, // Purple border
-    borderColor: '#8E7EFE', // Purple color for the border
+    borderWidth: 2,
+    borderColor: '#8E7EFE', 
   },
   saveButton: {
     alignSelf: 'center',
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 125,
     paddingVertical: 8,
-    marginTop: 20, // Add some space between the inputs and the button
+    marginTop: 20, 
   },
   saveButtonText: {
     color: '#fff',
