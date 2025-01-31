@@ -54,9 +54,9 @@ function EnterPage({ navigation }: enterProps) {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("OverviewPage")}>
-        <Icon name="arrow-back" style={styles.backIcon} />
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")}>
+                <Icon name="arrow-back" style={styles.backIcon} />
+              </TouchableOpacity>
       <Text style={styles.header}>Add Payment Card</Text>
 
       {/* ScrollView with contentContainerStyle set to ensure form stays at the top */}
