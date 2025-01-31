@@ -51,7 +51,6 @@ function OverviewPage({ navigation }: overviewProps) {
 }
 
 function EnterPage({ navigation }: enterProps) {
-  const router = useRouter();
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("OverviewPage")}>
