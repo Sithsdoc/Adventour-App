@@ -51,9 +51,10 @@ function OverviewPage({ navigation }: overviewProps) {
 }
 
 function EnterPage({ navigation }: enterProps) {
+  const router = useRouter();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("OverviewPage")}>
                 <Icon name="arrow-back" style={styles.backIcon} />
               </TouchableOpacity>
       <Text style={styles.header}>Add Payment Card</Text>
@@ -66,7 +67,7 @@ function EnterPage({ navigation }: enterProps) {
           <TextInput style={styles.formLabel} placeholder="Cardholder Name" />
           <TextInput style={styles.formLabel} placeholder="Expiry Date" keyboardType="numeric" />
           <TextInput style={styles.formLabel} placeholder="CVV" keyboardType="numeric" secureTextEntry />
-          <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate("OverviewPage")}>
+          <TouchableOpacity style={styles.saveButton} onPress={() => router.push("/ProfilePage")}>
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
         </View>
