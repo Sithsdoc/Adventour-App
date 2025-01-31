@@ -216,7 +216,7 @@ function ListPage({route, navigation}: listProps){
                 </View>
                 <View>
                     <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("MainPage")}>
-                        <Text style={styles.listButtonText}>Show list</Text> 
+                        <Text style={styles.listButtonText}>Hide list</Text> 
                     </TouchableOpacity>
                 </View>
             </View>

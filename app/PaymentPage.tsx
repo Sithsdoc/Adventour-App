@@ -72,6 +72,8 @@ function EnterPage({ navigation }: enterProps) {
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+
     </View>
   );
 }
@@ -226,5 +228,19 @@ const styles = StyleSheet.create({
     flexGrow: 1, 
     justifyContent: 'flex-start',
     paddingTop: 0, 
+  },
+  navbar: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#8E7EFE",
+    height: 70,
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+  },
+  navButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
 });
