@@ -25,7 +25,7 @@ export default function ChangePage() {
         <Text style={styles.formLabel}>Confirm New Password</Text>
         <TextInput style={styles.input} secureTextEntry={true} />
 
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity style={styles.saveButton} onPress={() => router.push("/ProfilePage")}>
           <Text style={styles.saveButtonText}>Save Changes</Text>
         </TouchableOpacity>
       </View>
