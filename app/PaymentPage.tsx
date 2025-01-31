@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Montserrat',
     fontWeight: 'bold',
-    textAlign: 'center', // Center the header
+    textAlign: 'center', 
     flex: 1,
   },
   backButton: {
     padding: 10,
-    position: 'absolute', // Position the back button at the left
+    position: 'absolute', 
     left: 10,
   },
   backIcon: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     borderWidth: 2,
     borderColor: '#8E7EFE',
-    marginTop: 0, // Removed any top margin to avoid additional space
+    marginTop: 0, 
   },
   formLabel: {
     fontSize: 18,
@@ -223,8 +223,8 @@ const styles = StyleSheet.create({
   },
   // Adjust ScrollView content style
   scrollViewContent: {
-    flexGrow: 1, // Ensures it takes full height
-    justifyContent: 'flex-start', // Keeps content aligned at the top
-    paddingTop: 0, // Remove any padding that causes extra space
+    flexGrow: 1, 
+    justifyContent: 'flex-start',
+    paddingTop: 0, 
   },
 });
