@@ -2,6 +2,7 @@ import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput } fr
 import React from "react";
 import { useRouter } from "expo-router";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { supabase } from "../utils/supabase";
 
 const MainStack = createNativeStackNavigator<RootStackParamList>();
 const TabStack = createNativeStackNavigator<RootStackParamList>();
