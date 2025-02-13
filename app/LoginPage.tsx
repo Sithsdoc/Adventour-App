@@ -90,6 +90,7 @@ function signup({navigation}: signupProps){
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
     const [loading, setLoading] = useState(false);
 
     async function signUpWithEmail(){
@@ -102,8 +103,11 @@ function signup({navigation}: signupProps){
             password: password,
         })
 
-        if(error)
-        if(!session)
+        if(error) {
+            console.log("error", error.message)
+        } else if (password == rePassword){
+            router.push("/HomePage")
+        }
             setLoading(false)
     }
 
@@ -116,11 +120,25 @@ function signup({navigation}: signupProps){
 
             <View style={styles.middleSection}>
                 <Text style={styles.label}>Email</Text>
-                <TextInput style={styles.input} placeholder="Enter your email" />
+                <TextInput style={styles.input} 
+                placeholder="Enter your email" 
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                />
                 <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
+                <TextInput style={styles.input} 
+                placeholder="Enter your password" 
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                secureTextEntry={true} 
+                />
                 <Text style={styles.label}>Re-Enter Password</Text>
-                <TextInput style={styles.input} placeholder="Re-Enter Password"/>
+                <TextInput style={styles.input} 
+                placeholder="Re-Enter Password"
+                onChangeText={(text) => setRePassword(text)}
+                value={rePassword}
+                secureTextEntry={true}
+                />
                 <TouchableOpacity style={styles.signButton} onPress={() => signUpWithEmail()}>
                     <Text style={styles.signButtonText}>Sign Up</Text>
                 </TouchableOpacity>
