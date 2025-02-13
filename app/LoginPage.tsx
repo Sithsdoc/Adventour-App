@@ -1,5 +1,5 @@
-import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import React from "react";
+import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput, AppState } from "react-native";
+import React, {useState} from "react";
 import { useRouter } from "expo-router";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { supabase } from "../utils/supabase";
@@ -16,8 +16,37 @@ type RootStackParamList = {
 type loginProps = NativeStackScreenProps<RootStackParamList, "login">;
 type signupProps = NativeStackScreenProps<RootStackParamList, "signup">;
 
+
+AppState.addEventListener('change', (state) => {
+    if (state === 'active') {
+      supabase.auth.startAutoRefresh()
+    } else {
+      supabase.auth.stopAutoRefresh()
+    }
+  })
+
 function login({navigation}: loginProps){
     const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    async function signInWithEmail() {
+        setLoading(true);
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        });
+    
+        if (error) {
+            console.log("did not work", error.message);
+        } else {
+            router.push("/HomePage");
+        }
+        setLoading(false);
+      }
+
+
     return(
         <View style={styles.container}>
             <View style={styles.topSection}>
@@ -26,17 +55,26 @@ function login({navigation}: loginProps){
 
             <View style={styles.middleSection}>
                 <Text style={styles.label}>Email</Text>
-                <TextInput style={styles.input} placeholder="Enter your email" />
+                <TextInput style={styles.input} 
+                placeholder="Enter your email" 
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                />
                 <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
-                <TouchableOpacity style={styles.loginButton} onPress={() => router.push("/HomePage")}>
+                <TextInput style={styles.input}
+                placeholder="Enter your password" 
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                //secureTextEntry={true}
+                 />
+                <TouchableOpacity style={styles.loginButton} onPress={() => signInWithEmail()}>
                 <Text style={styles.loginButtonText}>Log In</Text>
                 </TouchableOpacity>
             </View>
 
 
             <View>
-                <TouchableOpacity style={styles.googleButton} onPress={() => console.log("Sign in with Google")}>
+                <TouchableOpacity style={styles.googleButton} onPress={() => router.push("/HomePage")}>
                     <Text style={styles.googleButtonText}>Sign in with Google</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate("signup")}>
@@ -50,6 +88,25 @@ function login({navigation}: loginProps){
 
 function signup({navigation}: signupProps){
     const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    async function signUpWithEmail(){
+        setLoading(true);
+        const {
+            data: {session},
+            error
+        } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        })
+
+        if(error)
+        if(!session)
+            setLoading(false)
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.topSection}>
@@ -64,14 +121,14 @@ function signup({navigation}: signupProps){
                 <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
                 <Text style={styles.label}>Re-Enter Password</Text>
                 <TextInput style={styles.input} placeholder="Re-Enter Password"/>
-                <TouchableOpacity style={styles.signButton} onPress={() => router.push("/HomePage")}>
+                <TouchableOpacity style={styles.signButton} onPress={() => signUpWithEmail()}>
                     <Text style={styles.signButtonText}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
 
 
             <View>
-                <TouchableOpacity style={styles.googleButton} onPress={() => console.log("Sign in with Google")}>
+                <TouchableOpacity style={styles.googleButton} onPress={() => router.push("/HomePage")}>
                 <Text style={styles.googleButtonText}>Sign in with Google</Text>
                 </TouchableOpacity>
             </View>
