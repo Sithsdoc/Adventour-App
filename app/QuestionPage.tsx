@@ -17,7 +17,7 @@ type RootStackParamList ={
   TimeScreen: undefined, 
   PlanScreen: undefined,
   FoodScreen: undefined,
-  AgeScreen: undefined,
+  HeightScreen: undefined,
   DisabilityScreen: undefined,
   RideScreen: undefined,
   AttractionScreen: undefined,
@@ -30,7 +30,7 @@ type calendarProps = NativeStackScreenProps<RootStackParamList, "CalendarPage">;
 type timeProps = NativeStackScreenProps<RootStackParamList, "TimeScreen">;
 type planProps = NativeStackScreenProps<RootStackParamList, "PlanScreen">;
 type foodProps = NativeStackScreenProps<RootStackParamList, "FoodScreen">;
-type ageProps = NativeStackScreenProps<RootStackParamList, "AgeScreen">;
+type heightProps = NativeStackScreenProps<RootStackParamList, "HeightScreen">;
 type disabilityProps = NativeStackScreenProps<RootStackParamList, "DisabilityScreen">;
 type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 type attractionProps = NativeStackScreenProps<RootStackParamList, "AttractionScreen">;
@@ -39,6 +39,7 @@ type itineraryProps = NativeStackScreenProps<RootStackParamList, "ItineraryScree
 
 function CalendarPage({navigation}: calendarProps) {
       const router = useRouter();
+      
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -169,10 +170,10 @@ function FoodScreen({navigation}: foodProps) {
         <TextInput placeholder="Enter Time" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("AgeScreen")}>
+      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("HeightScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("AgeScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("HeightScreen")}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -195,7 +196,7 @@ function FoodScreen({navigation}: foodProps) {
   );
 }
 
-function AgeScreen({navigation}: ageProps) {
+function HeightScreen({navigation}: heightProps) {
       const router = useRouter();
   return(
     <View style={styles.container}>
@@ -206,22 +207,15 @@ function AgeScreen({navigation}: ageProps) {
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
-      <Text style={styles.questionText}>Select your age group:</Text>
+      <Text style={styles.questionText}>Is there anyone in your group shorter than 56 inches(142cm)?</Text>
         <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>Preschoolers</Text>
+          <Text style={styles.selectionButtonText}>Yes</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>Children</Text>
+          <Text style={styles.selectionButtonText}>No</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>Teenagers</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>Adults</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>All Ages</Text>
-        </TouchableOpacity>
+        <Text style={styles.questionText}>If so enter their height in inches or centimeters:</Text>
+        <TextInput placeholder="Enter height" style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("DisabilityScreen")}>
@@ -255,7 +249,7 @@ function DisabilityScreen({navigation}: disabilityProps) {
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("AgeScreen")}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("HeightScreen")}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
@@ -541,7 +535,7 @@ function NestedScreens(){
       <NestedStack.Screen name="TimeScreen" component={TimeScreen}/>
       <NestedStack.Screen name="PlanScreen" component={PlanScreen}/>
       <NestedStack.Screen name="FoodScreen" component={FoodScreen}/>
-      <NestedStack.Screen name="AgeScreen" component={AgeScreen}/>
+      <NestedStack.Screen name="HeightScreen" component={HeightScreen}/>
       <NestedStack.Screen name="DisabilityScreen" component={DisabilityScreen}/>
       <NestedStack.Screen name="RideScreen" component={RideScreen}/>
       <NestedStack.Screen name="AttractionScreen" component={AttractionScreen}/>
