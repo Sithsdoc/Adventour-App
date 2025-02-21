@@ -1,6 +1,6 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, {useState, Component} from "react";
 import { StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //import { FlatList } from "react-native";
@@ -39,6 +39,15 @@ type itineraryProps = NativeStackScreenProps<RootStackParamList, "ItineraryScree
 
 function CalendarPage({navigation}: calendarProps) {
       const router = useRouter();
+      const [selectedDate, setSelectedDate] = useState<String| null>("");
+      
+
+      const onDayPress = (day: { dateString: string }) => {
+        //console.log(day);
+        setSelectedDate(day.dateString);
+        console.log("Selected Date:", day.dateString);
+      };
+
       
   return(
     <View style={styles.container}>
@@ -47,7 +56,7 @@ function CalendarPage({navigation}: calendarProps) {
       </View> 
       <View style={styles.CalendarmiddleSection}>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
-      <Calendar/>
+      <Calendar onDayPress={onDayPress} />
       </View> 
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("TimeScreen")}>
@@ -74,6 +83,19 @@ function CalendarPage({navigation}: calendarProps) {
 
 function TimeScreen({navigation}: timeProps) {
       const router = useRouter();
+      const [arrivalInputTime, setArrivalInputTime] = useState("");
+      const [arrivalTime, setArrivalTime] = useState("");
+      const [leaveInputTime, setLeaveInputTime] = useState("");
+      const [leaveTime, setLeaveTime] = useState("");
+
+      const handlesave = () => {
+        setArrivalTime(arrivalInputTime);
+        setLeaveTime(leaveInputTime);
+        navigation.navigate("PlanScreen");
+        //console.log(arrivalInputTime);
+        //console.log(leaveInputTime);
+      }
+
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -85,12 +107,18 @@ function TimeScreen({navigation}: timeProps) {
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
         <Text>Arriving:</Text>
-        <TextInput placeholder="Enter Time" style={styles.inputBox}/>
+        <TextInput placeholder="Enter Time" 
+        value={arrivalInputTime}
+        onChangeText={setArrivalInputTime} 
+        style={styles.inputBox}/>
         <Text>Leaving:</Text>
-        <TextInput placeholder="Enter Time" style={styles.inputBox}/>
+        <TextInput placeholder="Enter Time"
+        value={leaveInputTime}
+        onChangeText={setLeaveInputTime}
+         style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("PlanScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={handlesave}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
