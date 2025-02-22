@@ -37,9 +37,11 @@ type attractionProps = NativeStackScreenProps<RootStackParamList, "AttractionScr
 type suggestedProps = NativeStackScreenProps<RootStackParamList, "SuggestedScreen">;
 type itineraryProps = NativeStackScreenProps<RootStackParamList, "ItineraryScreen">;
 
+let userInput = [""];
+
 function CalendarPage({navigation}: calendarProps) {
       const router = useRouter();
-      const [selectedDate, setSelectedDate] = useState<String| null>("");
+      const [selectedDate, setSelectedDate] = useState<string| null>("");
       
 
       const onDayPress = (day: { dateString: string }) => {
@@ -47,6 +49,16 @@ function CalendarPage({navigation}: calendarProps) {
         setSelectedDate(day.dateString);
         console.log("Selected Date:", day.dateString);
       };
+
+      let pushToArray = () => {
+        if(selectedDate){
+        userInput.push(selectedDate);
+        console.log(userInput);
+        } else {
+          console.log("nothing saved to array");
+        }
+        navigation.navigate("TimeScreen");
+      }
 
       
   return(
@@ -59,7 +71,7 @@ function CalendarPage({navigation}: calendarProps) {
       <Calendar onDayPress={onDayPress} />
       </View> 
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("TimeScreen")}>
+      <TouchableOpacity style={styles.primaryButton} onPress={pushToArray}>
         <Text style={styles.primaryButtonText}>Next</Text>
       </TouchableOpacity>
       </View>
@@ -91,6 +103,9 @@ function TimeScreen({navigation}: timeProps) {
       const handlesave = () => {
         setArrivalTime(arrivalInputTime);
         setLeaveTime(leaveInputTime);
+        userInput.push(arrivalInputTime);
+        userInput.push(leaveInputTime);
+        console.log(userInput);
         navigation.navigate("PlanScreen");
         //console.log(arrivalInputTime);
         //console.log(leaveInputTime);
@@ -143,6 +158,7 @@ function TimeScreen({navigation}: timeProps) {
 
 function PlanScreen({navigation}: planProps) {
       const router = useRouter();
+      //at this point in the code the system needs to generate a random list of rides from the options in the databse for suggestplan
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -182,6 +198,15 @@ function PlanScreen({navigation}: planProps) {
 
 function FoodScreen({navigation}: foodProps) {
       const router = useRouter();
+      const [breakfastTime, setBreakfastTime] = useState("");
+      const [lunchTime, setLunchTime] = useState("");
+
+      let saveFoodTime = () => {
+        userInput.push(breakfastTime);
+        userInput.push(lunchTime);
+        console.log(userInput);
+        navigation.navigate("HeightScreen");
+      }
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -193,15 +218,21 @@ function FoodScreen({navigation}: foodProps) {
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>What time do you plan on eating?</Text>
         <Text>Breakfast:</Text>
-        <TextInput placeholder="Enter Time" style={styles.inputBox}/>
+        <TextInput placeholder="Enter Time"
+        value={breakfastTime} 
+        onChangeText={setBreakfastTime}
+        style={styles.inputBox}/>
         <Text>Lunch:</Text>
-        <TextInput placeholder="Enter Time" style={styles.inputBox}/>
+        <TextInput placeholder="Enter Time"
+        value={lunchTime}
+        onChangeText={setLunchTime}
+         style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("HeightScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("HeightScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={saveFoodTime}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -226,6 +257,15 @@ function FoodScreen({navigation}: foodProps) {
 
 function HeightScreen({navigation}: heightProps) {
       const router = useRouter();
+      const [userAnswer, setUserAnswer] = useState("");
+      const [userHeight, setUserHeight] = useState("");
+
+      let saveHeight = () => {
+        userInput.push(userHeight);
+        console.log(userInput);
+        navigation.navigate("DisabilityScreen");
+      }
+
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -243,13 +283,16 @@ function HeightScreen({navigation}: heightProps) {
           <Text style={styles.selectionButtonText}>No</Text>
         </TouchableOpacity>
         <Text style={styles.questionText}>If so enter their height in inches or centimeters:</Text>
-        <TextInput placeholder="Enter height" style={styles.inputBox}/>
+        <TextInput placeholder="Enter height" 
+        value={userHeight}
+        onChangeText={setUserHeight}
+        style={styles.inputBox}/>
       </View>
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("DisabilityScreen")}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("DisabilityScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={saveHeight}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -274,6 +317,15 @@ function HeightScreen({navigation}: heightProps) {
 
 function DisabilityScreen({navigation}: disabilityProps) {
       const router = useRouter();
+      const [userDisability, setUserDisability] = useState("");
+
+      let answerSelection = (answer: string) => {
+        setUserDisability(answer);
+        console.log(userDisability);
+        console.log(userInput);
+        userInput.push(userDisability);
+      }
+
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -282,15 +334,15 @@ function DisabilityScreen({navigation}: disabilityProps) {
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
-      <View style={styles.middleSection}>
+      <View style={styles.middleSection} >
       <Text style={styles.questionText}>Accessibility options:</Text>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Remain in Wheelchair")}>
           <Text style={styles.selectionButtonText}>Remain in Wheelchair</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Include Shuttles")}>
           <Text style={styles.selectionButtonText}>Include Shuttles</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Service Animals")}>
           <Text style={styles.selectionButtonText}>Service Animals</Text>
         </TouchableOpacity>
       </View>
