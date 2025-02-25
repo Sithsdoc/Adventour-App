@@ -124,7 +124,18 @@ const UserProfile = () => {
   }
 
   async function saveEmail() {
-    setEditingEmail(false);
+    const { data, error } = await supabase.auth.updateUser({
+      email: email,
+    });
+
+    if (error) {
+      console.error("Error updating email: ", error);
+    }
+    else {
+      console.log("Email update begun. User must confirm via link in email");
+      setUserData((prev) => prev ? { ...prev, email: email } : null);
+      setEditingEmail(false);
+    }
   }
 
   function editPhoneNumber() {
@@ -135,7 +146,7 @@ const UserProfile = () => {
     setEditingPhoneNumber(true);
   }
 
-  const handlePhoneNumber = (text) => {
+  const handlePhoneNumber = (text: string) => {
     const numbersOnly = text.replace(/[^0-9]/g, '');
     setPhoneNumber(numbersOnly);
   }
