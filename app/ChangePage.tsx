@@ -1,10 +1,38 @@
-import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { supabase } from '@/utils/supabase';
 
 export default function ChangePage() {
   const router = useRouter();
+
+  const [ newPassword, setNewPassword ] = useState("");
+  const [ confirmNewPassword, setConfirmNewPassword ] = useState("");
+
+  async function changePassword() {
+    if (!newPassword || !confirmNewPassword) {
+      Alert.alert("Error", "Please fill in both passwords");
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+
+    if (error) {
+      console.error("Error changing password: ", error);
+      Alert.alert("Error", error.message);
+    }
+    else {
+      Alert.alert("Success", "Password changed successfully");
+      router.push("/ProfilePage");
+    }
+
+  }
 
   return (
     <View style={styles.container}>
@@ -16,16 +44,13 @@ export default function ChangePage() {
       </View>
 
       <View style={styles.passwordSection}>
-        <Text style={styles.formLabel}>Current Password</Text>
-        <TextInput style={styles.input} secureTextEntry={true} />
-
         <Text style={styles.formLabel}>New Password</Text>
-        <TextInput style={styles.input} secureTextEntry={true} />
+        <TextInput style={styles.input} secureTextEntry={true} value={newPassword} onChangeText={setNewPassword} />
 
         <Text style={styles.formLabel}>Confirm New Password</Text>
-        <TextInput style={styles.input} secureTextEntry={true} />
+        <TextInput style={styles.input} secureTextEntry={true} value={confirmNewPassword} onChangeText={setConfirmNewPassword} />
 
-        <TouchableOpacity style={styles.saveButton} onPress={() => router.push("/ProfilePage")}>
+        <TouchableOpacity style={styles.saveButton} onPress={changePassword}>
           <Text style={styles.saveButtonText}>Save Changes</Text>
         </TouchableOpacity>
       </View>
