@@ -1,10 +1,69 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { supabase } from '@/utils/supabase';
+
+interface userProfile {
+  auth_id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  payment_method: string;
+  profile_picture: string | null;
+}
 
 const UserProfile = () => {
   const router = useRouter();
+  const [userData, setUserData] = useState<userProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchUserData();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" || event === "SIGNED_OUT") {
+          fetchUserData();
+      }
+  });
+
+  return () => {
+      authListener.subscription.unsubscribe();
+  };
+  }, []);
+
+  const fetchUserData = async () => {
+    setLoading(true);
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      console.error("Error fetching user: ", authError);
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("Users")
+      .select("*")
+      .eq("auth_id", user.id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching user data: ", error);
+      setLoading(false);
+      return;
+    }
+    
+    setUserData({...data, email: user.email });
+
+    setLoading(false);
+  }
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#8E7EFE" />;
+  }
 
   return (
     <View style={styles.container}>
@@ -12,27 +71,29 @@ const UserProfile = () => {
 
       <View style={styles.profileSection}>
         <Image
-          source={require("../image/ProfilePicture.jpg")}
+          source={userData?.profile_picture
+            ? { uri: userData.profile_picture }
+            : require("../image/ProfilePicture.jpg")}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.infoRow}>
-              <Text style={styles.name}>John Doe</Text>
+              <Text style={styles.name}>{userData?.first_name || "First Name"} {userData?.last_name || "Last Name"}</Text>
               <TouchableOpacity>
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>
             </View>
 
             <View style={styles.infoRow}>
-              <Text style={styles.email}>john.doe@example.com</Text>
+              <Text style={styles.email}>{userData?.email || "Email"}</Text>
               <TouchableOpacity>
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>
             </View>
 
             <View style={styles.infoRow}>
-              <Text style={styles.phoneNumber}>+300 254 7895</Text>
+              <Text style={styles.phoneNumber}>{userData?.phone_number || "Phone Number"}</Text>
               <TouchableOpacity>
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>

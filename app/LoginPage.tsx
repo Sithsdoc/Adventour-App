@@ -41,11 +41,22 @@ function login({navigation}: loginProps){
         if (error) {
             console.log("did not work", error.message);
         } else {
+            await fetchUserSession();
             router.push("/HomePage");
+            console.log("Successfully logged in");
         }
         setLoading(false);
-      }
+    }
 
+    const fetchUserSession = async () => {
+        const { data, error } = await supabase.auth.getSession();
+    
+        if (error) {
+            console.log("Error fetching session:", error.message);
+        } else {
+            console.log("Session data:", data);
+        }
+    };
 
     return(
         <View style={styles.container}>
