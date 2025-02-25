@@ -71,15 +71,21 @@ const UserProfile = () => {
     setProfilePic(data.profile_picture || "https://dixcsqbokxonnpkeptts.supabase.co/storage/v1/object/public/profile-pictures/please_work.png")
     setFirstName(data.first_name || "First Name");
     setLastName(data.last_name || "Last Name");
-    setEmail(data.email || "Email");
+    setEmail(user.email || "Email");
     setPhoneNumber(data.phone_number || "Phone Number");
-    
-
     setLoading(false);
   }
 
   if (loading) {
     return <ActivityIndicator size="large" color="#8E7EFE" />;
+  }
+
+  function editProfilePic() {
+
+  }
+
+  async function saveProfilePic() {
+
   }
 
   function editName() {
@@ -106,6 +112,47 @@ const UserProfile = () => {
       console.log("New name uploaded to database");
       setUserData((prev) => prev ? { ...prev, first_name: firstName, last_name: lastName } : null);
       setEditingName(false);
+    }
+  }
+
+  function editEmail() {
+    if (email === "Email") {
+      setEmail("")
+    }
+
+    setEditingEmail(true);
+  }
+
+  async function saveEmail() {
+    setEditingEmail(false);
+  }
+
+  function editPhoneNumber() {
+    if (phoneNumber === "Phone Number") {
+      setPhoneNumber("")
+    }
+
+    setEditingPhoneNumber(true);
+  }
+
+  const handlePhoneNumber = (text) => {
+    const numbersOnly = text.replace(/[^0-9]/g, '');
+    setPhoneNumber(numbersOnly);
+  }
+
+  async function savePhoneNumber() {
+    const { error } = await supabase
+      .from("Users")
+      .update({phone_number: phoneNumber})
+      .eq("auth_id", userData?.auth_id);
+
+    if (error) {
+      console.error("Error saving phone number: ", error);
+    }
+    else {
+      console.log("New phone number uploaded to database");
+      setUserData((prev) => prev ? { ...prev, phone_number: phoneNumber } : null);
+      setEditingPhoneNumber(false);
     }
   }
 
@@ -140,17 +187,39 @@ const UserProfile = () => {
             </View>
 
             <View style={styles.infoRow}>
-              <Text style={styles.email}>{email}</Text>
-              <TouchableOpacity>
-                <Icon name="edit" color="#8E7EFE" size={20} />
-              </TouchableOpacity>
+              { editingEmail ? (
+                <>
+                  <TextInput style={styles.input} placeholder="Email Address" keyboardType="email-address" value={email} onChangeText={setEmail} />
+                  <TouchableOpacity onPress={() => saveEmail()}>
+                    <Icon name="check" color="#4CAF50" size={20} />
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.email}>{email}</Text>
+                  <TouchableOpacity onPress={() => editEmail()}>
+                    <Icon name="edit" color="#8E7EFE" size={20} />
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
 
             <View style={styles.infoRow}>
-              <Text style={styles.phoneNumber}>{phoneNumber}</Text>
-              <TouchableOpacity>
-                <Icon name="edit" color="#8E7EFE" size={20} />
-              </TouchableOpacity>
+              { editingPhoneNumber ? (
+                <>
+                  <TextInput style={styles.input} placeholder="Phone Number" keyboardType="phone-pad" value={phoneNumber} onChangeText={handlePhoneNumber} />
+                  <TouchableOpacity onPress={() => savePhoneNumber()}>
+                    <Icon name="check" color="#4CAF50" size={20} />
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.phoneNumber}>{phoneNumber}</Text>
+                  <TouchableOpacity onPress={() => editPhoneNumber()}>
+                    <Icon name="edit" color="#8E7EFE" size={20} />
+                  </TouchableOpacity>
+                </>
+              ) }
             </View>
           </View>
         </View>
