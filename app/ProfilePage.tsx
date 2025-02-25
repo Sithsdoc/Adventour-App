@@ -124,7 +124,15 @@ const UserProfile = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
-        <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/LoginPage")}>
+        <TouchableOpacity style={styles.pMethod} onPress={async () => {
+          const { error } = await supabase.auth.signOut();
+          if (error) {
+            console.error("Logout failed: ", error.message);
+          }
+          else {
+            router.replace("/LoginPage");
+          }
+          }}>
           <Text style={styles.editButtonText}>Log Out</Text>
         </TouchableOpacity>
 
