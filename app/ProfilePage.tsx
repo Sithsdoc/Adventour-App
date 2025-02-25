@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { supabase } from '@/utils/supabase';
@@ -18,6 +18,17 @@ const UserProfile = () => {
   const router = useRouter();
   const [userData, setUserData] = useState<userProfile | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [profilePic, setProfilePic] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [editingProfilePic, setEditingProfilePic] = useState(false);
+  const [editingName, setEditingName] = useState(false);
+  const [editingEmail, setEditingEmail] = useState(false);
+  const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
 
   useEffect(() => {
     fetchUserData();
@@ -57,6 +68,12 @@ const UserProfile = () => {
     }
     
     setUserData({...data, email: user.email });
+    setProfilePic(data.profile_picture || "https://dixcsqbokxonnpkeptts.supabase.co/storage/v1/object/public/profile-pictures/please_work.png")
+    setFirstName(data.first_name || "First Name");
+    setLastName(data.last_name || "Last Name");
+    setEmail(data.email || "Email");
+    setPhoneNumber(data.phone_number || "Phone Number");
+    
 
     setLoading(false);
   }
@@ -65,35 +82,72 @@ const UserProfile = () => {
     return <ActivityIndicator size="large" color="#8E7EFE" />;
   }
 
+  function editName() {
+    if (firstName === "First Name") {
+      setFirstName("")
+    }
+    if (lastName === "Last Name") {
+      setLastName("")
+    }
+
+    setEditingName(true);
+  }
+
+  async function saveName() {
+    const { error } = await supabase
+      .from("Users")
+      .update({first_name: firstName, last_name: lastName})
+      .eq("auth_id", userData?.auth_id);
+
+    if (error) {
+      console.error("Error saving name: ", error);
+    }
+    else {
+      console.log("New name uploaded to database");
+      setUserData((prev) => prev ? { ...prev, first_name: firstName, last_name: lastName } : null);
+      setEditingName(false);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Profile</Text>
 
       <View style={styles.profileSection}>
         <Image
-          source={userData?.profile_picture
-            ? { uri: userData.profile_picture }
-            : require("../image/ProfilePicture.jpg")}
+          source={{uri: profilePic}}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.infoRow}>
-              <Text style={styles.name}>{userData?.first_name || "First Name"} {userData?.last_name || "Last Name"}</Text>
+              { editingName ? (
+                <>
+                  <TextInput style={styles.input} placeholder="Given Name" value={firstName} onChangeText={setFirstName} />
+                  <TextInput style={styles.input} placeholder="Family Name" value={lastName} onChangeText={setLastName} />
+                  <TouchableOpacity onPress={() => saveName()}>
+                    <Icon name="check" color="#4CAF50" size={20} />
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.name}>{firstName} {lastName}</Text>
+                  <TouchableOpacity onPress={() => editName()}>
+                    <Icon name="edit" color="#8E7EFE" size={20} />
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+
+            <View style={styles.infoRow}>
+              <Text style={styles.email}>{email}</Text>
               <TouchableOpacity>
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>
             </View>
 
             <View style={styles.infoRow}>
-              <Text style={styles.email}>{userData?.email || "Email"}</Text>
-              <TouchableOpacity>
-                <Icon name="edit" color="#8E7EFE" size={20} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.infoRow}>
-              <Text style={styles.phoneNumber}>{userData?.phone_number || "Phone Number"}</Text>
+              <Text style={styles.phoneNumber}>{phoneNumber}</Text>
               <TouchableOpacity>
                 <Icon name="edit" color="#8E7EFE" size={20} />
               </TouchableOpacity>
@@ -285,4 +339,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
+  input: {
+    width: '100%',
+    height: 40,
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+},
 });
