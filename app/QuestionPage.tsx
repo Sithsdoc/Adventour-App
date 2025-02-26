@@ -69,6 +69,7 @@ function CalendarPage({navigation}: calendarProps) {
       <View style={styles.CalendarmiddleSection}>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
       <Calendar onDayPress={onDayPress} />
+      <Text>The date you selected is {selectedDate}</Text>
       </View> 
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.primaryButton} onPress={pushToArray}>
@@ -96,19 +97,24 @@ function CalendarPage({navigation}: calendarProps) {
 function TimeScreen({navigation}: timeProps) {
       const router = useRouter();
       const [arrivalInputTime, setArrivalInputTime] = useState("");
-      const [arrivalTime, setArrivalTime] = useState("");
       const [leaveInputTime, setLeaveInputTime] = useState("");
-      const [leaveTime, setLeaveTime] = useState("");
+      const [errorMessage, setErrorMessage] = useState("");
+
+      const validateTimeExpressions = (time: string) => {
+        const timePattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$/i;
+        //const timePattern24 = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        return timePattern.test(time);
+      }
 
       const handlesave = () => {
-        setArrivalTime(arrivalInputTime);
-        setLeaveTime(leaveInputTime);
+        if (validateTimeExpressions(arrivalInputTime) || validateTimeExpressions(leaveInputTime)){
         userInput.push(arrivalInputTime);
         userInput.push(leaveInputTime);
         console.log(userInput);
         navigation.navigate("PlanScreen");
-        //console.log(arrivalInputTime);
-        //console.log(leaveInputTime);
+        } else {
+          setErrorMessage("Please enter the time in the correct format");
+        }
       }
 
   return (
@@ -122,15 +128,16 @@ function TimeScreen({navigation}: timeProps) {
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
         <Text>Arriving:</Text>
-        <TextInput placeholder="Enter Time" 
+        <TextInput placeholder="Enter Time (ex. 10:30 AM)" 
         value={arrivalInputTime}
         onChangeText={setArrivalInputTime} 
         style={styles.inputBox}/>
         <Text>Leaving:</Text>
-        <TextInput placeholder="Enter Time"
+        <TextInput placeholder="Enter Time (ex. 6:00 PM)"
         value={leaveInputTime}
         onChangeText={setLeaveInputTime}
          style={styles.inputBox}/>
+         <Text>{errorMessage}</Text>
       </View>
       <View style={styles.bottomSection}>
         <TouchableOpacity style={styles.primaryButton} onPress={handlesave}>
@@ -200,10 +207,28 @@ function FoodScreen({navigation}: foodProps) {
       const router = useRouter();
       const [breakfastTime, setBreakfastTime] = useState("");
       const [lunchTime, setLunchTime] = useState("");
+      const [errorMessage, setErrorMessage] = useState("");
+
+      const validateTimeExpressions = (time: string) => {
+        const timePattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$/i;
+        //const timePattern24 = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        return timePattern.test(time);
+      }
 
       let saveFoodTime = () => {
+        if (validateTimeExpressions(breakfastTime) || validateTimeExpressions(lunchTime)){
         userInput.push(breakfastTime);
         userInput.push(lunchTime);
+        console.log(userInput);
+        navigation.navigate("HeightScreen");
+        } else {
+          setErrorMessage("Please enter the time in the correct format");
+        }
+      }
+
+      let skipFoodTime = () => {
+        userInput.push("");
+        userInput.push("");
         console.log(userInput);
         navigation.navigate("HeightScreen");
       }
@@ -227,9 +252,10 @@ function FoodScreen({navigation}: foodProps) {
         value={lunchTime}
         onChangeText={setLunchTime}
          style={styles.inputBox}/>
+         <Text>{errorMessage}</Text>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("HeightScreen")}>
+      <TouchableOpacity style={styles.skipButton} onPress={skipFoodTime}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={saveFoodTime}>
@@ -259,9 +285,25 @@ function HeightScreen({navigation}: heightProps) {
       const router = useRouter();
       const [userAnswer, setUserAnswer] = useState("");
       const [userHeight, setUserHeight] = useState("");
+      const [errorMessage, setErrorMessage] = useState("");
+
+      const validateHeightExpressions = (height: string) => {
+        const heightPattern = /^\d{1,3}\s?(in|cm)$/i;
+        return heightPattern.test(height);
+      }
 
       let saveHeight = () => {
+        if(validateHeightExpressions(userHeight)){
         userInput.push(userHeight);
+        console.log(userInput);
+        navigation.navigate("DisabilityScreen");
+        } else {
+          setErrorMessage("Please enter the height in the correct format");
+        }
+      }
+
+      let skipHeight = () => {
+        userInput.push("");
         console.log(userInput);
         navigation.navigate("DisabilityScreen");
       }
@@ -275,21 +317,16 @@ function HeightScreen({navigation}: heightProps) {
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
-      <Text style={styles.questionText}>Is there anyone in your group shorter than 56 inches(142cm)?</Text>
-        <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>Yes</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
-          <Text style={styles.selectionButtonText}>No</Text>
-        </TouchableOpacity>
-        <Text style={styles.questionText}>If so enter their height in inches or centimeters:</Text>
+        <Text style={styles.questionText}>What is the height of the shortest person in your group (Enter their
+          height in inches or centimeters):</Text>
         <TextInput placeholder="Enter height" 
         value={userHeight}
         onChangeText={setUserHeight}
         style={styles.inputBox}/>
+        <Text>{errorMessage}</Text>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("DisabilityScreen")}>
+      <TouchableOpacity style={styles.skipButton} onPress={skipHeight}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={saveHeight}>
@@ -321,9 +358,19 @@ function DisabilityScreen({navigation}: disabilityProps) {
 
       let answerSelection = (answer: string) => {
         setUserDisability(answer);
-        console.log(userDisability);
+        console.log(answer);
+        userInput.push(answer);
+      }
+
+      let handleAnswer = () => {
         console.log(userInput);
-        userInput.push(userDisability);
+        navigation.navigate("RideScreen");
+      }
+
+      let skipAnswer = () => {
+        userInput.push("");
+        console.log(userInput);
+        navigation.navigate("RideScreen");
       }
 
   return(
@@ -345,12 +392,13 @@ function DisabilityScreen({navigation}: disabilityProps) {
         <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Service Animals")}>
           <Text style={styles.selectionButtonText}>Service Animals</Text>
         </TouchableOpacity>
+        <Text>You Chose {userDisability}</Text>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("RideScreen")}>
+      <TouchableOpacity style={styles.skipButton} onPress={skipAnswer}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("RideScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={handleAnswer}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -375,6 +423,23 @@ function DisabilityScreen({navigation}: disabilityProps) {
 
 function RideScreen({navigation}: rideProps) {
       const router = useRouter();
+      const [rideChoice, setRideChoice] = useState("");
+
+      let rideSelection = (ride: string) => {
+        setRideChoice(ride);
+        userInput.push(ride);
+      }
+
+      let handleRide = () => {
+        console.log(userInput);
+        navigation.navigate("AttractionScreen");
+      }
+
+      let skipRide = () => {
+        userInput.push("");
+        console.log(userInput);
+        navigation.navigate("AttractionScreen");
+      }
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -385,24 +450,24 @@ function RideScreen({navigation}: rideProps) {
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Choose your ride preferences:</Text>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Thrill Rides")}>
           <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Slow Rides")}>
           <Text style={styles.selectionButtonText}>Slow Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Water Rides")}>
           <Text style={styles.selectionButtonText}>Water Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Animal Experiences")}>
           <Text style={styles.selectionButtonText}>Animal Experiences</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("AttractionScreen")}>
+      <TouchableOpacity style={styles.skipButton} onPress={skipRide}>
             <Text style={styles.skipButtonText}>Skip</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("AttractionScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={handleRide}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
