@@ -1,11 +1,12 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, {useState, Component} from "react";
+import React, {useState, useEffect} from "react";
 import { StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //import { FlatList } from "react-native";
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { useRouter } from "expo-router";
+import { supabase } from "../utils/supabase";
 //import { CheckBox, Input } from "@rneui/themed";
 //import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -37,8 +38,12 @@ type attractionProps = NativeStackScreenProps<RootStackParamList, "AttractionScr
 type suggestedProps = NativeStackScreenProps<RootStackParamList, "SuggestedScreen">;
 type itineraryProps = NativeStackScreenProps<RootStackParamList, "ItineraryScreen">;
 
-let userInput = [""];
-
+let userInput = [
+["","",""], 
+["","",""], 
+["","",""], 
+[""]];
+//use .pop() to delete information from an array or delete word using "delete userInput[][]"
 function CalendarPage({navigation}: calendarProps) {
       const router = useRouter();
       const [selectedDate, setSelectedDate] = useState<string| null>("");
@@ -50,9 +55,9 @@ function CalendarPage({navigation}: calendarProps) {
         console.log("Selected Date:", day.dateString);
       };
 
-      let pushToArray = () => {
+      const pushToArray = () => {
         if(selectedDate){
-        userInput.push(selectedDate);
+        userInput[0][0] = selectedDate;
         console.log(userInput);
         } else {
           console.log("nothing saved to array");
@@ -108,8 +113,8 @@ function TimeScreen({navigation}: timeProps) {
 
       const handlesave = () => {
         if (validateTimeExpressions(arrivalInputTime) || validateTimeExpressions(leaveInputTime)){
-        userInput.push(arrivalInputTime);
-        userInput.push(leaveInputTime);
+        userInput[0][1] = arrivalInputTime;
+        userInput[0][2] = leaveInputTime;
         console.log(userInput);
         navigation.navigate("PlanScreen");
         } else {
@@ -117,10 +122,15 @@ function TimeScreen({navigation}: timeProps) {
         }
       }
 
+      const handleDateDelete = () => {
+        delete userInput[0][0];
+        navigation.navigate("CalendarPage");
+      }
+
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("CalendarPage")}>
+        <TouchableOpacity style={styles.backButton} onPress={handleDateDelete}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text>
@@ -165,11 +175,17 @@ function TimeScreen({navigation}: timeProps) {
 
 function PlanScreen({navigation}: planProps) {
       const router = useRouter();
+
+      const handleTimeDelete = () => {
+        delete userInput[0][1];
+        delete userInput[0][2];
+        navigation.navigate("TimeScreen");
+      }
       //at this point in the code the system needs to generate a random list of rides from the options in the databse for suggestplan
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("TimeScreen")}>
+        <TouchableOpacity style={styles.backButton} onPress={handleTimeDelete}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity> 
         <Text style={styles.headerText}>Plan My Day</Text> 
@@ -215,10 +231,10 @@ function FoodScreen({navigation}: foodProps) {
         return timePattern.test(time);
       }
 
-      let saveFoodTime = () => {
+      const saveFoodTime = () => {
         if (validateTimeExpressions(breakfastTime) || validateTimeExpressions(lunchTime)){
-        userInput.push(breakfastTime);
-        userInput.push(lunchTime);
+        userInput[1][0] = breakfastTime;
+        userInput[1][1] = lunchTime;
         console.log(userInput);
         navigation.navigate("HeightScreen");
         } else {
@@ -226,9 +242,9 @@ function FoodScreen({navigation}: foodProps) {
         }
       }
 
-      let skipFoodTime = () => {
-        userInput.push("");
-        userInput.push("");
+      const skipFoodTime = () => {
+        userInput[1][0] = ("");
+        userInput[1][1] = ("");
         console.log(userInput);
         navigation.navigate("HeightScreen");
       }
@@ -243,12 +259,12 @@ function FoodScreen({navigation}: foodProps) {
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>What time do you plan on eating?</Text>
         <Text>Breakfast:</Text>
-        <TextInput placeholder="Enter Time"
+        <TextInput placeholder="Enter Time (ex. 10:30 AM)"
         value={breakfastTime} 
         onChangeText={setBreakfastTime}
         style={styles.inputBox}/>
         <Text>Lunch:</Text>
-        <TextInput placeholder="Enter Time"
+        <TextInput placeholder="Enter Time (ex. 1:30 PM)"
         value={lunchTime}
         onChangeText={setLunchTime}
          style={styles.inputBox}/>
@@ -292,9 +308,9 @@ function HeightScreen({navigation}: heightProps) {
         return heightPattern.test(height);
       }
 
-      let saveHeight = () => {
+      const saveHeight = () => {
         if(validateHeightExpressions(userHeight)){
-        userInput.push(userHeight);
+        userInput[1][2] = userHeight;
         console.log(userInput);
         navigation.navigate("DisabilityScreen");
         } else {
@@ -302,17 +318,22 @@ function HeightScreen({navigation}: heightProps) {
         }
       }
 
-      let skipHeight = () => {
-        userInput.push("");
+      const skipHeight = () => {
+        userInput[1][2] = ("");
         console.log(userInput);
         navigation.navigate("DisabilityScreen");
       }
 
+      const handleFoodDelete = () => {
+        delete userInput[1][0];
+        delete userInput[1][1];
+        navigation.navigate("FoodScreen");
+      }
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("FoodScreen")}/>
+          <Icon name="arrow-back" style={styles.backIcon} onPress={handleFoodDelete}/>
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
@@ -356,27 +377,32 @@ function DisabilityScreen({navigation}: disabilityProps) {
       const router = useRouter();
       const [userDisability, setUserDisability] = useState("");
 
-      let answerSelection = (answer: string) => {
+      const answerSelection = (answer: string) => {
         setUserDisability(answer);
         console.log(answer);
-        userInput.push(answer);
+        userInput[2][0] = answer;
       }
 
-      let handleAnswer = () => {
+      const handleAnswer = () => {
         console.log(userInput);
         navigation.navigate("RideScreen");
       }
 
-      let skipAnswer = () => {
-        userInput.push("");
+      const skipAnswer = () => {
+        userInput[2][0] = ("");
         console.log(userInput);
         navigation.navigate("RideScreen");
+      }
+
+      const handleHeightDelete = () => {
+        delete userInput[1][2];
+        navigation.navigate("HeightScreen");
       }
 
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("HeightScreen")}>
+        <TouchableOpacity style={styles.backButton} onPress={handleHeightDelete}>
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
@@ -425,26 +451,31 @@ function RideScreen({navigation}: rideProps) {
       const router = useRouter();
       const [rideChoice, setRideChoice] = useState("");
 
-      let rideSelection = (ride: string) => {
+      const rideSelection = (ride: string) => {
         setRideChoice(ride);
-        userInput.push(ride);
+        userInput[2][1] = ride;
       }
 
-      let handleRide = () => {
+      const handleRide = () => {
         console.log(userInput);
         navigation.navigate("AttractionScreen");
       }
 
-      let skipRide = () => {
-        userInput.push("");
+      const skipRide = () => {
+        userInput[2][1] = ("");
         console.log(userInput);
         navigation.navigate("AttractionScreen");
+      }
+
+      const handleDisabilityDelete = () => {
+        delete userInput[2][0];
+        navigation.navigate("DisabilityScreen");
       }
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" style={styles.backIcon} onPress={() => navigation.navigate("DisabilityScreen")}/>
+          <Icon name="arrow-back" style={styles.backIcon} onPress={handleDisabilityDelete}/>
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
@@ -454,7 +485,7 @@ function RideScreen({navigation}: rideProps) {
           <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Slow Rides")}>
-          <Text style={styles.selectionButtonText}>Slow Rides</Text>
+          <Text style={styles.selectionButtonText}>Shows</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Water Rides")}>
           <Text style={styles.selectionButtonText}>Water Rides</Text>
@@ -492,18 +523,22 @@ function RideScreen({navigation}: rideProps) {
 
 function AttractionScreen({navigation}: attractionProps){
       const router = useRouter();
+
+      const handleRideDelete = () => {
+        delete userInput[2][1]
+        navigation.navigate("RideScreen");
+      }
+
   return (
     <View style={styles.container}>
       
-      {/* Top Section */}
       <View style={styles.topSection}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("RideScreen")}>
+        <TouchableOpacity style={styles.backButton} onPress={handleRideDelete}>
           <Icon name="arrow-back" style={styles.backIcon}/>
         </TouchableOpacity>
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
 
-      {/* Middle Section */}
       <View style={styles.ridemiddleSection}>
         <Text style={styles.questionText}>Choose your must-go thrill rides:</Text>
         
@@ -532,17 +567,15 @@ function AttractionScreen({navigation}: attractionProps){
         </View>
       </View>
 
-      {/* Bottom Section */}
       <View style={styles.bottomSection}>
         <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("ItineraryScreen")}>
-          <Text style={styles.skipButtonText}>SKIP</Text>
+          <Text style={styles.skipButtonText}>Skip</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ItineraryScreen")}>
-          <Text style={styles.primaryButtonText}>NEXT</Text>
+          <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Navbar */}
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
           <Icon name="home" color="#C8A6FF" size={30}/>
@@ -563,10 +596,26 @@ function AttractionScreen({navigation}: attractionProps){
 
 function SuggestedScreen({navigation}: suggestedProps){
   const router = useRouter();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() =>{
+    const fetchPlanData = async () => {
+      const  { data, error} = await supabase
+      .from("Park Information")
+      .select("*");
+      if(error){
+        console.log(error.message);
+      } else {
+        setData(data);
+      }
+      setLoading(false);
+    };
+    fetchPlanData();
+  }, []);
   return(
     <View style={styles.container}>
       
-    {/* Top Section */}
     <View style={styles.itintopSection}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Icon name="arrow-back" style={styles.backIcon}/>
@@ -574,7 +623,6 @@ function SuggestedScreen({navigation}: suggestedProps){
       <Text style={styles.suggestheaderText}>Awesome! Here is the suggested plan</Text>
     </View>
 
-    {/* Middle Section */}
     <View style={styles.itinmiddleSection}>
       {[ 
         { image: require("../image/IronGwazi.png"), name: "Iron Gwazi", arrival: "9:30AM" },
@@ -598,7 +646,6 @@ function SuggestedScreen({navigation}: suggestedProps){
       ))}
     </View>
 
-    {/* Navbar */}
     <View style={styles.navbar}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
         <Icon name="home" color="#C8A6FF" size={30}/>
