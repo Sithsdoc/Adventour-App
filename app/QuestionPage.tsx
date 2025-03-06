@@ -1,12 +1,13 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, {useState, useEffect} from "react";
-import { StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-//import { FlatList } from "react-native";
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { useRouter } from "expo-router";
 import { supabase } from "../utils/supabase";
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+//import { ScrollView } from "react-native-reanimated/lib/typescript/Animated";
 //import { CheckBox, Input } from "@rneui/themed";
 //import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -106,7 +107,7 @@ function TimeScreen({navigation}: timeProps) {
       const [errorMessage, setErrorMessage] = useState("");
 
       const validateTimeExpressions = (time: string) => {
-        const timePattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$/i;
+        const timePattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/i;
         //const timePattern24 = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
         return timePattern.test(time);
       }
@@ -136,7 +137,9 @@ function TimeScreen({navigation}: timeProps) {
         <Text style={styles.headerText}>Plan My Day</Text>
       </View>
       <View style={styles.middleSection}>
-      <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?</Text>
+      <Text style={styles.questionText}>At what time do you plan to arrive and leave the park?
+        (Include spaces between time and AM/PM)
+      </Text>
         <Text>Arriving:</Text>
         <TextInput placeholder="Enter Time (ex. 10:30 AM)" 
         value={arrivalInputTime}
@@ -226,7 +229,7 @@ function FoodScreen({navigation}: foodProps) {
       const [errorMessage, setErrorMessage] = useState("");
 
       const validateTimeExpressions = (time: string) => {
-        const timePattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$/i;
+        const timePattern = /^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/i;
         //const timePattern24 = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
         return timePattern.test(time);
       }
@@ -264,7 +267,7 @@ function FoodScreen({navigation}: foodProps) {
         onChangeText={setBreakfastTime}
         style={styles.inputBox}/>
         <Text>Lunch:</Text>
-        <TextInput placeholder="Enter Time (ex. 1:30 PM)"
+        <TextInput placeholder="Enter Time (ex. 6:00 PM)"
         value={lunchTime}
         onChangeText={setLunchTime}
          style={styles.inputBox}/>
@@ -596,23 +599,68 @@ function AttractionScreen({navigation}: attractionProps){
 
 function SuggestedScreen({navigation}: suggestedProps){
   const router = useRouter();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() =>{
-    const fetchPlanData = async () => {
-      const  { data, error} = await supabase
-      .from("Park Information")
-      .select("*");
-      if(error){
-        console.log(error.message);
-      } else {
-        setData(data);
-      }
-      setLoading(false);
-    };
-    fetchPlanData();
-  }, []);
+
+const fetchRideData = async () => {
+  setLoading(true);
+  
+  const {data: parkInformation, error} = await supabase
+  .from("park_information")
+  .select("*");
+
+  if (error){
+    console.log(error.message);
+  } else {
+    setData(parkInformation);
+    rideInterval();
+    //console.log("Data here is:", data);
+  }
+  setLoading(false);
+}
+
+useEffect(() => {
+  fetchRideData();
+}, []);
+//take the arrival time and increment by 45 minutes until the leave time is met
+const rideInterval = () => {
+  const date = userInput[0][0];
+  //arrival time information
+  const arrivalTime = userInput[0][1];
+  const parseArrivalTime = arrivalTime.split(" ");
+  const arrivalTimeString = new Date(`${date} ${parseArrivalTime[0]}`);
+  let arrivalMinutes = arrivalTimeString.getMinutes();
+  let arrivalHour = arrivalTimeString.getHours();
+  //leave time information 
+  const leaveTime = userInput[0][2];
+  const parseLeaveTime = leaveTime.split(" ");
+  const leaveTimeString = new Date(`${date} ${parseLeaveTime}`);
+  let leaveMinutes = leaveTimeString.getMinutes();
+  let leaveHour = leaveTimeString.getHours();
+  
+  //loop to get incremented minutes
+  const schedule = [];
+  /*put break statement first, find a way to convert the time in the if statement to required format 
+  then push it to the array to save time/ ignores break statement in favor of i iteration (so 16) */
+  for (let i = 0; i <= 16; i++) {
+    //leaveHour == arrivalHour || arrivalMinutes >= leaveMinutes - 45
+    arrivalMinutes += 45;
+    if (arrivalMinutes >= 60){
+       arrivalHour += Math.floor(arrivalMinutes / 60);
+       arrivalMinutes = arrivalMinutes % 60;
+       console.log(arrivalHour);
+    }
+    var suffix = arrivalHour < 12 ? "AM":"PM";
+    if (arrivalHour > 12){
+    arrivalHour = ((arrivalHour + 11) % 12 + 1);
+    //schedule.push(`${arrivalHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+    }
+
+    schedule.push(`${arrivalHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+  }
+  console.log(schedule);
+}
   return(
     <View style={styles.container}>
       
@@ -624,26 +672,32 @@ function SuggestedScreen({navigation}: suggestedProps){
     </View>
 
     <View style={styles.itinmiddleSection}>
-      {[ 
-        { image: require("../image/IronGwazi.png"), name: "Iron Gwazi", arrival: "9:30AM" },
-        { image: require("../image/Kumba.png"), name: "Kumba", arrival: "10:00AM" },
-        { image: require("../image/Phoenix.png"), name: "Phoenix Rising", arrival: "10:30AM" },
-        { image: require("../image/CheetaHunt.png"), name: "Cheetah Hunt", arrival: "11:00AM" }
-      ].map((ride, index) => (
-        <View key={index} style={styles.itineraryContainer}>
-          <Image source={ride.image} style={styles.itineraryImage} />
-          <View style={styles.itinTextContainer}>
-            <Text style={styles.itinselectionButtonText}>{ride.name}</Text>
-            <Text style={styles.itinrideDescription}>Arrive by {ride.arrival}</Text>
-            <TouchableOpacity style={styles.directionsButton}>
-              <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
+      { loading ? ( 
+        <ActivityIndicator />
+      ) : (
+        <FlatList 
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({item, index}) => (
+         <View key={index} style={styles.itineraryContainer}>
+          <SafeAreaProvider>
+            <SafeAreaView>
+              <Image  style={styles.itineraryImage} />
+            <View style={styles.itinTextContainer}>
+              <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
+              <Text style={styles.itinrideDescription}>Arrive by</Text>
+              <TouchableOpacity style={styles.directionsButton}>
+                <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity>
+              <Icon name="delete" style={styles.deleteIcon} />
             </TouchableOpacity>
-          </View>
-          <TouchableOpacity>
-            <Icon name="delete" style={styles.deleteIcon} />
-          </TouchableOpacity>
+          </SafeAreaView>
+          </SafeAreaProvider>
         </View>
-      ))}
+      )}/>
+    )}
     </View>
 
     <View style={styles.navbar}>
