@@ -643,7 +643,7 @@ const rideInterval = () => {
   const schedule = [];
   /*put break statement first, find a way to convert the time in the if statement to required format 
   then push it to the array to save time/ ignores break statement in favor of i iteration (so 16) */
-  for (let i = 0; i <= 16; i++) {
+  for (let i = 0; i <= 8; i++) {
     //leaveHour == arrivalHour || arrivalMinutes >= leaveMinutes - 45
     arrivalMinutes += 45;
     if (arrivalMinutes >= 60){
@@ -651,14 +651,14 @@ const rideInterval = () => {
        arrivalMinutes = arrivalMinutes % 60;
        console.log(arrivalHour);
     }
+    let displayHour = arrivalHour;
     var suffix = arrivalHour < 12 ? "AM":"PM";
-    if (arrivalHour > 12){
-    arrivalHour = ((arrivalHour + 11) % 12 + 1);
-    //schedule.push(`${arrivalHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
-    }
-
-    schedule.push(`${arrivalHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+    if (displayHour > 12 ){
+      displayHour -= 12;
+    } 
+    schedule.push(`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
   }
+
   console.log(schedule);
 }
   return(
