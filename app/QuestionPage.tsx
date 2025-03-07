@@ -635,21 +635,33 @@ const rideInterval = () => {
   //leave time information 
   const leaveTime = userInput[0][2];
   const parseLeaveTime = leaveTime.split(" ");
-  const leaveTimeString = new Date(`${date} ${parseLeaveTime}`);
+  const leaveTimeString = new Date(`${date} ${parseLeaveTime[0]}`);
   let leaveMinutes = leaveTimeString.getMinutes();
   let leaveHour = leaveTimeString.getHours();
-  
   //loop to get incremented minutes
   const schedule = [];
-  /*put break statement first, find a way to convert the time in the if statement to required format 
-  then push it to the array to save time/ ignores break statement in favor of i iteration (so 16) */
-  for (let i = 0; i <= 8; i++) {
-    //leaveHour == arrivalHour || arrivalMinutes >= leaveMinutes - 45
+//convert time to 24 hour format in order to run the loop conditions 
+  if (parseArrivalTime[1].toLowerCase() == "pm"){
+    arrivalHour += 12;
+  }
+  if (parseLeaveTime[1].toLowerCase() == "pm"){
+    leaveHour += 12;
+  }
+  let leaveUserHour = leaveHour;
+  let leaveUserMinutes = leaveMinutes - 45;
+  if (leaveUserMinutes < 0){
+    leaveUserHour -= 1;
+    leaveUserMinutes += 60;
+  }
+  //let leaveUserTime = (`${leaveUserHour}:${leaveUserMinutes}`);
+
+  while(
+    arrivalHour < leaveHour || (arrivalHour === leaveHour && arrivalMinutes < leaveUserMinutes)
+  ){
     arrivalMinutes += 45;
     if (arrivalMinutes >= 60){
        arrivalHour += Math.floor(arrivalMinutes / 60);
        arrivalMinutes = arrivalMinutes % 60;
-       console.log(arrivalHour);
     }
     let displayHour = arrivalHour;
     var suffix = arrivalHour < 12 ? "AM":"PM";
@@ -658,9 +670,9 @@ const rideInterval = () => {
     } 
     schedule.push(`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
   }
-
   console.log(schedule);
 }
+
   return(
     <View style={styles.container}>
       
