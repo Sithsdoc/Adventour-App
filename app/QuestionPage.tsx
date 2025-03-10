@@ -602,13 +602,24 @@ function SuggestedScreen({navigation}: suggestedProps){
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  //code for saving values in loop
+  /*Objective:
+  1. get the value in the array and limit the number of rides that appear
+  2. Take the different times and place them in the arrival time interval
+  **call the rideInterval() logic in the function to get the information for the arrival time on the logic into the html*/
+  const schedule: string[] = [];
+  let scheduleAmount = schedule.length;
+  console.log(schedule);
+  console.log(scheduleAmount);
+
 
 const fetchRideData = async () => {
   setLoading(true);
   
   const {data: parkInformation, error} = await supabase
   .from("park_information")
-  .select("*");
+  .select("*")
+  .limit(rideInterval());
 
   if (error){
     console.log(error.message);
@@ -639,7 +650,6 @@ const rideInterval = () => {
   let leaveMinutes = leaveTimeString.getMinutes();
   let leaveHour = leaveTimeString.getHours();
   //loop to get incremented minutes
-  const schedule = [];
 //convert time to 24 hour format in order to run the loop conditions 
   if (parseArrivalTime[1].toLowerCase() == "pm"){
     arrivalHour += 12;
@@ -670,8 +680,11 @@ const rideInterval = () => {
     } 
     schedule.push(`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
   }
-  console.log(schedule);
+  return schedule.length;
+  //console.log(schedule);
+  //console.log(schedule.length);
 }
+console.log(schedule);
 
   return(
     <View style={styles.container}>
