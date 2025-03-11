@@ -343,7 +343,7 @@ function HeightScreen({navigation}: heightProps) {
       <View style={styles.middleSection}>
         <Text style={styles.questionText}>What is the height of the shortest person in your group (Enter their
           height in inches or centimeters):</Text>
-        <TextInput placeholder="Enter height" 
+        <TextInput placeholder="Enter height(in or cm)" 
         value={userHeight}
         onChangeText={setUserHeight}
         style={styles.inputBox}/>
@@ -601,18 +601,13 @@ function SuggestedScreen({navigation}: suggestedProps){
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [time, setTime] = useState<string[]>([]);
 
   //code for saving values in loop
   /*Objective:
   1. get the value in the array and limit the number of rides that appear
   2. Take the different times and place them in the arrival time interval
   **call the rideInterval() logic in the function to get the information for the arrival time on the logic into the html*/
-  const schedule: string[] = [];
-  let scheduleAmount = schedule.length;
-  console.log(schedule);
-  console.log(scheduleAmount);
-
-
 const fetchRideData = async () => {
   setLoading(true);
   
@@ -665,6 +660,7 @@ const rideInterval = () => {
   }
   //let leaveUserTime = (`${leaveUserHour}:${leaveUserMinutes}`);
 
+  const schedule = [];
   while(
     arrivalHour < leaveHour || (arrivalHour === leaveHour && arrivalMinutes < leaveUserMinutes)
   ){
@@ -678,14 +674,16 @@ const rideInterval = () => {
     if (displayHour > 12 ){
       displayHour -= 12;
     } 
-    schedule.push(`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+    let iterator = (`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+    schedule.push(iterator);
+    setTime(prevTime => [...prevTime, iterator]);
   }
-  return schedule.length;
-  //console.log(schedule);
+  console.log("Schedule is:", schedule);
+  console.log("Time is",time);
   //console.log(schedule.length);
+  //const length = schedule.length;
+    return (schedule.length);
 }
-console.log(schedule);
-
   return(
     <View style={styles.container}>
       
@@ -710,7 +708,7 @@ console.log(schedule);
               <Image  style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
-              <Text style={styles.itinrideDescription}>Arrive by</Text>
+              <Text style={styles.itinrideDescription}>Arrive by {time[index]}</Text>
               <TouchableOpacity style={styles.directionsButton}>
                 <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
               </TouchableOpacity>
