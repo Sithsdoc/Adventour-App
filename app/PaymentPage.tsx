@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -21,7 +21,7 @@ function OverviewPage({ navigation }: overviewProps) {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")} >
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.header}>Payment Information</Text>
@@ -95,152 +95,158 @@ export default function PaymentPage() {
   );
 }
 
+const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 16,
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: width * 0.04,
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: height * 0.02,
+    },
+    header: {
+        fontSize: width * 0.06,
+        fontFamily: 'Montserrat',
+        fontWeight: 'bold',
+        textAlign: 'center', 
+        flex: 1,
+    },
+    backButton: {
+      position: 'absolute',
+      left: width * 0.02,
+      width: width * 0.08, // Make it fit the icon exactly
+      height: width * 0.08, // Square shape matching the icon
+      justifyContent: 'center',
+      alignItems: 'center',
   },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  header: {
-    fontSize: 24,
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
-    textAlign: 'center', 
-    flex: 1,
-  },
-  backButton: {
-    padding: 10,
-    position: 'absolute', 
-    left: 10,
-  },
+  
   backIcon: {
-    color: "#000000",
-    fontSize: 30,
+      color: "#000000",
+      fontSize: width * 0.08,
   },
-  passwordSection: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 4,
-    borderWidth: 2,
-    borderColor: '#8E7EFE',
-    marginTop: 0, 
-  },
-  formLabel: {
-    fontSize: 18,
-    fontFamily: 'Atkinson Hyperlegible',
-    fontWeight: 'bold',
-    color: '#6b7280',
-    marginVertical: 8,
-  },
-  savedPaymentMethodSection: {
-    marginTop: 40,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 4,
-    borderWidth: 2,
-    borderColor: '#8E7EFE',
-  },
-  savedPaymentMethodTitle: {
-    fontSize: 18,
-    fontFamily: 'Atkinson Hyperlegible',
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  savedCardInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  savedCardText: {
-    fontSize: 20,
-    color: '#6b7280',
-    fontFamily: 'Atkinson Hyperlegible',
-  },
-  editIcon: {
-    padding: 4,
-  },
-  expiryContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  trashIcon: {
-    padding: 4,
-  },
-  addPaymentCardButton: {
-    alignSelf: 'center',
-    backgroundColor: '#310082',
-    borderRadius: 8,
-    paddingHorizontal: 90,
-    paddingVertical: 12,
-    marginTop: 20,
-  },
-  addPaymentCardButtonText: {
-    color: '#fff',
-    fontFamily: 'Montserrat',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-  },
-  saveButton: {
-    alignSelf: 'center',
-    backgroundColor: '#310082',
-    borderRadius: 8,
-    paddingHorizontal: 98,
-    paddingVertical: 12,
-    marginTop: 20,
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontFamily: 'Montserrat',
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  // Adjust ScrollView content style
-  scrollViewContent: {
-    flexGrow: 1, 
-    justifyContent: 'flex-start',
-    paddingTop: 0, 
-  },
-  navbar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: "#8E7EFE",
-    height: 70,
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-  },
-  navButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-  },
+    passwordSection: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: width * 0.04,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        elevation: 4,
+        borderWidth: 2,
+        borderColor: '#8E7EFE',
+        marginTop: height * 0.02,
+    },
+    formLabel: {
+        fontSize: width * 0.045,
+        fontFamily: 'Atkinson Hyperlegible',
+        fontWeight: 'bold',
+        color: '#6b7280',
+        marginVertical: height * 0.01,
+    },
+    savedPaymentMethodSection: {
+        marginTop: height * 0.05,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: width * 0.04,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
+        elevation: 4,
+        borderWidth: 2,
+        borderColor: '#8E7EFE',
+    },
+    savedPaymentMethodTitle: {
+        fontSize: width * 0.05,
+        fontFamily: 'Atkinson Hyperlegible',
+        fontWeight: 'bold',
+        marginBottom: height * 0.02,
+    },
+    savedCardInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: height * 0.02,
+    },
+    savedCardText: {
+        fontSize: width * 0.05,
+        color: '#6b7280',
+        fontFamily: 'Atkinson Hyperlegible',
+    },
+    editIcon: {
+        padding: width * 0.01,
+    },
+    expiryContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: height * 0.02,
+    },
+    trashIcon: {
+        padding: width * 0.01,
+    },
+    addPaymentCardButton: {
+        alignSelf: 'center',
+        backgroundColor: '#310082',
+        borderRadius: 8,
+        paddingHorizontal: width * 0.25,
+        paddingVertical: height * 0.015,
+        marginTop: height * 0.03,
+    },
+    addPaymentCardButtonText: {
+        color: '#fff',
+        fontFamily: 'Montserrat',
+        fontSize: width * 0.06,
+        fontWeight: 'bold',
+    },
+    input: {
+        width: '100%',
+        height: height * 0.06,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        paddingHorizontal: width * 0.03,
+        marginVertical: height * 0.01,
+        borderWidth: 1,
+        borderColor: '#d1d5db',
+    },
+    saveButton: {
+        alignSelf: 'center',
+        backgroundColor: '#310082',
+        borderRadius: 8,
+        paddingHorizontal: width * 0.25,
+        paddingVertical: height * 0.015,
+        marginTop: height * 0.03,
+    },
+    saveButtonText: {
+        color: '#fff',
+        fontFamily: 'Montserrat',
+        fontSize: width * 0.06,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    scrollViewContent: {
+        flexGrow: 1, 
+        justifyContent: 'flex-start',
+        paddingTop: height * 0.01,
+    },
+    navbar: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "#8E7EFE",
+        height: height * 0.1,
+        width: "100%",
+        position: "absolute",
+        bottom: 0,
+    },
+    navButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+    },
 });
+ 

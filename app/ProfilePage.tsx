@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput, Dimensions, ScrollView } from 'react-native';
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { supabase } from '@/utils/supabase';
@@ -274,7 +274,6 @@ const UserProfile = () => {
           <Text style={styles.editButtonText}>Delete My Account</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
           <Icon name="home" color="#C8A6FF" size={30} />
@@ -297,122 +296,115 @@ export default function ProfilePage() {
   return <UserProfile />;
 };
 
+const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 16,
-    paddingBottom: 100,  
-    fontFamily: "Atkinson Hyperlegible",  
+    backgroundColor: "#fff",
+    paddingHorizontal: width * 0.04,
+    paddingBottom: height * 0.12, // Ensures navbar does not overlap content
+    justifyContent: "space-between", // Distributes sections evenly
   },
   header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 16,
-    fontFamily: "Montserrat",  
+    fontSize: width * 0.05,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: height * 0.02,
+    fontFamily: "Montserrat",
   },
-
-  // Profile Section
   profileSection: {
-    alignItems: 'center',
-    marginBottom: 30,  
+    alignItems: "center",
+    flexShrink: 1, // Allows section to shrink on smaller screens
+    marginBottom: height * 0.02,
   },
   profileImage: {
-    width: 120,  
-    height: 120, 
-    borderRadius: 60,
-    marginBottom: 10,  
+    width: width * 0.25,
+    height: width * 0.25,
+    borderRadius: width * 0.125,
   },
   profileInfo: {
-    alignItems: 'center',
-    width: '100%', 
+    alignItems: "center",
+    width: "100%",
+    flexShrink: 1,
   },
-
-  // Profile details container with purple border
   profileDetailsContainer: {
-    width: '100%',  
-    borderWidth: 2, 
-    borderColor: '#8E7EFE', 
-    borderRadius: 12, 
-    padding: 16, 
+    width: "100%",
+    borderWidth: 2,
+    borderColor: "#8E7EFE",
+    borderRadius: 12,
+    padding: width * 0.03,
   },
-
-  // Info Row for name, email, phone number
   infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', 
-    alignItems: 'center',
-    width: '100%', 
-    marginBottom: 10, 
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    width: "100%",
   },
   name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    flex: 1, 
-    fontFamily: "Atkinson Hyperlegible",  
+    fontSize: width * 0.04,
+    fontWeight: "bold",
+    flexShrink: 1,
+    fontFamily: "Atkinson Hyperlegible",
   },
   email: {
-    fontSize: 16,
-    color: '#6b7280',
-    flex: 1, 
-    fontFamily: "Atkinson Hyperlegible",  
+    fontSize: width * 0.035,
+    color: "#6b7280",
+    flexShrink: 1,
+    fontFamily: "Atkinson Hyperlegible",
   },
   phoneNumber: {
-    fontSize: 16,
-    color: '#6b7280',
-    flex: 1, 
-    fontFamily: "Atkinson Hyperlegible",  
+    fontSize: width * 0.035,
+    color: "#6b7280",
+    flexShrink: 1,
+    fontFamily: "Atkinson Hyperlegible",
   },
-
-  // Sections Styling
   section: {
-    marginBottom: 50,
+    flexShrink: 1, // Prevents sections from taking too much space
+    maxHeight: height * 0.18, // Ensures sections don’t overflow
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#333',
-    fontFamily: "Montserrat",  
+    fontSize: width * 0.045,
+    fontWeight: "bold",
+    color: "#333",
+    fontFamily: "Montserrat",
   },
-
-  // Payment Method, Change Password, and Account buttons
   pMethod: {
-    backgroundColor: '#8E7EFE', 
+    backgroundColor: "#8E7EFE",
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginTop: 10,
+    paddingVertical: height * 0.008, // Reduce padding to fit smaller screens
+    marginTop: height * 0.005,
+    flexWrap: "wrap",
+    alignItems: "center",
   },
   buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   editButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
     fontFamily: "Atkinson Hyperlegible",
-    fontSize: 20,  
+    fontSize: width * 0.04,
+    textAlign: "center",
   },
-
-  // Delete My Account Button
   deleteButton: {
-    backgroundColor: '#EF4444', 
+    backgroundColor: "#EF4444",
   },
-
-  // Navbar Styling
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
     backgroundColor: "#8E7EFE",
-    height: 70,
-    width: "100%",  
+    height: height * 0.08,
+    width: "100%",
     position: "absolute",
     bottom: 0,
-    left: 0,  
-    right: 0, 
+    left: 0,
+    right: 0,
+    paddingBottom: height * 0.015, // Prevents overlap with content
   },
   navButton: {
     alignItems: "center",
@@ -420,11 +412,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    width: '100%',
-    height: 40,
-    backgroundColor: '#ffffff',
+    width: "100%",
+    height: height * 0.05,
+    backgroundColor: "#ffffff",
     borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-},
+    paddingHorizontal: width * 0.03,
+    marginVertical: height * 0.005,
+  },
 });
