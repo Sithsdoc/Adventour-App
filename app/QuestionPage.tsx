@@ -487,15 +487,16 @@ function RideScreen({navigation}: rideProps) {
         <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Thrill Rides")}>
           <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Slow Rides")}>
-          <Text style={styles.selectionButtonText}>Shows</Text>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Shows & Entertainment")}>
+          <Text style={styles.selectionButtonText}>Shows & Entertainment</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Water Rides")}>
-          <Text style={styles.selectionButtonText}>Water Rides</Text>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Family Friendly")}>
+          <Text style={styles.selectionButtonText}>Family Friendly</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Animal Experiences")}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Animal Encounter")}>
           <Text style={styles.selectionButtonText}>Animal Experiences</Text>
         </TouchableOpacity>
+        <Text>You Chose {rideChoice}</Text>
       </View>
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.skipButton} onPress={skipRide}>
@@ -526,11 +527,46 @@ function RideScreen({navigation}: rideProps) {
 
 function AttractionScreen({navigation}: attractionProps){
       const router = useRouter();
+      const [data, setData] = useState<any[]>([]);
+      const [loading, setLoading] = useState(true);
+      let userSelection = userInput[2][1];
+
+      const handleRide = (ride: any) => {
+        console.log(ride.ride_name);
+        userInput[2][2] = ride.ride_name;
+      }
+
+      const nextPage = () => {
+        console.log(userInput);
+        navigation.navigate("ItineraryScreen");
+      }
 
       const handleRideDelete = () => {
         delete userInput[2][1]
         navigation.navigate("RideScreen");
       }
+
+      const fetchRideData = async () => {
+        setLoading(true);
+        
+        const {data: parkInformation, error} = await supabase
+        .from("park_information")
+        .select("*")
+        .eq("ride_type", userSelection)
+        .limit(3);
+      
+        if (error){
+          console.log(error.message);
+        } else {
+          setData(parkInformation);
+        }
+        setLoading(false);
+      }
+      
+      useEffect(() => {
+        fetchRideData();
+      }, []);
+
 
   return (
     <View style={styles.container}>
@@ -543,38 +579,29 @@ function AttractionScreen({navigation}: attractionProps){
       </View>
 
       <View style={styles.ridemiddleSection}>
-        <Text style={styles.questionText}>Choose your must-go thrill rides:</Text>
+        <Text style={styles.questionText}>Choose your must-do attractions:</Text>
         
-        <View style={styles.optionContainer}>
-          <Image source={require("../image/IronGwazi.png")} style={styles.rideImage} />
-          <View style={styles.rideTextContainer}>
-            <Text style={styles.selectionButtonText}>Iron Gwazi</Text>
-            <Text style={styles.rideDescription}>Plunging riders from a 206 foot-tall peak into a 91-degree drop and reaching top speeds of 76 miles per hour.</Text>
-          </View>
+        <FlatList 
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({item, index}) => (
+        <View key={index} style={styles.optionContainer}>
+          <Image  style={styles.rideImage} />
+          <TouchableOpacity onPress={() => handleRide(item)}>
+            <View style={styles.rideTextContainer}>
+              <Text style={styles.selectionButtonText}>{item.ride_name}</Text>
+              <Text style={styles.rideDescription}>{item.description}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-
-        <View style={styles.optionContainer}>
-          <Image source={require("../image/Sheikra.png")} style={styles.rideImage} />
-          <View style={styles.rideTextContainer}>
-            <Text style={styles.selectionButtonText}>Sheikra</Text>
-            <Text style={styles.rideDescription}>200 ft from the sky, 90° straight down - ride this extreme roller coaster if you dare.</Text>
-          </View>
-        </View>
-
-        <View style={styles.optionContainer}>
-          <Image source={require("../image/Tigris.png")} style={styles.rideImage} />
-          <View style={styles.rideTextContainer}>
-            <Text style={styles.selectionButtonText}>Tigris</Text>
-            <Text style={styles.rideDescription}>Catapult through an exhilarating array of looping twists with forward and backward motion and breath-taking drops.</Text>
-          </View>
-        </View>
+        )}/>
       </View>
 
       <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.skipButton} onPress={() => navigation.navigate("ItineraryScreen")}>
+        <TouchableOpacity style={styles.skipButton} onPress={nextPage}>
           <Text style={styles.skipButtonText}>Skip</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ItineraryScreen")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={nextPage}>
           <Text style={styles.primaryButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -604,10 +631,6 @@ function SuggestedScreen({navigation}: suggestedProps){
   const [time, setTime] = useState<string[]>([]);
 
   //code for saving values in loop
-  /*Objective:
-  1. get the value in the array and limit the number of rides that appear
-  2. Take the different times and place them in the arrival time interval
-  **call the rideInterval() logic in the function to get the information for the arrival time on the logic into the html*/
 const fetchRideData = async () => {
   setLoading(true);
   
@@ -620,8 +643,6 @@ const fetchRideData = async () => {
     console.log(error.message);
   } else {
     setData(parkInformation);
-    rideInterval();
-    //console.log("Data here is:", data);
   }
   setLoading(false);
 }
@@ -678,10 +699,7 @@ const rideInterval = () => {
     schedule.push(iterator);
     setTime(prevTime => [...prevTime, iterator]);
   }
-  console.log("Schedule is:", schedule);
-  console.log("Time is",time);
-  //console.log(schedule.length);
-  //const length = schedule.length;
+  //console.log("Schedule is:", schedule);
     return (schedule.length);
 }
   return(
