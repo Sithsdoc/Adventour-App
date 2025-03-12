@@ -1,4 +1,4 @@
-import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput, AppState } from "react-native";
+import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput, AppState, Dimensions } from "react-native";
 import React, {useState} from "react";
 import { useRouter } from "expo-router";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -182,104 +182,100 @@ export default function LoginPage(){
     );
 }
 
-const styles = StyleSheet.create({
-    //CSS for dividing sections
-    container: {
-      flex: 1,
-      backgroundColor: "#67C5ED",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingBottom: 30, 
+const { width, height } = Dimensions.get("window");
 
-    },
-    topSection: {
-        flex: 1, 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#67C5ED",
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 30,
-      },
-      middleSection: {
+        paddingBottom: height * 0.05,
+        paddingHorizontal: width * 0.05,
+    },
+    topSection: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingTop: height * 0.03,
+    },
+    middleSection: {
         flex: 1,
         width: "90%",
-        padding: 20,
+        padding: width * 0.05,
         elevation: 5,
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 5,
+        marginBottom: height * 0.02,
         alignSelf: "center",
-        paddingTop: 10,
-      },
-      input: {
+    },
+    input: {
         width: '100%',
-        height: 40,
+        height: height * 0.05,
         backgroundColor: '#ffffff',
         borderRadius: 5,
-        paddingHorizontal: 10,
-        marginVertical: 10,
+        paddingHorizontal: width * 0.03,
+        marginVertical: height * 0.01,
     },
     label: {
-        fontSize: 18,
+        fontSize: width * 0.045,
         fontWeight: 'bold',
         color: '#ffffff',
         textAlign: "left",
-        marginBottom: 5,
+        marginTop: height * 0.02,
     },
     loginButton: {
-        backgroundColor: "#310082", 
-        width:"100%",
-        height:40,
-        borderRadius: 30, 
-        alignItems: "center", 
-        justifyContent: "center", 
-        marginTop: 20,
+        backgroundColor: "#310082",
+        width: "100%",
+        height: height * 0.06,
+        borderRadius: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: height * 0.02,
     },
     loginButtonText: {
-        color: "#ffffff", 
-        fontSize: 18,
+        color: "#ffffff",
+        fontSize: width * 0.05,
         fontWeight: "bold",
     },
-    googleButton: { 
-        backgroundColor: '#ffffff',  
-        fontSize: 18,        
-        fontWeight: 'bold',
-        paddingVertical: 10,  
-        paddingHorizontal: 90,
-        borderRadius: 30,      
-        marginTop: 20,       
+    googleButton: {
+        backgroundColor: '#ffffff',
+        paddingVertical: height * 0.015,
+        paddingHorizontal: width * 0.2,
+        borderRadius: 30,
+        marginTop: height * 0.02,
     },
     googleButtonText: {
         color: "black",
-        fontSize: 18,  
-        fontWeight: 'black',
-        textAlign: 'center', 
+        fontSize: width * 0.045,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     signupButton: {
-        backgroundColor: '#ffffff',  
-        fontSize: 18,            
-        fontWeight: 'bold',
-        paddingVertical: 10,     
-        paddingHorizontal: 30,   
-        borderRadius: 30,         
-        marginTop: 20,          
+        backgroundColor: '#ffffff',
+        paddingVertical: height * 0.015,
+        paddingHorizontal: width * 0.15,
+        borderRadius: 30,
+        marginTop: height * 0.02,
     },
     signupButtonText: {
-        color: "#black", 
-        fontSize: 18,           
-        fontWeight: 'black',
-        textAlign: 'center',    
+        color: "black",
+        fontSize: width * 0.045,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     signButton: {
-        backgroundColor: "#310082", 
-        width:"100%",
-        height:40,
-        borderRadius: 30, 
-        alignItems: "center", 
-        justifyContent: "center", 
-        marginTop: 20,
+        backgroundColor: "#310082",
+        width: "100%",
+        height: height * 0.06,
+        borderRadius: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: height * 0.02,
     },
     signButtonText: {
-        color: "#ffffff", 
-        fontSize: 18,
+        color: "#ffffff",
+        fontSize: width * 0.05,
         fontWeight: "bold",
     },
 });
