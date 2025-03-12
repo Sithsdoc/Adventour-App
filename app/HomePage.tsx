@@ -1,241 +1,272 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { 
+  StyleSheet, 
+  View, 
+  Text, 
+  Image, 
+  TouchableOpacity,
+  Dimensions 
+} from "react-native";
 import { useRouter } from "expo-router";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-export default function HomePage(){
-    const router = useRouter();
+const { width } = Dimensions.get("window");
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.topSection}>
-          <Image source={require("../image/logo.svg")} style={styles.logo}/>
-        </View>
-        <View style={styles.separator}/>
+export default function HomePage() {
+  const router = useRouter();
 
-        <View style={styles.middleSection}>
-          <Text style={styles.titleText}>Upcoming Events</Text>
-          <View style={styles.box}>
-            <Text style={styles.boxText}>Iron Gwazi</Text>
-            <Text style={styles.boxTime}>Arrive at 9:30AM</Text>
-            <TouchableOpacity style={[styles.button, styles.detailsButton]}>
-              <Text style={styles.buttonText}>Details</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.directionsButton]}>
-              <Text style={styles.buttonText}>Directions</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.separator}/>
-
-        <View style={styles.middleSection}>
-          <View style={styles.row}>
-            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/HistoryPage")}>
-              <Icon name="history" size={30} color="#310082" />
-              <Text style={styles.iconText}>History</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/ReminderPage")}>
-              <Icon name="notifications" size={30} color="#310082"/>
-              <Text style={styles.iconText}>Reminder</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
-              <Icon name="event" size={30} color="#310082"/>
-              <Text style={styles.iconText}>Shows/Events</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
-              <Icon name="restaurant" size={30} color="#310082"/>
-              <Text style={styles.iconText}>Dining</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
-              <Icon name="accessible" size={30} color="#310082"/>
-              <Text style={styles.iconText}>Accessibility</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} onPress={() => router.push("/MapPage")}>
-              <Icon name="attractions" size={30} color="#310082"/>
-              <Text style={styles.iconText}>Top Rides</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            <TouchableOpacity style={styles.equalButton} onPress={() => router.push("/QuestionPage")}>
-              <Text style={styles.buttonText}>Start Planning</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.equalButton} onPress={() => router.push("/MapPage")}>
-              <Text style={styles.buttonText}>View Map</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.navbar}>
-          <TouchableOpacity style={styles.navButton}>
-            <Icon name="home" color="#C8A6FF" size={30}/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/QuestionPage")}>
-            <Icon name="assignment" color="#C8A6FF" size={30}/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
-            <Icon name="place" color="#C8A6FF" size={30}/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
-            <Icon name="account-circle" color="#C8A6FF" size={30}/>
-          </TouchableOpacity>
-        </View>
-        
+  return (
+    <View style={styles.container}>
+      {/* Top Section / Logo */}
+      <View style={styles.topSection}>
+        <Image
+          source={require("../image/logo.svg")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
       </View>
-    );
+
+      {/* Separator */}
+      <View style={styles.separator} />
+
+      {/* Upcoming Events */}
+      <View style={styles.middleSection}>
+        <Text style={styles.titleText}>Upcoming Events</Text>
+        <View style={styles.box}>
+          <Text style={styles.boxText}>Iron Gwazi</Text>
+          <Text style={styles.boxTime}>Arrive at 9:30AM</Text>
+
+          <TouchableOpacity style={[styles.button, styles.detailsButton]}>
+            <Text style={styles.buttonText}>Details</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.button, styles.directionsButton]}>
+            <Text style={styles.buttonText}>Directions</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Separator */}
+      <View style={styles.separator} />
+
+      {/* Feature Icons and Buttons */}
+      <View style={styles.middleSection}>
+        <View style={styles.row}>
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={() => router.push("/HistoryPage")}
+          >
+            <Icon name="history" size={width * 0.08} color="#310082" />
+            <Text style={styles.iconText}>History</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={() => router.push("/ReminderPage")}
+          >
+            <Icon name="notifications" size={width * 0.08} color="#310082" />
+            <Text style={styles.iconText}>Reminder</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={() => router.push("/MapPage")}
+          >
+            <Icon name="event" size={width * 0.08} color="#310082" />
+            <Text style={styles.iconText}>Shows/Events</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.row}>
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={() => router.push("/MapPage")}
+          >
+            <Icon name="restaurant" size={width * 0.08} color="#310082" />
+            <Text style={styles.iconText}>Dining</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={() => router.push("/MapPage")}
+          >
+            <Icon name="accessible" size={width * 0.08} color="#310082" />
+            <Text style={styles.iconText}>Accessibility</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={() => router.push("/MapPage")}
+          >
+            <Icon name="attractions" size={width * 0.08} color="#310082" />
+            <Text style={styles.iconText}>Top Rides</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.equalButton}
+            onPress={() => router.push("/QuestionPage")}
+          >
+            <Text style={styles.buttonText}>Start Planning</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.equalButton}
+            onPress={() => router.push("/MapPage")}
+          >
+            <Text style={styles.buttonText}>View Map</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Bottom Navbar */}
+      <View style={styles.navbar}>
+        <TouchableOpacity style={styles.navButton}>
+          <Icon name="home" color="#C8A6FF" size={width * 0.08} />
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.navButton} 
+          onPress={() => router.push("/QuestionPage")}
+        >
+          <Icon name="assignment" color="#C8A6FF" size={width * 0.08} />
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.navButton} 
+          onPress={() => router.push("/MapPage")}
+        >
+          <Icon name="place" color="#C8A6FF" size={width * 0.08} />
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.navButton} 
+          onPress={() => router.push("/ProfilePage")}
+        >
+          <Icon name="account-circle" color="#C8A6FF" size={width * 0.08} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
+  /** Container holds everything */
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "flex-start",  
-    paddingBottom: 70,  
+  },
+
+  /** Top Section */
+  topSection: {
+    width: "100%",
+    alignItems: "center",
+    marginTop: "5%",
   },
   logo: {
-    width: 370,
-    height: 190,
-    alignSelf: "center",
-    marginBottom: 50,
-    marginTop: 20,
+    width: "80%",          // 80% of the screen width
+    aspectRatio: 370 / 190, // Keep original logo ratio
+    marginBottom: "5%",
   },
-  topSection: {
-    flex: 1, 
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 90,
-  },
+
+  /** Middle Section */
   middleSection: {
-    flex: 2, 
+    width: "90%",
     alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 20,
-  },
-  bottomSection: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 40, 
+    marginVertical: "3%",
   },
   titleText: {
-    fontFamily: "Montserrat",
-    fontSize: 24,
     fontWeight: "bold",
-    justifyContent: "flex-start",
     color: "#310082",
-  },
-  sectionText: {
-    fontSize: 18,
+    fontSize: width * 0.06, // e.g. 6% of screen width
+    textAlign: "center",
+    marginBottom: "3%",
   },
   box: {
-    width: "120%",
+    width: "100%",
     backgroundColor: "#310082",
-    padding: 15,
+    padding: "5%",
     borderRadius: 10,
-    shadowColor: "#000",
-    marginTop: 20,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: "3%",
   },
   boxText: {
     fontWeight: "bold",
-    fontFamily: "Montserrat",
-    fontSize: 16,
-    color:"#FFFFFF",
+    fontSize: width * 0.045,
+    color: "#FFFFFF",
     textAlign: "center",
   },
   boxTime: {
-    fontSize: 13,
-    fontFamily: "Atkinson Hyperlegible",
-    color:"#FFFFFF",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,  
+    fontSize: width * 0.035,
+    color: "#FFFFFF",
+    marginBottom: "5%",
   },
+
+  /** Buttons */
   button: {
     backgroundColor: "#310082",
-    height: 50,  
-    width: "80%",  
+    height: 50,
+    width: "80%",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10, 
+    marginBottom: "3%",
   },
   detailsButton: {
-    backgroundColor: "#8E7EFE",  
+    backgroundColor: "#8E7EFE",
   },
   directionsButton: {
-    backgroundColor: "#8E7EFE",  
-  },
-  equalButton: {
-    backgroundColor: "#310082",
-    height: 50, 
-    width: "70%", 
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 10,  
+    backgroundColor: "#8E7EFE",
   },
   buttonText: {
     color: "#FFFFFF",
-    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center", 
-    flexShrink: 1, 
+    fontSize: width * 0.04,
   },
-  separator: {
-    width: "100%", 
-    height: 1, 
-    backgroundColor: "#8E7EFE", 
-    marginTop: 20, 
-  },
+
+  /** Row layout for icons and action buttons */
   row: {
     flexDirection: "row",
-    justifyContent: "center",  
-    marginBottom: 20,
+    justifyContent: "center",
     width: "100%",
+    marginBottom: "5%",
   },
   iconButton: {
-    alignItems: "center",
     flex: 1,
-    marginHorizontal: 5,
+    alignItems: "center",
   },
   iconText: {
-    marginTop: 5,
-    fontSize: 12,
+    marginTop: "5%",
+    fontSize: width * 0.03,
+    textAlign: "center",
   },
-  weatherTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 60,
-  },
-  weatherContainer: {
-    flexDirection: "row", 
-    justifyContent: "space-between", 
-    alignItems: "center", 
-    padding: 10, 
-    marginTop: 25, 
-    borderRadius: 10,
-  },
-  weatherBox: {
-    width: 600,
-    height: "100%",
+  equalButton: {
     backgroundColor: "#310082",
-    padding: 15,
+    height: 50,
+    width: "40%",      // each button about 40%, so two fit side by side
     borderRadius: 10,
-    shadowColor: "#000",
-    marginTop: 20,
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: "2%",
   },
+
+  /** Separator line */
+  separator: {
+    width: "90%",
+    height: 1,
+    backgroundColor: "#8E7EFE",
+    marginVertical: "3%",
+  },
+
+  /** Bottom navigation bar */
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
     backgroundColor: "#8E7EFE",
-    height: 70,
     width: "100%",
+    height: "8%",      // 8% of screen height for the nav
     position: "absolute",
     bottom: 0,
   },
