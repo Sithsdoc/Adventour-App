@@ -1,13 +1,14 @@
-import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, View, Text, Button, TextInput,  Image, TouchableOpacity, Dimensions } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const { width, height } = Dimensions.get("window");
+
 export default function ReminderPage(){
   const router = useRouter();
-    return(
-      <View style={remindStyles.container}>
-     
+  return(
+    <View style={remindStyles.container}>
       <View style={remindStyles.topSection}>
         <View style={remindStyles.headerContainer}>
           <TouchableOpacity style={remindStyles.backButton} onPress={() => router.push("/HomePage")}>
@@ -18,7 +19,6 @@ export default function ReminderPage(){
         <Text style={remindStyles.subHeaderText}>Your ride starts in 5 minutes!</Text>
       </View>
 
-      
       <View style={remindStyles.middleSection}>
         <View style={remindStyles.card}>
           <Image source={require("../image/IronGwazi.png")} style={remindStyles.rideImage} />
@@ -32,7 +32,6 @@ export default function ReminderPage(){
         </View>
       </View>
 
-      
       <View style={remindStyles.navbar}>
         <TouchableOpacity style={remindStyles.navButton} onPress={() => router.push("/HomePage")}>
           <Icon name="home" color="#C8A6FF" size={30}/>
@@ -63,6 +62,7 @@ const remindStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 30,
+    width: "100%",
   },
   headerContainer: {
     flexDirection: "row",
@@ -89,7 +89,7 @@ const remindStyles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    left: -1,
+    left: 10,
   },
   backIcon: {
     color: "#000000",
@@ -99,6 +99,7 @@ const remindStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 10,
+    width: "100%",
   },
   card: {
     backgroundColor: "#FAF5FF",
@@ -108,15 +109,15 @@ const remindStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     elevation: 5,
-    width: 320,
+    width: width * 0.9,
     overflow: "hidden",
-    marginTop: 1,
+    marginTop: 10,
     borderColor: "#8E7EFE",
     borderWidth: 1,
   },
   rideImage: {
     width: "100%",
-    height: 150,
+    height: height * 0.25,
   },
   cardContent: {
     padding: 15,
