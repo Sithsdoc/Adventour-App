@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -18,20 +18,22 @@ const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
 function OverviewPage({ navigation }: overviewProps) {
   const router = useRouter();
+
+  const [paymentMethod, setPaymentMethod] = useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.push("/ProfilePage")} >
+        <TouchableOpacity onPress={() => router.push("/ProfilePage")} >
           <Icon name="arrow-back" style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.header}>Payment Information</Text>
       </View>
-
-      <View style={styles.savedPaymentMethodSection}>
+      { paymentMethod ? (
+        <View style={styles.savedPaymentMethodSection}>
         <Text style={styles.savedPaymentMethodTitle}>Saved Payment Method</Text>
         <View style={styles.savedCardInfo}>
           <Text style={styles.savedCardText}>**** **** **** 2584</Text>
-          <TouchableOpacity style={styles.editIcon}>
+          <TouchableOpacity >
             <Icon name="edit" size={24} color="#8E7EFE" />
           </TouchableOpacity>
         </View>
@@ -42,10 +44,14 @@ function OverviewPage({ navigation }: overviewProps) {
           </TouchableOpacity>
         </View>
       </View>
-
+    ) : (
       <TouchableOpacity style={styles.addPaymentCardButton} onPress={() => navigation.navigate("EnterPage")}>
         <Text style={styles.addPaymentCardButtonText}>Add Payment Card</Text>
       </TouchableOpacity>
+
+    ) }
+      
+
     </View>
   );
 }
@@ -54,7 +60,7 @@ function EnterPage({ navigation }: enterProps) {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("OverviewPage")}>
+      <TouchableOpacity onPress={() => navigation.navigate("OverviewPage")}>
                 <Icon name="arrow-back" style={styles.backIcon} />
               </TouchableOpacity>
       <Text style={styles.header}>Add Payment Card</Text>
@@ -67,7 +73,7 @@ function EnterPage({ navigation }: enterProps) {
           <TextInput style={styles.formLabel} placeholder="Cardholder Name" />
           <TextInput style={styles.formLabel} placeholder="Expiry Date" keyboardType="numeric" />
           <TextInput style={styles.formLabel} placeholder="CVV" keyboardType="numeric" secureTextEntry />
-          <TouchableOpacity style={styles.saveButton} onPress={() => router.push("/ProfilePage")}>
+          <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate("OverviewPage")}>
             <Text style={styles.saveButtonText}>Save</Text>
           </TouchableOpacity>
         </View>

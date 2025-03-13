@@ -238,7 +238,7 @@ const UserProfile = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Payment Information</Text>
-        <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/PaymentPage")}>
+        <TouchableOpacity style={styles.pMethod} onPress={() => router.navigate("/PaymentPage")}>
           <View style={styles.buttonRow}>
             <Text style={styles.editButtonText}>Manage Payment Method</Text>
             <Icon name="edit" color="#fff" size={20} />
