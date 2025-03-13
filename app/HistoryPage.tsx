@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+
 export default function HistoryPage(){
     const router = useRouter();
     return(
@@ -13,6 +14,7 @@ export default function HistoryPage(){
                 </TouchableOpacity>                
                 <Text style={styles.title}>History</Text>
             </View>
+
 
             <View style={styles.middleSection}>
                 <View style={styles.historyItem}>
@@ -41,6 +43,7 @@ export default function HistoryPage(){
                 </View>
             </View>
 
+
             <View style={styles.navbar}>
                 <TouchableOpacity style={styles.navButton}>
                     <Icon name="home" color="#C8A6FF" size={30} onPress={() => router.push("/HomePage")}/>
@@ -59,6 +62,7 @@ export default function HistoryPage(){
     );
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -66,26 +70,26 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start",
         paddingTop: 30,
-        fontFamily: "Montserrat", 
+        fontFamily: "Montserrat",
     },
     topSection: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center', 
+        justifyContent: 'center',
         width: '100%',
-        paddingTop: 20, 
+        paddingTop: 20,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#000',
-        marginLeft: 30, 
-        fontFamily: "Montserrat", 
+        marginLeft: 30,
+        fontFamily: "Montserrat",
     },
     backButton: {
         position: "absolute",
-        top: 10, 
-        left: 40, 
+        top: 10,
+        left: 40,
         zIndex: 10,
     },
     backIcon: {
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     middleSection: {
-        flex: 1, 
+        flex: 1,
         alignItems: "center",
         justifyContent: "flex-start",
         paddingTop: 20,
@@ -109,19 +113,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',  
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: '#8E7EFE', 
+        borderColor: '#8E7EFE',
     },
     date: {
         color: 'black',
         fontSize: 20,
         fontWeight: '600',
-        fontFamily: "Montserrat", 
+        fontFamily: "Montserrat",
     },
     hours: {
         color: 'black',
         fontSize: 20,
         fontWeight: '600',
-        fontFamily: "Montserrat", 
+        fontFamily: "Montserrat",
     },
     navbar: {
         flexDirection: "row",
@@ -138,3 +142,5 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
+
+
