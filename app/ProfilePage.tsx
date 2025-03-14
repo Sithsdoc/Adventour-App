@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { supabase } from '@/utils/supabase';
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
 
 interface userProfile {
   auth_id: string;
@@ -27,12 +26,9 @@ const UserProfile = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const [editingProfilePic, setEditingProfilePic] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [editingEmail, setEditingEmail] = useState(false);
   const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
-
-  const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchUserData();
@@ -125,7 +121,6 @@ const UserProfile = () => {
           console.log("Old file deletion successful: ", oldFileName);
         }
       }
-
 
       const { data, error } = await supabase.storage
         .from('profile-pictures')
