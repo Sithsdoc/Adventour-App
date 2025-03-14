@@ -184,7 +184,6 @@ function PlanScreen({navigation}: planProps) {
         delete userInput[0][2];
         navigation.navigate("TimeScreen");
       }
-      //at this point in the code the system needs to generate a random list of rides from the options in the databse for suggestplan
   return(
     <View style={styles.container}>
       <View style={styles.topSection}>
@@ -484,7 +483,7 @@ function RideScreen({navigation}: rideProps) {
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Choose your ride preferences:</Text>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Thrill Rides")}>
+        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Thrill Ride")}>
           <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Shows & Entertainment")}>
@@ -494,7 +493,7 @@ function RideScreen({navigation}: rideProps) {
           <Text style={styles.selectionButtonText}>Family Friendly</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Animal Encounter")}>
-          <Text style={styles.selectionButtonText}>Animal Experiences</Text>
+          <Text style={styles.selectionButtonText}>Animal Encounter</Text>
         </TouchableOpacity>
         <Text>You Chose {rideChoice}</Text>
       </View>
@@ -626,15 +625,15 @@ function AttractionScreen({navigation}: attractionProps){
 
 function SuggestedScreen({navigation}: suggestedProps){
   const router = useRouter();
-  const [data, setData] = useState<any[]>([]);
+  const [parkData, setParkData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [time, setTime] = useState<string[]>([]);
+  const [parkTime, setParkTime] = useState<string[]>([]);
 
   //code for saving values in loop
-const fetchRideData = async () => {
+const fetchParkData = async () => {
   setLoading(true);
   
-  const {data: parkInformation, error} = await supabase
+  const {data: selectedParkInformation, error} = await supabase
   .from("park_information")
   .select("*")
   .limit(rideInterval());
@@ -642,65 +641,65 @@ const fetchRideData = async () => {
   if (error){
     console.log(error.message);
   } else {
-    setData(parkInformation);
+    setParkData(selectedParkInformation);
   }
   setLoading(false);
 }
 
 useEffect(() => {
-  fetchRideData();
+  fetchParkData();
 }, []);
 //take the arrival time and increment by 45 minutes until the leave time is met
 const rideInterval = () => {
-  const date = userInput[0][0];
+  const chosenDate = userInput[0][0];
   //arrival time information
-  const arrivalTime = userInput[0][1];
-  const parseArrivalTime = arrivalTime.split(" ");
-  const arrivalTimeString = new Date(`${date} ${parseArrivalTime[0]}`);
-  let arrivalMinutes = arrivalTimeString.getMinutes();
-  let arrivalHour = arrivalTimeString.getHours();
+  const userArrivalTime = userInput[0][1];
+  const parseUserArrivalTime = userArrivalTime.split(" ");
+  const userArrivalTimeString = new Date(`${chosenDate} ${parseUserArrivalTime[0]}`);
+  let userArrivalMinutes = userArrivalTimeString.getMinutes();
+  let userArrivalHour = userArrivalTimeString.getHours();
   //leave time information 
-  const leaveTime = userInput[0][2];
-  const parseLeaveTime = leaveTime.split(" ");
-  const leaveTimeString = new Date(`${date} ${parseLeaveTime[0]}`);
-  let leaveMinutes = leaveTimeString.getMinutes();
-  let leaveHour = leaveTimeString.getHours();
+  const userLeaveTime = userInput[0][2];
+  const parseUserLeaveTime = userLeaveTime.split(" ");
+  const userLeaveTimeString = new Date(`${chosenDate} ${parseUserLeaveTime[0]}`);
+  let userLeaveMinutes = userLeaveTimeString.getMinutes();
+  let userLeaveHour = userLeaveTimeString.getHours();
   //loop to get incremented minutes
 //convert time to 24 hour format in order to run the loop conditions 
-  if (parseArrivalTime[1].toLowerCase() == "pm"){
-    arrivalHour += 12;
+  if (parseUserArrivalTime[1].toLowerCase() == "pm"){
+    userArrivalHour += 12;
   }
-  if (parseLeaveTime[1].toLowerCase() == "pm"){
-    leaveHour += 12;
+  if (parseUserLeaveTime[1].toLowerCase() == "pm"){
+    userLeaveHour += 12;
   }
-  let leaveUserHour = leaveHour;
-  let leaveUserMinutes = leaveMinutes - 45;
-  if (leaveUserMinutes < 0){
-    leaveUserHour -= 1;
-    leaveUserMinutes += 60;
+  let leavePickedHour = userLeaveHour;
+  let leavePickedMinutes = userLeaveMinutes - 45;
+  if (leavePickedMinutes < 0){
+    leavePickedHour -= 1;
+    leavePickedMinutes += 60;
   }
   //let leaveUserTime = (`${leaveUserHour}:${leaveUserMinutes}`);
 
-  const schedule = [];
+  const userSchedule = [];
   while(
-    arrivalHour < leaveHour || (arrivalHour === leaveHour && arrivalMinutes < leaveUserMinutes)
+    userArrivalHour < userLeaveHour || (userArrivalHour === userLeaveHour && userArrivalMinutes < leavePickedMinutes)
   ){
-    arrivalMinutes += 45;
-    if (arrivalMinutes >= 60){
-       arrivalHour += Math.floor(arrivalMinutes / 60);
-       arrivalMinutes = arrivalMinutes % 60;
+    userArrivalMinutes += 45;
+    if (userArrivalMinutes >= 60){
+      userArrivalHour += Math.floor(userArrivalMinutes / 60);
+       userArrivalMinutes = userArrivalMinutes % 60;
     }
-    let displayHour = arrivalHour;
-    var suffix = arrivalHour < 12 ? "AM":"PM";
+    let displayHour = userArrivalHour;
+    var suffix = userArrivalHour < 12 ? "AM":"PM";
     if (displayHour > 12 ){
       displayHour -= 12;
     } 
-    let iterator = (`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
-    schedule.push(iterator);
-    setTime(prevTime => [...prevTime, iterator]);
+    let iteration = (`${displayHour}:${userArrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+    userSchedule.push(iteration);
+    setParkTime(lastTime => [...lastTime, iteration]);
   }
-  //console.log("Schedule is:", schedule);
-    return (schedule.length);
+  console.log("Schedule is:", userSchedule);
+    return (userSchedule.length);
 }
   return(
     <View style={styles.container}>
@@ -717,7 +716,7 @@ const rideInterval = () => {
         <ActivityIndicator />
       ) : (
         <FlatList 
-        data={data}
+        data={parkData}
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
@@ -726,7 +725,7 @@ const rideInterval = () => {
               <Image  style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
-              <Text style={styles.itinrideDescription}>Arrive by {time[index]}</Text>
+              <Text style={styles.itinrideDescription}>Arrive by {parkTime[index]}</Text>
               <TouchableOpacity style={styles.directionsButton}>
                 <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
               </TouchableOpacity>
@@ -761,10 +760,142 @@ const rideInterval = () => {
 
 function ItineraryScreen({navigation}: itineraryProps){
     const router = useRouter();
+    const [data, setData] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [time, setTime] = useState<string[]>([]);
+
+    /*Objective:
+    1. take the breakfast and lunch time the user inputs and remove it from the interval (use if and continue)
+    1.1 use if value not null continue, need to convert values most likely (userInput[1][0], userInput[1][1])
+    2. Take the height the user provides and use it to filter the options using .eq 
+    3. Take the ride that the user chooses in Attraction screen (userInput[2][2]) and have it be the first ride
+    on the generated list */
+  
+    const fetchRideData = async () => {
+      setLoading(true);
+      
+      const {data: parkInformation, error} = await supabase
+      .from("park_information")
+      .select("*")
+      .limit(rideInterval());
+    
+      if (error){
+        console.log(error.message);
+      } else {
+        setData(parkInformation);
+      }
+      setLoading(false);
+    }
+    
+    useEffect(() => {
+      fetchRideData();
+    }, []);
+  
+  const rideInterval = () => {
+    const date = userInput[0][0];
+    //arrival time information
+    const arrivalTime = userInput[0][1];
+    const parseArrivalTime = arrivalTime.split(" ");
+    const arrivalTimeString = new Date(`${date} ${parseArrivalTime[0]}`);
+    let arrivalMinutes = arrivalTimeString.getMinutes();
+    let arrivalHour = arrivalTimeString.getHours();
+    //leave time information 
+    const leaveTime = userInput[0][2];
+    const parseLeaveTime = leaveTime.split(" ");
+    const leaveTimeString = new Date(`${date} ${parseLeaveTime[0]}`);
+    let leaveMinutes = leaveTimeString.getMinutes();
+    let leaveHour = leaveTimeString.getHours();
+    // breakfast time information
+    const breakfastTime = userInput[1][0];
+    const parseBreakfastTime = breakfastTime.split(" ");
+    const breakfastTimeString = new Date(`${date} ${parseBreakfastTime[0]}`);
+    let breakfastMinutes = breakfastTimeString.getMinutes();
+    let breakfastHour = breakfastTimeString.getHours();
+    //lunch time informaiton
+    const lunchTime = userInput[1][1];
+    const parseLunchTime = lunchTime.split(" ");
+    const lunchTimeString = new Date(`${date} ${parseLunchTime[0]}`);
+    let lunchMinutes = lunchTimeString.getMinutes();
+    let lunchHour = lunchTimeString.getHours();
+    //loop to get incremented minutes
+  //convert time to 24 hour format in order to run the loop conditions 
+    if (parseArrivalTime[1].toLowerCase() == "pm"){
+      arrivalHour += 12;
+    }
+    if (parseLeaveTime[1].toLowerCase() == "pm"){
+      leaveHour += 12;
+    }
+    let leaveUserHour = leaveHour;
+    let leaveUserMinutes = leaveMinutes - 45;
+    if (leaveUserMinutes < 0){
+      leaveUserHour -= 1;
+      leaveUserMinutes += 60;
+    }
+    //let leaveUserTime = (`${leaveUserHour}:${leaveUserMinutes}`);
+
+    //breakfast time increment
+    let userBreakfastHour = breakfastHour;
+    let userBreakfastMinutes = breakfastMinutes + 45;
+    if(userBreakfastMinutes > 60){
+      userBreakfastHour += 1;
+      userBreakfastMinutes -= 60;
+    }
+    let userBreakfastTime = (`${userBreakfastHour}:${userBreakfastMinutes}`);
+    console.log("Brekafast is:",userBreakfastTime);
+    let originalBreakfastHour = breakfastHour;
+    let originalBreakfastMinutes = breakfastMinutes;
+    let originalBreakfastTime = (`${breakfastHour}:${breakfastMinutes}`);
+    console.log("original: ", originalBreakfastTime);
+
+    //lunch time increment 
+    let userLunchHour = lunchHour;
+    let userLunchMinutes = lunchMinutes + 45;
+    if(userLunchMinutes > 60){
+      userLunchHour += 1;
+      userLunchMinutes -= 60;
+    }
+    let userLunchTime = (`${userLunchHour}:${userLunchMinutes}`);
+    let originalLunchTime = (`${lunchHour}:${lunchMinutes}`);
+    console.log("Lunch is:",userLunchTime);
+  
+    const schedule = [];
+    while(
+      arrivalHour < leaveHour || (arrivalHour === leaveHour && arrivalMinutes < leaveUserMinutes)
+    ){
+      arrivalMinutes += 45;
+
+      if (arrivalMinutes >= 60){
+        arrivalHour += Math.floor(arrivalMinutes / 60);
+        arrivalMinutes = arrivalMinutes % 60;
+     }
+     let displayHour = arrivalHour;
+     var suffix = arrivalHour < 12 ? "AM":"PM";
+     if (displayHour > 12 ){
+       displayHour -= 12;
+     }
+     let originalArrivalTime = (`${displayHour}:${arrivalMinutes}`);
+     console.log(originalArrivalTime);
+      
+      if ((originalArrivalTime >= originalBreakfastTime) && 
+          (originalArrivalTime < userBreakfastTime)){
+            continue;
+          }
+
+          if ((originalArrivalTime >= originalLunchTime) && 
+          (originalArrivalTime < userLunchTime)){
+            continue;
+          }
+
+      let iterator = (`${displayHour}:${arrivalMinutes.toString().padStart(2, "0")} ${suffix}`);
+      schedule.push(iterator);
+      setTime(prevTime => [...prevTime, iterator]);
+    }
+    console.log("Schedule is:", schedule);
+      return (schedule.length);
+  }
   return(
     <View style={styles.container}>
       
-      {/* Top Section */}
       <View style={styles.itintopSection}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" style={styles.backIcon}/>
@@ -772,19 +903,21 @@ function ItineraryScreen({navigation}: itineraryProps){
         <Text style={styles.itinheaderText}>Awesome! Here is your itinerary</Text>
       </View>
 
-      {/* Middle Section */}
       <View style={styles.itinmiddleSection}>
-        {[ 
-          { image: require("../image/CheetaHunt.png"), name: "Cheetah Hunt", arrival: "9:30AM" },
-          { image: require("../image/Kumba.png"), name: "Kumba", arrival: "10:00AM" },
-          { image: require("../image/CobraCurse.png"), name: "Cobra’s Curse", arrival: "10:30AM" },
-          { image: require("../image/Phoenix.png"), name: "Phoenix Rising", arrival: "11:00AM" }
-        ].map((ride, index) => (
-          <View key={index} style={styles.itineraryContainer}>
-            <Image source={ride.image} style={styles.itineraryImage} />
+      { loading ? ( 
+        <ActivityIndicator />
+      ) : (
+        <FlatList 
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({item, index}) => (
+         <View key={index} style={styles.itineraryContainer}>
+          <SafeAreaProvider>
+            <SafeAreaView>
+              <Image  style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
-              <Text style={styles.itinselectionButtonText}>{ride.name}</Text>
-              <Text style={styles.itinrideDescription}>Arrive by {ride.arrival}</Text>
+              <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
+              <Text style={styles.itinrideDescription}>Arrive by {time[index]}</Text>
               <TouchableOpacity style={styles.directionsButton}>
                 <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
               </TouchableOpacity>
@@ -792,11 +925,13 @@ function ItineraryScreen({navigation}: itineraryProps){
             <TouchableOpacity>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableOpacity>
-          </View>
-        ))}
-      </View>
+          </SafeAreaView>
+          </SafeAreaProvider>
+        </View>
+      )}/>
+    )}
+    </View>
 
-      {/* Navbar */}
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
           <Icon name="home" color="#C8A6FF" size={30}/>
