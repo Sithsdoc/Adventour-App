@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput, Dimensions, ScrollView, Alert, Platform } from 'react-native';
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { supabase } from '@/utils/supabase';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 interface userProfile {
   auth_id: string;
@@ -29,6 +31,8 @@ const UserProfile = () => {
   const [editingName, setEditingName] = useState(false);
   const [editingEmail, setEditingEmail] = useState(false);
   const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
+
+  const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchUserData();
@@ -80,12 +84,51 @@ const UserProfile = () => {
     return <ActivityIndicator size="large" color="#8E7EFE" />;
   }
 
-  function editProfilePic() {
+  const editProfilePic = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
 
-  }
+    if (!result.canceled) {
+      setProfilePic(result.assets[0].uri);
+      await saveProfilePic(result.assets[0].uri);
+    }
+  };
 
-  async function saveProfilePic() {
+  async function saveProfilePic(uri) {
+    try {
+      const fileExt = uri.split('.').pop();
+      const fileName = `${userData?.auth_id}.${fileExt}`;
+      const filePath = `${fileName}`;
 
+      const fileData = await FileSystem.readAsStringAsync(uri, {
+        encoding: FileSystem.EncodingType.Base64
+      });
+
+      const { data, error } = await supabase.storage
+        .from('profile-pictures')
+        .upload(filePath, fileData, {contentType: `image/${fileExt}`, upsert: true});
+      
+      if (error) throw error;
+
+      const { data: publicUrl } = supabase.storage.from('profile-pictures').getPublicUrl(filePath);
+
+      const { error: updateError } = await supabase
+      .from('Users')
+      .update({ profile_picture: publicUrl.publicUrl })
+      .eq('auth_id', userData?.auth_id);
+
+      if (updateError) throw updateError;
+
+      Alert.alert("Success", "Profile picture updated!");
+    }
+    catch (error) {
+      console.error("Profile pic upload error: ", error.message);
+      Alert.alert("Profile pic upload error: ", error.message);
+    }
   }
 
   function editName() {
@@ -176,6 +219,9 @@ const UserProfile = () => {
           source={{uri: profilePic}}
           style={styles.profileImage}
         />
+        <TouchableOpacity onPress={() => editProfilePic()}>
+          <Icon name="edit" color="#8E7EFE" size={20} />
+        </TouchableOpacity>
         <View style={styles.profileInfo}>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.infoRow}>

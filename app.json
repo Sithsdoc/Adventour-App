@@ -33,7 +33,14 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "react-native-ble-plx"
+      "react-native-ble-plx",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos so you can upload a profile picture."
+        }
+      ]
+
     ],
     "experiments": {
       "typedRoutes": true
