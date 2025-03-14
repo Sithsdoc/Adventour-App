@@ -102,31 +102,54 @@ const UserProfile = () => {
     try {
       const fileExt = uri.split('.').pop();
       const fileName = `${userData?.auth_id}.${fileExt}`;
-      const filePath = `${fileName}`;
-
-      const fileData = await FileSystem.readAsStringAsync(uri, {
-        encoding: FileSystem.EncodingType.Base64
+      const formData = new FormData();
+      formData.append("file", {
+        uri: uri,
+        name: fileName,
+        type: `image/${fileExt}`,
       });
+
+      let oldFileName = null;
+      if (userData?.profile_picture !== "https://dixcsqbokxonnpkeptts.supabase.co/storage/v1/object/public/profile-pictures/please_work.png") {
+        const urlParts = userData.profile_picture.split('/');
+        oldFileName = urlParts[urlParts.length - 1];
+      }
+
+      if (oldFileName && oldFileName !== fileName) {
+        const { error: deleteError } = await supabase.storage.from('profile-pictures').remove([oldFileName]);
+
+        if (deleteError) {
+          console.warn("Old file deletion failed: ", deleteError.message);
+        }
+        else {
+          console.log("Old file deletion successful: ", oldFileName);
+        }
+      }
+
 
       const { data, error } = await supabase.storage
         .from('profile-pictures')
-        .upload(filePath, fileData, {contentType: `image/${fileExt}`, upsert: true});
+        .upload(fileName, formData, {
+          contentType: `image/${fileExt}`,
+          upsert: true
+        });
       
-      if (error) throw error;
+      if (error) {console.log("image upload error"); throw error;};
 
-      const { data: publicUrl } = supabase.storage.from('profile-pictures').getPublicUrl(filePath);
+      const { data: publicUrl } = supabase.storage.from('profile-pictures').getPublicUrl(fileName);
 
       const { error: updateError } = await supabase
-      .from('Users')
-      .update({ profile_picture: publicUrl.publicUrl })
-      .eq('auth_id', userData?.auth_id);
+        .from('Users')
+        .update({ profile_picture: publicUrl.publicUrl })
+        .eq('auth_id', userData?.auth_id);
 
-      if (updateError) throw updateError;
+      if (updateError) {console.log("database update error"); throw  updateError;};
 
       Alert.alert("Success", "Profile picture updated!");
     }
     catch (error) {
       console.error("Profile pic upload error: ", error.message);
+      console.error("Full error details:", error);
       Alert.alert("Profile pic upload error: ", error.message);
     }
   }
