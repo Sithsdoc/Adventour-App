@@ -585,7 +585,7 @@ function AttractionScreen({navigation}: attractionProps){
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
         <View key={index} style={styles.optionContainer}>
-          <Image  style={styles.rideImage} />
+          <Image source={{uri: item.images}} style={styles.rideImage} />
           <TouchableOpacity onPress={() => handleRide(item)}>
             <View style={styles.rideTextContainer}>
               <Text style={styles.selectionButtonText}>{item.ride_name}</Text>
@@ -722,7 +722,7 @@ const rideInterval = () => {
          <View key={index} style={styles.itineraryContainer}>
           <SafeAreaProvider>
             <SafeAreaView>
-              <Image  style={styles.itineraryImage} />
+              <Image source={{uri: item.images}} style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
               <Text style={styles.itinrideDescription}>Arrive by {parkTime[index]}</Text>
@@ -914,7 +914,7 @@ function ItineraryScreen({navigation}: itineraryProps){
          <View key={index} style={styles.itineraryContainer}>
           <SafeAreaProvider>
             <SafeAreaView>
-              <Image  style={styles.itineraryImage} />
+              <Image source={{uri: item.images}} style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
               <Text style={styles.itinrideDescription}>Arrive by {time[index]}</Text>
