@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ActivityIndicator, TextInput, Dimensions, ScrollView, Alert, Platform } from 'react-native';
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { supabase } from '@/utils/supabase';
+import * as ImagePicker from 'expo-image-picker';
 
 interface userProfile {
   auth_id: string;
@@ -25,7 +26,6 @@ const UserProfile = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const [editingProfilePic, setEditingProfilePic] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [editingEmail, setEditingEmail] = useState(false);
   const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
@@ -80,12 +80,73 @@ const UserProfile = () => {
     return <ActivityIndicator size="large" color="#8E7EFE" />;
   }
 
-  function editProfilePic() {
+  const editProfilePic = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
 
-  }
+    if (!result.canceled) {
+      setProfilePic(result.assets[0].uri);
+      await saveProfilePic(result.assets[0].uri);
+    }
+  };
 
-  async function saveProfilePic() {
+  async function saveProfilePic(uri) {
+    try {
+      const fileExt = uri.split('.').pop();
+      const fileName = `${userData?.auth_id}.${fileExt}`;
+      const formData = new FormData();
+      formData.append("file", {
+        uri: uri,
+        name: fileName,
+        type: `image/${fileExt}`,
+      });
 
+      let oldFileName = null;
+      if (userData?.profile_picture !== "https://dixcsqbokxonnpkeptts.supabase.co/storage/v1/object/public/profile-pictures/please_work.png") {
+        const urlParts = userData.profile_picture.split('/');
+        oldFileName = urlParts[urlParts.length - 1];
+      }
+
+      if (oldFileName && oldFileName !== fileName) {
+        const { error: deleteError } = await supabase.storage.from('profile-pictures').remove([oldFileName]);
+
+        if (deleteError) {
+          console.warn("Old file deletion failed: ", deleteError.message);
+        }
+        else {
+          console.log("Old file deletion successful: ", oldFileName);
+        }
+      }
+
+      const { data, error } = await supabase.storage
+        .from('profile-pictures')
+        .upload(fileName, formData, {
+          contentType: `image/${fileExt}`,
+          upsert: true
+        });
+      
+      if (error) {console.log("image upload error"); throw error;};
+
+      const { data: publicUrl } = supabase.storage.from('profile-pictures').getPublicUrl(fileName);
+
+      const { error: updateError } = await supabase
+        .from('Users')
+        .update({ profile_picture: publicUrl.publicUrl })
+        .eq('auth_id', userData?.auth_id);
+
+      if (updateError) {console.log("database update error"); throw  updateError;};
+
+      Alert.alert("Success", "Profile picture updated!");
+    }
+    catch (error) {
+      console.error("Profile pic upload error: ", error.message);
+      console.error("Full error details:", error);
+      Alert.alert("Profile pic upload error: ", error.message);
+    }
   }
 
   function editName() {
@@ -176,6 +237,9 @@ const UserProfile = () => {
           source={{uri: profilePic}}
           style={styles.profileImage}
         />
+        <TouchableOpacity onPress={() => editProfilePic()}>
+          <Icon name="edit" color="#8E7EFE" size={20} />
+        </TouchableOpacity>
         <View style={styles.profileInfo}>
           <View style={styles.profileDetailsContainer}>
             <View style={styles.infoRow}>
@@ -238,7 +302,7 @@ const UserProfile = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Payment Information</Text>
-        <TouchableOpacity style={styles.pMethod} onPress={() => router.push("/PaymentPage")}>
+        <TouchableOpacity style={styles.pMethod} onPress={() => router.navigate("/PaymentPage")}>
           <View style={styles.buttonRow}>
             <Text style={styles.editButtonText}>Manage Payment Method</Text>
             <Icon name="edit" color="#fff" size={20} />

@@ -1,11 +1,12 @@
 import React from "react";
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  Image, 
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
   TouchableOpacity,
-  Dimensions 
+  Dimensions,
+  ScrollView
 } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -16,132 +17,135 @@ export default function HomePage() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      {/* Top Section / Logo */}
-      <View style={styles.topSection}>
-        <Image
-          source={require("../image/logo.svg")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-      </View>
-
-      {/* Separator */}
-      <View style={styles.separator} />
-
-      {/* Upcoming Events */}
-      <View style={styles.middleSection}>
-        <Text style={styles.titleText}>Upcoming Events</Text>
-        <View style={styles.box}>
-          <Text style={styles.boxText}>Iron Gwazi</Text>
-          <Text style={styles.boxTime}>Arrive at 9:30AM</Text>
-
-          <TouchableOpacity style={[styles.button, styles.detailsButton]}>
-            <Text style={styles.buttonText}>Details</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={[styles.button, styles.directionsButton]}>
-            <Text style={styles.buttonText}>Directions</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Separator */}
-      <View style={styles.separator} />
-
-      {/* Feature Icons and Buttons */}
-      <View style={styles.middleSection}>
-        <View style={styles.row}>
-          <TouchableOpacity 
-            style={styles.iconButton} 
-            onPress={() => router.push("/HistoryPage")}
-          >
-            <Icon name="history" size={width * 0.08} color="#310082" />
-            <Text style={styles.iconText}>History</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.iconButton} 
-            onPress={() => router.push("/ReminderPage")}
-          >
-            <Icon name="notifications" size={width * 0.08} color="#310082" />
-            <Text style={styles.iconText}>Reminder</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.iconButton} 
-            onPress={() => router.push("/MapPage")}
-          >
-            <Icon name="event" size={width * 0.08} color="#310082" />
-            <Text style={styles.iconText}>Shows/Events</Text>
-          </TouchableOpacity>
+    <View style={{ flex: 1 }}>
+      {/* Scrollable Content */}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Top Section / Logo */}
+        <View style={styles.topSection}>
+          <Image
+            source={require("../image/logo.svg")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
 
-        <View style={styles.row}>
-          <TouchableOpacity 
-            style={styles.iconButton} 
-            onPress={() => router.push("/MapPage")}
-          >
-            <Icon name="restaurant" size={width * 0.08} color="#310082" />
-            <Text style={styles.iconText}>Dining</Text>
-          </TouchableOpacity>
+        {/* Separator */}
+        <View style={styles.separator} />
 
-          <TouchableOpacity 
-            style={styles.iconButton} 
-            onPress={() => router.push("/MapPage")}
-          >
-            <Icon name="accessible" size={width * 0.08} color="#310082" />
-            <Text style={styles.iconText}>Accessibility</Text>
-          </TouchableOpacity>
+        {/* Upcoming Events */}
+        <View style={styles.middleSection}>
+          <Text style={styles.titleText}>Upcoming Events</Text>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>Iron Gwazi</Text>
+            <Text style={styles.boxTime}>Arrive at 9:30AM</Text>
 
-          <TouchableOpacity 
-            style={styles.iconButton} 
-            onPress={() => router.push("/MapPage")}
-          >
-            <Icon name="attractions" size={width * 0.08} color="#310082" />
-            <Text style={styles.iconText}>Top Rides</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, styles.detailsButton]}>
+              <Text style={styles.buttonText}>Details</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.button, styles.directionsButton]}>
+              <Text style={styles.buttonText}>Directions</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={styles.row}>
-          <TouchableOpacity
-            style={styles.equalButton}
-            onPress={() => router.push("/QuestionPage")}
-          >
-            <Text style={styles.buttonText}>Start Planning</Text>
-          </TouchableOpacity>
+        {/* Separator */}
+        <View style={styles.separator} />
 
-          <TouchableOpacity
-            style={styles.equalButton}
-            onPress={() => router.push("/MapPage")}
-          >
-            <Text style={styles.buttonText}>View Map</Text>
-          </TouchableOpacity>
+        {/* Feature Icons and Buttons */}
+        <View style={styles.middleSection}>
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => router.push("/HistoryPage")}
+            >
+              <Icon name="history" size={width * 0.08} color="#310082" />
+              <Text style={styles.iconText}>History</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => router.push("/ReminderPage")}
+            >
+              <Icon name="notifications" size={width * 0.08} color="#310082" />
+              <Text style={styles.iconText}>Reminder</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => router.push("/MapPage")}
+            >
+              <Icon name="event" size={width * 0.08} color="#310082" />
+              <Text style={styles.iconText}>Shows/Events</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => router.push("/MapPage")}
+            >
+              <Icon name="restaurant" size={width * 0.08} color="#310082" />
+              <Text style={styles.iconText}>Dining</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => router.push("/MapPage")}
+            >
+              <Icon name="accessible" size={width * 0.08} color="#310082" />
+              <Text style={styles.iconText}>Accessibility</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => router.push("/MapPage")}
+            >
+              <Icon name="attractions" size={width * 0.08} color="#310082" />
+              <Text style={styles.iconText}>Top Rides</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.equalButton}
+              onPress={() => router.push("/QuestionPage")}
+            >
+              <Text style={styles.buttonText}>Start Planning</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.equalButton}
+              onPress={() => router.push("/MapPage")}
+            >
+              <Text style={styles.buttonText}>View Map</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
-      {/* Bottom Navbar */}
+      {/* Bottom Navbar (fixed) */}
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton}>
           <Icon name="home" color="#C8A6FF" size={width * 0.08} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.navButton} 
+        <TouchableOpacity
+          style={styles.navButton}
           onPress={() => router.push("/QuestionPage")}
         >
           <Icon name="assignment" color="#C8A6FF" size={width * 0.08} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.navButton} 
+        <TouchableOpacity
+          style={styles.navButton}
           onPress={() => router.push("/MapPage")}
         >
           <Icon name="place" color="#C8A6FF" size={width * 0.08} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          style={styles.navButton} 
+        <TouchableOpacity
+          style={styles.navButton}
           onPress={() => router.push("/ProfilePage")}
         >
           <Icon name="account-circle" color="#C8A6FF" size={width * 0.08} />
@@ -152,11 +156,10 @@ export default function HomePage() {
 }
 
 const styles = StyleSheet.create({
-  /** Container holds everything */
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  /** Scrollable content container style */
+  scrollContent: {
     alignItems: "center",
+    paddingBottom: "10%", // Add some bottom padding to avoid content being hidden by the navbar
   },
 
   /** Top Section */

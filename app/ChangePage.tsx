@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import { useRouter } from "expo-router";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useRouter } from "expo-router";
 import { supabase } from '@/utils/supabase';
 
 export default function ChangePage() {
   const router = useRouter();
 
-  const [ newPassword, setNewPassword ] = useState("");
-  const [ confirmNewPassword, setConfirmNewPassword ] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   async function changePassword() {
     if (!newPassword || !confirmNewPassword) {
@@ -26,12 +26,10 @@ export default function ChangePage() {
     if (error) {
       console.error("Error changing password: ", error);
       Alert.alert("Error", error.message);
-    }
-    else {
+    } else {
       Alert.alert("Success", "Password changed successfully");
       router.push("/ProfilePage");
     }
-
   }
 
   return (
@@ -67,14 +65,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 50, // Lowered by 50px
     marginBottom: 16,
   },
   header: {
     fontSize: 24,
-    fontFamily: 'Montserrat',  
+    fontFamily: 'Montserrat',
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1, 
+    flex: 1,
   },
   backButton: {
     padding: 10,
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontSize: 18,
-    fontFamily: 'Atkinson Hyperlegible',  
+    fontFamily: 'Atkinson Hyperlegible',
     fontWeight: 'bold',
     color: '#6b7280',
     marginVertical: 8,
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     borderWidth: 1,
-    borderColor: '#d1d5db', 
+    borderColor: '#d1d5db',
   },
   passwordSection: {
     marginTop: 40,
@@ -111,21 +110,21 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
     borderWidth: 2,
-    borderColor: '#8E7EFE', 
+    borderColor: '#8E7EFE',
   },
   saveButton: {
     alignSelf: 'center',
     backgroundColor: '#310082',
     borderRadius: 8,
-    paddingHorizontal: 98,  
-    paddingVertical: 12,   
-    marginTop: 20, 
+    paddingHorizontal: 98,
+    paddingVertical: 12,
+    marginTop: 20,
   },
   saveButtonText: {
     color: '#fff',
-    fontFamily: 'Montserrat', 
-    fontSize: 24,  
+    fontFamily: 'Montserrat',
+    fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',  
+    textAlign: 'center',
   },
 });
