@@ -649,7 +649,6 @@ const fetchParkData = async () => {
 useEffect(() => {
   fetchParkData();
 }, []);
-//take the arrival time and increment by 45 minutes until the leave time is met
 const rideInterval = () => {
   const chosenDate = userInput[0][0];
   //arrival time information
@@ -665,7 +664,6 @@ const rideInterval = () => {
   let userLeaveMinutes = userLeaveTimeString.getMinutes();
   let userLeaveHour = userLeaveTimeString.getHours();
   //loop to get incremented minutes
-//convert time to 24 hour format in order to run the loop conditions 
   if (parseUserArrivalTime[1].toLowerCase() == "pm"){
     userArrivalHour += 12;
   }
@@ -682,7 +680,8 @@ const rideInterval = () => {
 
   const userSchedule = [];
   while(
-    userArrivalHour < userLeaveHour || (userArrivalHour === userLeaveHour && userArrivalMinutes < leavePickedMinutes)
+    userArrivalHour < leavePickedHour || 
+    (userArrivalHour === leavePickedHour && userArrivalMinutes < leavePickedMinutes)
   ){
     userArrivalMinutes += 45;
     if (userArrivalMinutes >= 60){
@@ -765,19 +764,19 @@ function ItineraryScreen({navigation}: itineraryProps){
     const [time, setTime] = useState<string[]>([]);
 
     /*Objective:
-    1. take the breakfast and lunch time the user inputs and remove it from the interval (use if and continue)
-    1.1 use if value not null continue, need to convert values most likely (userInput[1][0], userInput[1][1])
-    2. Take the height the user provides and use it to filter the options using .eq 
-    3. Take the ride that the user chooses in Attraction screen (userInput[2][2]) and have it be the first ride
-    on the generated list */
+    1. make the height filter the database and only show rides the users can go on (userInput[1][2])
+    2. when the user chooses a ride they want to ride put that ride at the top of the list (userInput[2][2]) */
   
     const fetchRideData = async () => {
       setLoading(true);
+    
+      const {column, value} = heightFilter();
       
       const {data: parkInformation, error} = await supabase
       .from("park_information")
       .select("*")
-      .limit(rideInterval());
+      .limit(rideInterval())
+      .lte(column, value);
     
       if (error){
         console.log(error.message);
@@ -790,6 +789,35 @@ function ItineraryScreen({navigation}: itineraryProps){
     useEffect(() => {
       fetchRideData();
     }, []);
+
+    const heightFilter = (): { column: string; value: number } | undefined => {
+      let userHeight = userInput[1][2];
+
+      if (userHeight === ""){
+        userHeight = "70 in";
+      }
+
+      const regex = /^(\d+)\s*(\D*)$/
+      const parseHeight = userHeight.match(regex);
+
+      /*steps:
+      1.convert the string into a number in the if statement 
+      2. return the correct value for the .eq function, so it can filter everything out
+      3. create a separate function so you can return which column to use */
+
+      if (parseHeight){
+        //setHeightUnit(parseHeight[2]);
+        let number = parseInt(parseHeight[1], 10);
+        let unit = parseHeight[2].toLowerCase();
+        if (unit === "in"){
+          return {column: "height_inches", value: number};
+        } else if (unit === "cm"){
+          return {column: "height_centimeters", value: number};
+        }
+      }
+    }
+
+    
   
   const rideInterval = () => {
     const date = userInput[0][0];
@@ -845,7 +873,7 @@ function ItineraryScreen({navigation}: itineraryProps){
     let originalBreakfastHour = breakfastHour;
     let originalBreakfastMinutes = breakfastMinutes;
     let originalBreakfastTime = (`${breakfastHour}:${breakfastMinutes}`);
-    console.log("original: ", originalBreakfastTime);
+    //console.log("original: ", originalBreakfastTime);
 
     //lunch time increment 
     let userLunchHour = lunchHour;
@@ -856,11 +884,12 @@ function ItineraryScreen({navigation}: itineraryProps){
     }
     let userLunchTime = (`${userLunchHour}:${userLunchMinutes}`);
     let originalLunchTime = (`${lunchHour}:${lunchMinutes}`);
-    console.log("Lunch is:",userLunchTime);
+    //console.log("Lunch is:",userLunchTime);
   
     const schedule = [];
     while(
-      arrivalHour < leaveHour || (arrivalHour === leaveHour && arrivalMinutes < leaveUserMinutes)
+      arrivalHour < leaveUserHour || 
+      (arrivalHour === leaveUserHour && arrivalMinutes < leaveUserMinutes)
     ){
       arrivalMinutes += 45;
 
@@ -874,7 +903,7 @@ function ItineraryScreen({navigation}: itineraryProps){
        displayHour -= 12;
      }
      let originalArrivalTime = (`${displayHour}:${arrivalMinutes}`);
-     console.log(originalArrivalTime);
+     //console.log(originalArrivalTime);
       
       if ((originalArrivalTime >= originalBreakfastTime) && 
           (originalArrivalTime < userBreakfastTime)){
@@ -890,7 +919,7 @@ function ItineraryScreen({navigation}: itineraryProps){
       schedule.push(iterator);
       setTime(prevTime => [...prevTime, iterator]);
     }
-    console.log("Schedule is:", schedule);
+    //console.log("Schedule is:", schedule);
       return (schedule.length);
   }
   return(
