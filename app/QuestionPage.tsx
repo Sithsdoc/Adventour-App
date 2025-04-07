@@ -25,6 +25,7 @@ type RootStackParamList ={
   AttractionScreen: undefined,
   SuggestedScreen: undefined,
   ItineraryScreen: undefined,
+  ConfirmationScreen: undefined,
   NestedScreens: undefined,
 }
 
@@ -38,6 +39,7 @@ type rideProps = NativeStackScreenProps<RootStackParamList, "RideScreen">;
 type attractionProps = NativeStackScreenProps<RootStackParamList, "AttractionScreen">;
 type suggestedProps = NativeStackScreenProps<RootStackParamList, "SuggestedScreen">;
 type itineraryProps = NativeStackScreenProps<RootStackParamList, "ItineraryScreen">;
+type confirmationProps = NativeStackScreenProps<RootStackParamList, "ConfirmationScreen">;
 
 let userInput = [
 ["","",""], 
@@ -737,6 +739,9 @@ const rideInterval = () => {
         </View>
       )}/>
     )}
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+          <Text style={styles.primaryButtonText}>Confirm</Text>
+        </TouchableOpacity>
     </View>
 
     <View style={styles.navbar}>
@@ -922,6 +927,14 @@ function ItineraryScreen({navigation}: itineraryProps){
     //console.log("Schedule is:", schedule);
       return (schedule.length);
   }
+
+  const chosenRide = userInput[2][2];
+  console.log("Chosen ride:", chosenRide);
+  console.log("All ride names:", data.map(d => d.ride_name));
+  const reorderedRides = [
+    ...data.filter(item=> item.ride_name === chosenRide),
+    ...data.filter(item => item.ride_name !== chosenRide)
+  ];
   return(
     <View style={styles.container}>
       
@@ -937,7 +950,7 @@ function ItineraryScreen({navigation}: itineraryProps){
         <ActivityIndicator />
       ) : (
         <FlatList 
-        data={data}
+        data={reorderedRides}
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
@@ -959,6 +972,9 @@ function ItineraryScreen({navigation}: itineraryProps){
         </View>
       )}/>
     )}
+        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+          <Text style={styles.primaryButtonText}>Confirm</Text>
+        </TouchableOpacity>
     </View>
 
       <View style={styles.navbar}>
@@ -979,6 +995,14 @@ function ItineraryScreen({navigation}: itineraryProps){
   );
 }
 
+function ConfirmationScreen({navigation}: confirmationProps){
+  return(
+  <View style={styles.container}>
+    <Text>You have made it to the end of the show.</Text>
+  </View>
+  );
+}
+
 function NestedScreens(){
   return(
     <NestedStack.Navigator screenOptions={{ headerShown: false }}>
@@ -992,6 +1016,7 @@ function NestedScreens(){
       <NestedStack.Screen name="AttractionScreen" component={AttractionScreen}/>
       <NestedStack.Screen name="SuggestedScreen" component={SuggestedScreen}/>
       <NestedStack.Screen name="ItineraryScreen" component={ItineraryScreen}/>
+      <NestedStack.Screen name="ConfirmationScreen" component={ConfirmationScreen}/>
     </NestedStack.Navigator>
   );
 }
