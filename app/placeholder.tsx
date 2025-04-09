@@ -200,7 +200,7 @@ function ListPage({route, navigation}: listProps){
                     return (
                         <View>
                             <View style={styles.listCard}>
-                                <Image source={require("../image/chickfila.png")} style={styles.listImage} />
+                                <Image source={require("../image/Chickfila.png")} style={styles.listImage} />
                                 <View style={styles.listTextContainer}>
                                 <Text style={styles.listTitle}>Chick-fil-A</Text>
                                 <Text style={styles.listSubtitle}>$ American</Text>
