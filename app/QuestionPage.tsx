@@ -739,10 +739,11 @@ const rideInterval = () => {
         </View>
       )}/>
     )}
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
-          <Text style={styles.primaryButtonText}>Confirm</Text>
-        </TouchableOpacity>
     </View>
+
+    <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+      <Text style={styles.primaryButtonText}>Confirm</Text>
+    </TouchableOpacity>
 
     <View style={styles.navbar}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>

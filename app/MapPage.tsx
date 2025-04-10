@@ -1,5 +1,5 @@
-import { StyleSheet, View, Button, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react"; 
+import { StyleSheet, View, Button, Text, Image, TouchableOpacity,  ActivityIndicator, FlatList } from "react-native";
+import React, { useState, useEffect } from "react"; 
 import { Picker } from '@react-native-picker/picker';
 //import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -7,190 +7,177 @@ import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScree
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Touchable } from "react-native";
 import { useRouter } from "expo-router";
-
+import { supabase } from "../utils/supabase";
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 const MainStack =  createNativeStackNavigator<RootStackParamList>();
 const NestedStack = createNativeStackNavigator<RootStackParamList>();
 
 type RootStackParamList ={
-    MainPage: undefined,
-    ListPage: { selectedValue: string},
+    ListPage: undefined,
     NestedScreens: undefined,
 }
 
-type mainProps = NativeStackScreenProps<RootStackParamList, "MainPage">;
 type listProps = NativeStackScreenProps<RootStackParamList, "ListPage">;
 
+/* objectives:
+1. Make the list dynamic so that it works with the database
+2. Make the filter button bigger and move it to the center */
 
-
-function MainPage({navigation}: mainProps) {
-    const router = useRouter();
-    const [selectedValue, setSelectedValue] = useState("waitTimes");
-
-    return (
-        <View style={styles.mainContainer}>
-            <View style={styles.topSection}>
-                <View style={{width: "auto", alignSelf: "flex-start"}}>
-                    <Text>Filter</Text>
-                </View>
-                <View style={styles.mainPicker}>
-                    <Picker selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
-                        <Picker.Item label="Wait Times" value={"waitTimes"}/>
-                        <Picker.Item label="Attractions" value={"attractions"}/>
-                        <Picker.Item label="Dining" value={"dining"}/>
-                        <Picker.Item label="Restrooms" value={"restrooms"}/>
-                        <Picker.Item label="Shows" value={"shows"}/>
-                    </Picker>
-                </View>
-                <View>
-                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("ListPage", {selectedValue})}>
-                        <Text style={styles.listButtonText}>Show list</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View style={styles.mainMiddleSection}>
-                <Image source={require("../image/gardens.png")} style={styles.mainImage} />
-            </View>
-
-            <View style={styles.navbar}>
-                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
-                    <Icon name="home" color="#C8A6FF" size={30}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton}>
-                    <Icon name="assignment" color="#C8A6FF" size={30} onPress={() => router.push("/QuestionPage")}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/MapPage")}>
-                    <Icon name="place" color="#C8A6FF" size={30}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton} onPress={() => router.push("/ProfilePage")}>
-                    <Icon name="account-circle" color="#C8A6FF" size={30}/>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-}
 
 function ListPage({route, navigation}: listProps){
-    const {selectedValue} = route.params;
+    const [selectedValue, setSelectedValue] = useState("attractions");
     const router = useRouter();
+      const [parkData, setParkData] = useState<any[]>([]);
+      const [loading, setLoading] = useState(true);
+      const [parkTime, setParkTime] = useState<string[]>([]);
+      //let selectedDatabase = "park_information";
+    
+      const fetchParkData = async () => {
+        setLoading(true);
+
+        let selectedDatabase = "";
+        console.log(selectedValue);
+        switch(selectedValue){
+            case "attractioins":
+                selectedDatabase = "Rides";
+                break;
+            case "dining":
+                selectedDatabase = "Dining";
+                break;
+            case "shows":
+                selectedDatabase = "Shows";
+                break;
+            case "shops":
+                selectedDatabase = "Shops";
+                break;
+            default:
+                selectedDatabase = "park_information";
+        }
+        
+        const {data: selectedParkInformation, error} = await supabase
+        .from(selectedDatabase)
+        .select("*");
+      
+        if (error){
+          console.log(error.message);
+        } else {
+          setParkData(selectedParkInformation);
+        }
+        setLoading(false);
+      }
+      
+      useEffect(() => {
+        fetchParkData();
+      }, [selectedValue]);
+
     const listContent = () => {
         switch(selectedValue) {
-            case "waitTimes":
-            return (
-                <View>
-                <View style={styles.listCard}>
-                    <View style={styles.listTextContainer}>
-                        <Text style={styles.listTitle}>Cheetah Hunt</Text>
-                        <Text style={styles.listSubtitle}> 30 min wait</Text>
-                    </View>
-                    </View>
-                    <View style={styles.listCard}>
-                    <View style={styles.listTextContainer}>
-                        <Text style={styles.listTitle}>Kumba</Text>
-                        <Text style={styles.listSubtitle}> 90 min wait</Text>
-                    </View>
-                    </View>
-                    <View style={styles.listCard}>
-                    <View style={styles.listTextContainer}>
-                        <Text style={styles.listTitle}>Cobra's Curse</Text>
-                        <Text style={styles.listClosed}> Closed</Text>
-                    </View>
-                    </View>
-                </View>
-            );
             case "attractions":
+                //selectedDatabase = "Rides";
                 return (
-                    <View>
-                        <View style={styles.listCard}>
-                            <Image source={require("../image/CheetaHunt.png")} style={styles.listImage} />
-                            <View style={styles.listTextContainer}>
-                            <Text style={styles.listTitle}>Cheetah Hunt</Text>
-                            <Text style={styles.listSubtitle}>Thrilling triple-launch roller coaster</Text>
-                        </View>
-                        </View>
-                        <View style={styles.listCard}>
-                            <Image source={require("../image/Kumba.png")} style={styles.listImage} />
-                            <View style={styles.listTextContainer}>
-                            <Text style={styles.listTitle}>Kumba</Text>
-                            <Text style={styles.listSubtitle}>Legendary Florida steel coaster ride that roars</Text>
-                         </View>
-                         </View>
-                        <View style={styles.listCard}>
-                            <Image source={require("../image/Phoenix.png")} style={styles.listImage} />
-                            <View style={styles.listTextContainer}>
-                            <Text style={styles.listTitle}>Phoenix Rising</Text>
-                            <Text style={styles.listSubtitle}>Experience a fiery blaze of immersive, family-friendly excitement as you soar above the Serengeti Plain and drop into fun-filled twists and turns</Text>
-                        </View>
-                        </View>
+                    <View style={styles.mainContainer}>
+                        {loading ? (
+                            <ActivityIndicator/>
+                        ) : (
+                            <FlatList
+                            data={parkData}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({item, index}) => (
+                              <View key={index} style={styles.itineraryContainer}>
+                                <SafeAreaProvider>
+                                  <SafeAreaView>
+                                    <Image source={{uri: item.images}} style={styles.listImage} />
+                                    <View style={styles.listTextContainer}>
+                                        <Text style={styles.listTitle}>{item.ride_name}</Text>
+                                        <Text style={styles.listSubtitle}>{item.description}</Text>
+                                    </View>
+                                  </SafeAreaView>
+                                </SafeAreaProvider>              
+                              </View>
+                            )}/>
+                            )}
                     </View>
                 );
-                case "dining":
-                    return (
-                        <View>
-                            <View style={styles.listCard}>
-                                <Image source={require("../image/Chickfila.png")} style={styles.listImage} />
+            case "dining":
+                    //selectedDatabase = "Dining";
+                return (
+                    <View style={styles.mainContainer}>
+                    {loading ? (
+                        <ActivityIndicator/>
+                    ) : (
+                        <FlatList
+                        data={parkData}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({item, index}) => (
+                          <View key={index} style={styles.itineraryContainer}>
+                            <SafeAreaProvider>
+                              <SafeAreaView>
+                                <Image source={{uri: item.image}} style={styles.listImage} />
                                 <View style={styles.listTextContainer}>
-                                <Text style={styles.listTitle}>Chick-fil-A</Text>
-                                <Text style={styles.listSubtitle}>$ American</Text>
-                            </View>
-                            </View>
-                            <View style={styles.listCard}>
-                                <Image source={require("../image/zambia.png")} style={styles.listImage} />
-                                <View style={styles.listTextContainer}>
-                                <Text style={styles.listTitle}>Zambia Smokehouse</Text>
-                                <Text style={styles.listSubtitle}>$$ American, French</Text>
-                            </View>
-                            </View>
-                            <View style={styles.listCard}>
-                                <Image source={require("../image/morrocandelights.png")} style={styles.listImage} />
-                                <View style={styles.listTextContainer}>
-                                <Text style={styles.listTitle}>Moroccan Delights</Text>
-                                <Text style={styles.listSubtitle}>$ American, Italian</Text>
-                            </View>
-                            </View>
-                        </View>
+                                    <Text style={styles.listTitle}>{item.dining_name}</Text>
+                                    <Text style={styles.listSubtitle}>{item.description}</Text>
+                                </View>
+                              </SafeAreaView>
+                            </SafeAreaProvider>              
+                          </View>
+                        )}/>
+                      )}
+                    </View>
                     );
-                    case "restrooms":
-                        return (
-                            <View>
-                                <View style={styles.listItem}>
-                                    <Text style={styles.listTitle}>Near Entrance</Text>
+            case "shows":
+                //selectedDatabase = "Shows";
+                return (
+                    <View style={styles.mainContainer}>
+                    {loading ? (
+                        <ActivityIndicator/>
+                    ) : (
+                        <FlatList
+                        data={parkData}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({item, index}) => (
+                          <View key={index} style={styles.itineraryContainer}>
+                            <SafeAreaProvider>
+                              <SafeAreaView>
+                                <Image source={{uri: item.image}} style={styles.listImage} />
+                                <View style={styles.listTextContainer}>
+                                    <Text style={styles.listTitle}>{item.show_name}</Text>
+                                    <Text style={styles.listSubtitle}>{item.description}</Text>
                                 </View>
-                                <View style={styles.listItem}>
-                                    <Text style={styles.listTitle}>Near Iron Gwazi</Text>
+                              </SafeAreaView>
+                            </SafeAreaProvider>              
+                          </View>
+                        )}/>
+                      )}
+                    </View>
+                );
+            case "shops":
+                //selectedDatabase = "Shops";
+                 return(
+                    <View style={styles.mainContainer}>
+                    {loading ? (
+                        <ActivityIndicator/>
+                    ) : (
+                        <FlatList
+                        data={parkData}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({item, index}) => (
+                          <View key={index} style={styles.itineraryContainer}>
+                            <SafeAreaProvider>
+                              <SafeAreaView>
+                                <Image source={{uri: item.image}} style={styles.listImage} />
+                                <View style={styles.listTextContainer}>
+                                    <Text style={styles.listTitle}>{item.shop_name}</Text>
+                                    <Text style={styles.listSubtitle}>{item.description}</Text>
                                 </View>
-                                <View style={styles.listItem}>
-                                    <Text style={styles.listTitle}>Near Cheetah</Text>
-                                </View>
-                            </View>
-                        );
-                        case "shows":
-                            return (
-                                <View>
-                                    <View style={styles.listCard}>
-                                        <Image source={require("../image/iceshow.png")} style={styles.listImage} />
-                                        <View style={styles.listTextContainer}>
-                                        <Text style={styles.listTitle}>Christmas on Ice</Text>
-                                        <Text style={styles.listSubtitle}>Indoor, Seasonal</Text>
-                                    </View>
-                                    </View>
-                                    <View style={styles.listCard}>
-                                        <Image source={require("../image/fireworks.png")} style={styles.listImage} />
-                                        <View style={styles.listTextContainer}>
-                                        <Text style={styles.listTitle}>Holiday in the Sky Fireworks Show</Text>
-                                        <Text style={styles.listSubtitle}>Outdoor, Seasonal</Text>
-                                    </View>
-                                    </View>
-                                    <View style={styles.listCard}>
-                                        <Image source={require("../image/animaltales.png")} style={styles.listImage} />
-                                        <View style={styles.listTextContainer}>
-                                        <Text style={styles.listTitle}>Animal Tales</Text>
-                                        <Text style={styles.listSubtitle}>Presentation, Indoor</Text>
-                                    </View>
-                                    </View>
-                                </View>
-                            );
+                              </SafeAreaView>
+                            </SafeAreaProvider>              
+                          </View>
+                        )}/>
+                      )}
+                    </View>
+                 );
+
             default:
                 return(
                     <Text>No vlaue selected</Text>
@@ -202,22 +189,15 @@ function ListPage({route, navigation}: listProps){
         <View style={styles.listContainer}>
  
             <View style={styles.topSection}>
-                <View style={{width: "auto", alignSelf: "flex-start"}}>
-                    <Text>Filter</Text>
-                </View>
                 <View style={styles.mainPicker}>
-                    <Picker selectedValue={selectedValue} >
-                        <Picker.Item label="Wait Times" value={"waitTimes"}/>
+                    <Picker style={styles.pickerlist} selectedValue={selectedValue} onValueChange={(item) => setSelectedValue(item)}>
                         <Picker.Item label="Attractions" value={"attractions"}/>
                         <Picker.Item label="Dining" value={"dining"}/>
-                        <Picker.Item label="Restrooms" value={"restrooms"}/>
                         <Picker.Item label="Shows" value={"shows"}/>
+                        <Picker.Item label="Shops" value={"shops"}/>
                     </Picker>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.listButton} onPress={() => navigation.navigate("MainPage")}>
-                        <Text style={styles.listButtonText}>Hide list</Text> 
-                    </TouchableOpacity>
                 </View>
             </View>
  
@@ -226,9 +206,7 @@ function ListPage({route, navigation}: listProps){
                 {listContent()}
             </View>
  
- 
- 
- 
+
             <View style={styles.navbar}>
                 <TouchableOpacity style={styles.navButton}>
                     <Icon name="home" color="#C8A6FF" size={30} onPress={() => router.push("/HomePage")}/>
@@ -251,7 +229,6 @@ function ListPage({route, navigation}: listProps){
 function NestedScreens(){
     return(
         <NestedStack.Navigator screenOptions={{ headerShown: false }}>
-            <NestedStack.Screen name="MainPage" component={MainPage}/>
             <NestedStack.Screen name="ListPage" component={ListPage}/>
         </NestedStack.Navigator>
     );
@@ -316,13 +293,6 @@ export default function MapPage(){
             width: "100%",
             height: "100%",
             resizeMode: "cover",
-        },
-        mainPicker: {
-            width: 150,  // Set fixed width to make it visible
-            marginHorizontal: 10,  // Space it from the Filter button
-            fontSize: 16,
-            fontWeight: "bold",
-            color: "#200082",
         },
         DropdownContainer: {
             top: 10,
@@ -422,4 +392,41 @@ export default function MapPage(){
         listTextContainer: { 
             flex: 1 
         },
+        itineraryContainer: {
+            width: "100%", 
+            flexDirection: "row", 
+            backgroundColor: "#FFFFFF",
+            borderRadius: 10,
+            padding: 17,
+            alignItems: "center",
+            marginVertical: 8,
+            borderWidth: 1,
+            borderColor: "#C8A6FF",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 3,
+          },
+          itineraryImage: {
+            width: 80, 
+            height: 80, 
+            borderRadius: 50,
+            resizeMode: "cover",
+          },
+          mainPicker: {
+            width: "100%",  
+            alignItems: "center",
+            justifyContent: "center",  
+            fontSize: 16,
+            fontWeight: "bold",
+            color: "#200082",
+        },
+          pickerlist: {
+            width: 250,
+            height: 60,
+            fontSize: 18,
+            color: "#FFFFFF",
+            backgroundColor: "#310082",
+          },
     });
