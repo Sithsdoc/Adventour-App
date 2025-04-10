@@ -342,7 +342,7 @@ function HeightScreen({navigation}: heightProps) {
         <Text style={styles.headerText}>Customizable Itinerary</Text>
       </View>
       <View style={styles.middleSection}>
-        <Text style={styles.questionText}>What is the height of the shortest person in your group (Enter their
+        <Text style={styles.questionText}>What is the minimum guest height in your group? (Enter their
           height in inches or centimeters):</Text>
         <TextInput placeholder="Enter height(in or cm)" 
         value={userHeight}

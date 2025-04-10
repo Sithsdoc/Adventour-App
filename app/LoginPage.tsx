@@ -61,7 +61,7 @@ function login({navigation}: loginProps){
     return(
         <View style={styles.container}>
             <View style={styles.topSection}>
-                <Image source={require("../image/logo.svg")}/>
+                <Image source={require("../image/logo.png")}/>
             </View>
 
             <View style={styles.middleSection}>

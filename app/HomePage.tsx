@@ -23,7 +23,7 @@ export default function HomePage() {
         {/* Top Section / Logo */}
         <View style={styles.topSection}>
           <Image
-            source={require("../image/logo.svg")}
+            source={require("../image/logo.png")}
             style={styles.logo}
             resizeMode="contain"
           />
