@@ -1,7 +1,7 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, {useState, useEffect} from "react";
-import { FlatList, StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import { FlatList, StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { useRouter } from "expo-router";
@@ -10,6 +10,8 @@ import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 //import { ScrollView } from "react-native-reanimated/lib/typescript/Animated";
 //import { CheckBox, Input } from "@rneui/themed";
 //import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+const { width } = Dimensions.get("window");
 
 const MainStack =  createNativeStackNavigator<RootStackParamList>();
 const NestedStack = createNativeStackNavigator<RootStackParamList>();
@@ -50,22 +52,23 @@ let userInput = [
 function CalendarPage({navigation}: calendarProps) {
       const router = useRouter();
       const [selectedDate, setSelectedDate] = useState<string| null>("");
+      const [errorMessage, setErrorMessage] = useState("");
       
 
       const onDayPress = (day: { dateString: string }) => {
         //console.log(day);
         setSelectedDate(day.dateString);
-        console.log("Selected Date:", day.dateString);
+        //console.log("Selected Date:", day.dateString);
       };
 
       const pushToArray = () => {
         if(selectedDate){
         userInput[0][0] = selectedDate;
-        console.log(userInput);
-        } else {
-          console.log("nothing saved to array");
-        }
+        //console.log(userInput);
         navigation.navigate("TimeScreen");
+        } else if(!selectedDate){
+          setErrorMessage("Please pick a date");
+        }
       }
 
       
@@ -76,8 +79,8 @@ function CalendarPage({navigation}: calendarProps) {
       </View> 
       <View style={styles.CalendarmiddleSection}>
       <Text style={styles.questionText}>Select the day(s) you will spend at the park:</Text>
-      <Calendar onDayPress={onDayPress} />
-      <Text>The date you selected is {selectedDate}</Text>
+      <Calendar onDayPress={onDayPress} markedDates={{[selectedDate || ""]: {selected: true, backgroundColor: "blue"}}}/>
+      <Text>{errorMessage}</Text>
       </View> 
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.primaryButton} onPress={pushToArray}>
@@ -118,7 +121,7 @@ function TimeScreen({navigation}: timeProps) {
         if (validateTimeExpressions(arrivalInputTime) || validateTimeExpressions(leaveInputTime)){
         userInput[0][1] = arrivalInputTime;
         userInput[0][2] = leaveInputTime;
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("PlanScreen");
         } else {
           setErrorMessage("Please enter the time in the correct format");
@@ -239,7 +242,7 @@ function FoodScreen({navigation}: foodProps) {
         if (validateTimeExpressions(breakfastTime) || validateTimeExpressions(lunchTime)){
         userInput[1][0] = breakfastTime;
         userInput[1][1] = lunchTime;
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("HeightScreen");
         } else {
           setErrorMessage("Please enter the time in the correct format");
@@ -249,7 +252,7 @@ function FoodScreen({navigation}: foodProps) {
       const skipFoodTime = () => {
         userInput[1][0] = ("");
         userInput[1][1] = ("");
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("HeightScreen");
       }
   return(
@@ -315,7 +318,7 @@ function HeightScreen({navigation}: heightProps) {
       const saveHeight = () => {
         if(validateHeightExpressions(userHeight)){
         userInput[1][2] = userHeight;
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("DisabilityScreen");
         } else {
           setErrorMessage("Please enter the height in the correct format");
@@ -324,7 +327,7 @@ function HeightScreen({navigation}: heightProps) {
 
       const skipHeight = () => {
         userInput[1][2] = ("");
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("DisabilityScreen");
       }
 
@@ -383,12 +386,12 @@ function DisabilityScreen({navigation}: disabilityProps) {
 
       const answerSelection = (answer: string) => {
         setUserDisability(answer);
-        console.log(answer);
+        //console.log(answer);
         userInput[2][0] = answer;
       }
 
       const handleAnswer = () => {
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("RideScreen");
       }
 
@@ -413,16 +416,15 @@ function DisabilityScreen({navigation}: disabilityProps) {
       </View>
       <View style={styles.middleSection} >
       <Text style={styles.questionText}>Accessibility options:</Text>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Remain in Wheelchair")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: userDisability === "Remain in Wheelchair" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => answerSelection("Remain in Wheelchair")}>
           <Text style={styles.selectionButtonText}>Remain in Wheelchair</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Include Shuttles")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: userDisability === "Include Shuttles" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => answerSelection("Include Shuttles")}>
           <Text style={styles.selectionButtonText}>Include Shuttles</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => answerSelection("Service Animals")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: userDisability === "Service Animals" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => answerSelection("Service Animals")}>
           <Text style={styles.selectionButtonText}>Service Animals</Text>
         </TouchableOpacity>
-        <Text>You Chose {userDisability}</Text>
       </View>
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.skipButton} onPress={skipAnswer}>
@@ -461,13 +463,13 @@ function RideScreen({navigation}: rideProps) {
       }
 
       const handleRide = () => {
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("AttractionScreen");
       }
 
       const skipRide = () => {
         userInput[2][1] = ("");
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("AttractionScreen");
       }
 
@@ -485,19 +487,18 @@ function RideScreen({navigation}: rideProps) {
       </View>
       <View style={styles.middleSection}>
       <Text style={styles.questionText}>Choose your ride preferences:</Text>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Thrill Ride")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: rideChoice === "Thrill Ride" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => rideSelection("Thrill Ride")}>
           <Text style={styles.selectionButtonText}>Thrill Rides</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Shows & Entertainment")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: rideChoice === "Shows & Entertainment" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => rideSelection("Shows & Entertainment")}>
           <Text style={styles.selectionButtonText}>Shows & Entertainment</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Family Friendly")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: rideChoice === "Family Friendly" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => rideSelection("Family Friendly")}>
           <Text style={styles.selectionButtonText}>Family Friendly</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.selectionButton} onPress={() => rideSelection("Animal Encounter")}>
+        <TouchableOpacity style={[styles.selectionButton, {backgroundColor: rideChoice === "Animal Encounter" ? "#8E7EFE" : "#FCFAFF"}]} onPress={() => rideSelection("Animal Encounter")}>
           <Text style={styles.selectionButtonText}>Animal Encounter</Text>
         </TouchableOpacity>
-        <Text>You Chose {rideChoice}</Text>
       </View>
       <View style={styles.bottomSection}>
       <TouchableOpacity style={styles.skipButton} onPress={skipRide}>
@@ -529,16 +530,18 @@ function RideScreen({navigation}: rideProps) {
 function AttractionScreen({navigation}: attractionProps){
       const router = useRouter();
       const [data, setData] = useState<any[]>([]);
+      const [rideChosen, setRideChosen] = useState("");
       const [loading, setLoading] = useState(true);
       let userSelection = userInput[2][1];
 
       const handleRide = (ride: any) => {
-        console.log(ride.ride_name);
+        setRideChosen(ride.ride_name);
+        //console.log(ride.ride_name);
         userInput[2][2] = ride.ride_name;
       }
 
       const nextPage = () => {
-        console.log(userInput);
+        //console.log(userInput);
         navigation.navigate("ItineraryScreen");
       }
 
@@ -586,7 +589,7 @@ function AttractionScreen({navigation}: attractionProps){
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
-        <View key={index} style={styles.optionContainer}>
+        <View key={index} style={[styles.optionContainer, {backgroundColor: rideChosen === item.ride_name ? "#8E7EFE" : "#FCFAFF"}]}>
           <Image source={{uri: item.images}} style={styles.rideImage} />
           <TouchableOpacity onPress={() => handleRide(item)}>
             <View style={styles.rideTextContainer}>
@@ -699,7 +702,7 @@ const rideInterval = () => {
     userSchedule.push(iteration);
     setParkTime(lastTime => [...lastTime, iteration]);
   }
-  console.log("Schedule is:", userSchedule);
+  //console.log("Schedule is:", userSchedule);
     return (userSchedule.length);
 }
   return(
@@ -721,8 +724,7 @@ const rideInterval = () => {
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
-          <SafeAreaProvider>
-            <SafeAreaView>
+
               <Image source={{uri: item.images}} style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
@@ -734,8 +736,7 @@ const rideInterval = () => {
             <TouchableOpacity>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableOpacity>
-          </SafeAreaView>
-          </SafeAreaProvider>
+
         </View>
       )}/>
     )}
@@ -771,9 +772,6 @@ function ItineraryScreen({navigation}: itineraryProps){
     const [loading, setLoading] = useState(true);
     const [time, setTime] = useState<string[]>([]);
 
-    /*Objective:
-    1. make the height filter the database and only show rides the users can go on (userInput[1][2])
-    2. when the user chooses a ride they want to ride put that ride at the top of the list (userInput[2][2]) */
   
     const fetchRideData = async () => {
       setLoading(true);
@@ -1217,7 +1215,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   rideImage: {
-    width: 100, 
+    width: "10%", 
     height: 80, 
     borderRadius: 8,
     resizeMode: "cover",
@@ -1238,7 +1236,7 @@ const styles = StyleSheet.create({
     flexShrink: 1, 
   },
   suggestheaderText: {
-    fontSize: 30,
+    fontSize: width * 0.06,
     fontFamily: "Montserrat-Bold",
     color: "#310082",
     textAlign: "center",
@@ -1248,6 +1246,7 @@ const styles = StyleSheet.create({
   itintopSection: {
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
     justifyContent: "center",
     paddingHorizontal: 20,
     paddingTop: 40,
@@ -1269,7 +1268,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
 },
   itinheaderText: {
-    fontSize: 30,
+    fontSize: width * 0.03,
     fontFamily: "Montserrat-Bold",
     color: "#310082",
     textAlign: "center",

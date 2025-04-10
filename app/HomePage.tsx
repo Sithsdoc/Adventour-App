@@ -18,9 +18,9 @@ export default function HomePage() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Scrollable Content */}
+     
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Top Section / Logo */}
+        
         <View style={styles.topSection}>
           <Image
             source={require("../image/logo.png")}
@@ -29,10 +29,10 @@ export default function HomePage() {
           />
         </View>
 
-        {/* Separator */}
+        
         <View style={styles.separator} />
 
-        {/* Upcoming Events */}
+        
         <View style={styles.middleSection}>
           <Text style={styles.titleText}>Upcoming Events</Text>
           <View style={styles.box}>
@@ -49,10 +49,10 @@ export default function HomePage() {
           </View>
         </View>
 
-        {/* Separator */}
+       
         <View style={styles.separator} />
 
-        {/* Feature Icons and Buttons */}
+      
         <View style={styles.middleSection}>
           <View style={styles.row}>
             <TouchableOpacity
