@@ -741,9 +741,11 @@ const rideInterval = () => {
     )}
     </View>
 
-    <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
-      <Text style={styles.primaryButtonText}>Confirm</Text>
-    </TouchableOpacity>
+    <View style={styles.bottomSection}>
+      <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+        <Text style={styles.primaryButtonText}>Confirm</Text>
+      </TouchableOpacity>
+    </View>
 
     <View style={styles.navbar}>
       <TouchableOpacity style={styles.navButton} onPress={() => router.push("/HomePage")}>
@@ -973,9 +975,12 @@ function ItineraryScreen({navigation}: itineraryProps){
         </View>
       )}/>
     )}
-        <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
-          <Text style={styles.primaryButtonText}>Confirm</Text>
-        </TouchableOpacity>
+    </View>
+
+    <View style={styles.bottomSection}>
+      <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+        <Text style={styles.primaryButtonText}>Confirm</Text>
+      </TouchableOpacity>
     </View>
 
       <View style={styles.navbar}>
