@@ -85,15 +85,11 @@ function ListPage({route, navigation}: listProps){
                             keyExtractor={(item) => item.id}
                             renderItem={({item, index}) => (
                               <View key={index} style={styles.itineraryContainer}>
-                                <SafeAreaProvider>
-                                  <SafeAreaView>
                                     <Image source={{uri: item.images}} style={styles.listImage} />
                                     <View style={styles.listTextContainer}>
                                         <Text style={styles.listTitle}>{item.ride_name}</Text>
                                         <Text style={styles.listSubtitle}>{item.description}</Text>
-                                    </View>
-                                  </SafeAreaView>
-                                </SafeAreaProvider>              
+                                    </View>             
                               </View>
                             )}/>
                             )}
@@ -354,7 +350,7 @@ export default function MapPage(){
             width: 70,  // Increase size
             height: 70, // Increase size
             borderRadius: 35, 
-            marginRight: 15 // More spacing from text
+            marginRight: 15, // More spacing from text
         },
         listTitle: { 
             fontSize: 20, // Increase font size

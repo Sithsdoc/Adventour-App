@@ -724,19 +724,17 @@ const rideInterval = () => {
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
-
               <Image source={{uri: item.images}} style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
               <Text style={styles.itinrideDescription}>Arrive by {parkTime[index]}</Text>
-              <TouchableOpacity style={styles.directionsButton}>
+              {/*<TouchableOpacity style={styles.directionsButton}>
                 <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
             </View>
             <TouchableOpacity>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableOpacity>
-
         </View>
       )}/>
     )}
@@ -806,10 +804,6 @@ function ItineraryScreen({navigation}: itineraryProps){
       const regex = /^(\d+)\s*(\D*)$/
       const parseHeight = userHeight.match(regex);
 
-      /*steps:
-      1.convert the string into a number in the if statement 
-      2. return the correct value for the .eq function, so it can filter everything out
-      3. create a separate function so you can return which column to use */
 
       if (parseHeight){
         //setHeightUnit(parseHeight[2]);
@@ -955,21 +949,17 @@ function ItineraryScreen({navigation}: itineraryProps){
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
-          <SafeAreaProvider>
-            <SafeAreaView>
               <Image source={{uri: item.images}} style={styles.itineraryImage} />
             <View style={styles.itinTextContainer}>
               <Text style={styles.itinselectionButtonText}>{item.ride_name}</Text>
               <Text style={styles.itinrideDescription}>Arrive by {time[index]}</Text>
-              <TouchableOpacity style={styles.directionsButton}>
+              {/*<TouchableOpacity style={styles.directionsButton}>
                 <Text style={styles.directionsButtonText} numberOfLines={1} adjustsFontSizeToFit>Get Directions</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
             </View>
             <TouchableOpacity>
               <Icon name="delete" style={styles.deleteIcon} />
             </TouchableOpacity>
-          </SafeAreaView>
-          </SafeAreaProvider>
         </View>
       )}/>
     )}
@@ -1215,7 +1205,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   rideImage: {
-    width: "10%", 
+    width: 80, 
     height: 80, 
     borderRadius: 8,
     resizeMode: "cover",
@@ -1260,10 +1250,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#C8A6FF",
     elevation: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    //alignItems: "center",
+    //justifyContent: "center",
     marginBottom: 5,
-    alignSelf: "center",
+    //alignSelf: "center",
     paddingTop: 10,
     marginTop: 30,
 },
@@ -1292,25 +1282,27 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   itineraryImage: {
-    width: 80, 
-    height: 80, 
-    borderRadius: 50,
-    resizeMode: "cover",
+    width: 70, 
+    height: 70, 
+    borderRadius: 35,
+    //resizeMode: "cover",
+    marginRight: 15,
   },
   itinTextContainer: {
     flex: 1, 
-    paddingLeft: 15, 
-    justifyContent: "center",
+    //paddingLeft: 15, 
+    //justifyContent: "center",
   },
   itinselectionButtonText: {
     fontSize: 16, 
     fontFamily: "Montserrat-Bold",
+    fontWeight: "bold",
     color: "#000",
   },
   itinrideDescription: {
     fontSize: 14, 
     color: "#666",
-    marginVertical: 5,
+    //marginVertical: 5,
   },
   directionsButton: {
     backgroundColor: "#8E7EFE",
