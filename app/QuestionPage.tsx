@@ -1,7 +1,7 @@
 //import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, {useState, useEffect} from "react";
-import { FlatList, StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Dimensions } from "react-native";
+import { FlatList, StyleSheet, View, Button, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Dimensions, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { useRouter } from "expo-router";
@@ -134,6 +134,8 @@ function TimeScreen({navigation}: timeProps) {
       }
 
   return (
+  <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={ {flex: 1} }>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton} onPress={handleDateDelete}>
@@ -157,6 +159,7 @@ function TimeScreen({navigation}: timeProps) {
          style={styles.inputBox}/>
          <Text>{errorMessage}</Text>
       </View>
+      
       <View style={styles.bottomSection}>
         <TouchableOpacity style={styles.primaryButton} onPress={handlesave}>
           <Text style={styles.primaryButtonText}>Next</Text>
@@ -176,8 +179,9 @@ function TimeScreen({navigation}: timeProps) {
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
-
     </View>
+    </ScrollView>
+  </KeyboardAvoidingView>
   );
 }
 
@@ -256,6 +260,8 @@ function FoodScreen({navigation}: foodProps) {
         navigation.navigate("HeightScreen");
       }
   return(
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={ {flex: 1} }>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("PlanScreen")}>
@@ -299,8 +305,9 @@ function FoodScreen({navigation}: foodProps) {
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
-
     </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -337,6 +344,8 @@ function HeightScreen({navigation}: heightProps) {
         navigation.navigate("FoodScreen");
       }
   return(
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={ {flex: 1} }>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
     <View style={styles.container}>
       <View style={styles.topSection}>
         <TouchableOpacity style={styles.backButton}>
@@ -375,8 +384,9 @@ function HeightScreen({navigation}: heightProps) {
          <Icon name="account-circle" color="#C8A6FF" size={30}/>
        </TouchableOpacity>
      </View>
-
     </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -1221,9 +1231,10 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   rideDescription: {
+    width: 125,
     fontSize: 12, 
     color: "#666",
-    flexShrink: 1, 
+    //flexShrink: 1, 
   },
   suggestheaderText: {
     fontSize: width * 0.06,
