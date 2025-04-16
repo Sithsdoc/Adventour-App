@@ -664,6 +664,24 @@ const fetchParkData = async () => {
 useEffect(() => {
   fetchParkData();
 }, []);
+    /* based on research the best method would a foreach loop or .map operation through the arrays loop
+    rides are saved to reorderedRides. Information needed start time (userInput[0][1]), leave time (userInput[0][2]), and date (userInput[0][0]). Information for table is the id and the table name from the database.
+    Use the foreign key in the databse to connect park_information to the other rides */
+const submitPlan = () => {
+  const rideIds = reorderedRides.map(ride => ride.id);
+  const rideTypes = reorderedRides.map(rides => rides.ride_type);
+  const tableNames = reorderedRides.map(ride => {
+  if (rideTypes.includes("Thrill Ride") || rideTypes.includes("Family Friendly")){
+    return "Rides";
+      } else if (rideTypes.includes("Shows & Entertainment")){
+        return "Shows";
+      }
+    }
+  )
+  console.log(rideIds);
+  router.push("/HomePage");
+}
+
 const rideInterval = () => {
   const chosenDate = userInput[0][0];
   //arrival time information
@@ -715,6 +733,14 @@ const rideInterval = () => {
   //console.log("Schedule is:", userSchedule);
     return (userSchedule.length);
 }
+const chosenRide = userInput[2][2];
+//console.log("Chosen ride:", chosenRide);
+//console.log("All ride names:", data.map(d => d.ride_name));
+const reorderedRides = [
+  ...parkData.filter(item=> item.ride_name === chosenRide),
+  ...parkData.filter(item => item.ride_name !== chosenRide)
+];
+console.log(reorderedRides);
   return(
     <View style={styles.container}>
       
@@ -730,7 +756,7 @@ const rideInterval = () => {
         <ActivityIndicator />
       ) : (
         <FlatList 
-        data={parkData}
+        data={reorderedRides}
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
@@ -751,7 +777,7 @@ const rideInterval = () => {
     </View>
 
     <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+      <TouchableOpacity style={styles.primaryButton} onPress={() => submitPlan()}>
         <Text style={styles.primaryButtonText}>Confirm</Text>
       </TouchableOpacity>
     </View>
@@ -804,12 +830,12 @@ function ItineraryScreen({navigation}: itineraryProps){
       fetchRideData();
     }, []);
 
-    /*restructure database so that each column is a ride and not a time, but the time and ride name into 
-    each box, this will make it easier to submit the data, still trying to figure out the details, based
-    on research the best method would a foreach loop or .map operation through the arrays loop
-    rides are saved to reorderedRides */
+    /* based on research the best method would a foreach loop or .map operation through the arrays loop
+    rides are saved to reorderedRides. Information needed start time (userInput[0][1]), leave time (userInput[0][2]), and date (userInput[0][0]). Information for table is the id and the table name from the database.
+    Use the foreign key in the databse to connect park_information to the other rides */
     const submitPlan = () => {
-      let rideUniqueId = reorderedRides[0].id;
+      const rideIds = reorderedRides.map(ride => ride.id)
+      console.log(rideIds);
       router.push("/HomePage");
     }
 
