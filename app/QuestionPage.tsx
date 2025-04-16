@@ -804,6 +804,15 @@ function ItineraryScreen({navigation}: itineraryProps){
       fetchRideData();
     }, []);
 
+    /*restructure database so that each column is a ride and not a time, but the time and ride name into 
+    each box, this will make it easier to submit the data, still trying to figure out the details, based
+    on research the best method would a foreach loop or .map operation through the arrays loop
+    rides are saved to reorderedRides */
+    const submitPlan = () => {
+      let rideUniqueId = reorderedRides[0].id;
+      router.push("/HomePage");
+    }
+
     const heightFilter = (): { column: string; value: number } | undefined => {
       let userHeight = userInput[1][2];
 
@@ -934,12 +943,13 @@ function ItineraryScreen({navigation}: itineraryProps){
   }
 
   const chosenRide = userInput[2][2];
-  console.log("Chosen ride:", chosenRide);
-  console.log("All ride names:", data.map(d => d.ride_name));
+  //console.log("Chosen ride:", chosenRide);
+  //console.log("All ride names:", data.map(d => d.ride_name));
   const reorderedRides = [
     ...data.filter(item=> item.ride_name === chosenRide),
     ...data.filter(item => item.ride_name !== chosenRide)
   ];
+  //console.log(reorderedRides);
   return(
     <View style={styles.container}>
       
@@ -976,7 +986,7 @@ function ItineraryScreen({navigation}: itineraryProps){
     </View>
 
     <View style={styles.bottomSection}>
-      <TouchableOpacity style={styles.primaryButton} onPress={() => navigation.navigate("ConfirmationScreen")}>
+      <TouchableOpacity style={styles.primaryButton} onPress={() => submitPlan()}>
         <Text style={styles.primaryButtonText}>Confirm</Text>
       </TouchableOpacity>
     </View>
