@@ -1074,13 +1074,13 @@ const  { data: userData, error: userError } = await supabase
 
 const userId = userData?.id;
 console.log(userId);
-  /*console.log("idHolder is:", idHolder);
-  console.log(rideTypes);
-  console.log("original ride ids are:", rideIds);
-  console.log(date);
-  console.log(startTime);
-  console.log(endTime);
-  console.log(dynamicFields);*/
+  //console.log("idHolder is:", idHolder);
+  //console.log(rideTypes);
+  //console.log("original ride ids are:", rideIds);
+  //console.log(date);
+  //console.log(startTime);
+  //console.log(endTime);
+  //console.log(dynamicFields);
   const finalPlan = {
     user_id: userId,
     current_plan: true,
