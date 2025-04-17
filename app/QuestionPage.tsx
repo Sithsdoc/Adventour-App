@@ -654,8 +654,9 @@ const fetchParkData = async () => {
   .select("*")
   .limit(rideInterval());
 
-  if (error){
-    console.log(error.message);
+
+  if (error ){
+    console.log(error?.message);
   } else {
     setParkData(selectedParkInformation);
   }
@@ -665,46 +666,142 @@ const fetchParkData = async () => {
 useEffect(() => {
   fetchParkData();
 }, []);
-    /* based on research the best method would a foreach loop or .map operation through the arrays loop
-    rides are saved to reorderedRides. Information needed start time (userInput[0][1]), leave time (userInput[0][2]), and date (userInput[0][0]). Information for table is the id and the table name from the database.
-    Use the foreign key in the databse to connect park_information to the other rides */
+
+const savePlanToDatabase = async (finalPlan: any) => {
+  const { data: updateInformation, error: updateError} = await supabase 
+  .from("Plans")
+  .update({ current_plan: false})
+  .eq("user_id", finalPlan.user_id);
+
+  if (updateError){
+    console.log(updateError.message);
+  }
+
+  const { data: insertInformation, error: insertError} = await supabase 
+  .from("Plans")
+  .insert([finalPlan]);
+
+  if (insertError){
+    console.log(insertError.message);
+  }
+}
+
+
 const submitPlan = async () => {
   let date = userInput[0][0];
-  let startTime = userInput[0][1];
-  //need to convert end time to 24 hour format
-  let endTime = userInput[0][2];
-
-
-  /*This is about to get real annoying, so I will explain as best I can
-  1. await Promise.all runs multiple aysnc operations in parallel, the await portion just tells the system to wait until all the calculations are completed before continuing , promises themselves are just async operations in general 
-  2. The point of this ugly a** code  is to filter through the different ride types in park_information and relate them to the correct database (Rides or Shows)
-  3. After that using .eq you compare the values stored in rideIds (which is the primary key of the rides in park_information) and compare them to the foreign_id column in the Rides and Shows database. The point of this is to have the system grab the primary id of the rides in the Rides and Shows database
-  4. Once all the values are grabbed for the database: date, time_start, time_end,current_plan and the values for the rides they are put in the return statement and the function submitPlan is plugged into the insert statement .insert(submitPlan())
-  5. The only thing left to figure out after that would be how to turn the other value false
-
-  That is what my current plan is good luck!!!!
-   */
+  //convert time to 24 hour format
+  function timeConversion(timeStr: any){
+    const unfilteredTime = timeStr.split(" ");
+    const parsedTime = unfilteredTime[0];
+    const fullTime = new Date (`${date} ${parsedTime}`);
+    let hours = fullTime.getHours();
+    let minutes = fullTime.getMinutes();
+    let seconds = fullTime.getSeconds();
+    var timeSuffix = unfilteredTime[1].toLowerCase();
+    if (hours < 12 && timeSuffix == "pm"){
+      hours = hours + 12
+    }
+    let newTime = (`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
+    return newTime;
+  }
+  let startTime = timeConversion(userInput[0][1]);
+  let endTime = timeConversion(userInput[0][2]);
+  //const rideTypes = rideHolder.map(ride => ride.ride_type);
+  const rideTypes: string[] = [];
   const rideIds = rideHolder.map(ride => ride.id);
-  const tableNames = await Promise.all(rideHolder.map(async (ride) => {
+  let tableNames = "";
+  const idHolder = await Promise.all(rideHolder.map(async (ride, index) => {
   if (ride.ride_type === "Thrill Ride" || ride.ride_type === "Family Friendly"){
-    return "Rides";
+    tableNames = "Rides";
+    rideTypes.push(tableNames);
       } else if (ride.ride_type === "Shows & Entertainment" || ride.ride_type === "Animal Encounter"){
-        return "Shows";
+        tableNames = "Shows";
+        rideTypes.push(tableNames);
       } 
 
-      const { data, error } = await supabase
-      .from("Rides")
-      .select("*")
-      .eq("foreign_id", rideIds);
+      //rideTypes.push(tableNames);
 
-      return ();
+      const { data: correctIds, error } = await supabase
+      .from(tableNames)
+      .select("*")
+      .eq("foreign_id", ride.id)
+      .single();
+
+      if (error){
+        console.log(error.message);
+      }
+
+      return correctIds?.id
     }
   )
 )
+const generateColumnNames = (startHour: number, startMinutes: number, count: number): string[] => {
+  const result = [];
+  let hour = startHour;
+  let minutes = startMinutes;
 
-  
-  console.log(tableNames);
-  console.log(rideIds);
+  for (let i = 0; i < count; i++) {
+    const paddedHour = hour.toString().padStart(2, "0");
+    const paddedMinutes = minutes.toString().padStart(2, "0");
+    result.push(`event_${paddedHour}${paddedMinutes}`);
+
+    minutes += 45;
+    if (minutes >= 60) {
+      hour += Math.floor(minutes / 60);
+      minutes = minutes % 60;
+    }
+  }
+
+  return result;
+};
+
+
+const columnNames = generateColumnNames(10, 0, idHolder.length);
+
+
+const dynamicFields: Record<string, any> = {};
+columnNames.forEach((col, index) => {
+  dynamicFields[col] = {
+    id: idHolder[index],
+    type: rideTypes[index]
+  };
+});
+
+const { data: { user }, error } = await supabase.auth.getUser();
+
+if (error || !user) {
+  console.error("User not logged in");
+  return;
+}
+
+const systemUserId = user.id;
+
+const  { data: userData, error: userError } = await supabase 
+.from("Users")
+.select("id")
+.eq("auth_id", systemUserId)
+.single();
+
+const userId = userData?.id;
+console.log(userId);
+  /*console.log("idHolder is:", idHolder);
+  console.log(rideTypes);
+  console.log("original ride ids are:", rideIds);
+  console.log(date);
+  console.log(startTime);
+  console.log(endTime);
+  console.log(dynamicFields);*/
+  const finalPlan = {
+    user_id: userId,
+    current_plan: true,
+    date: date,
+    time_start: startTime, 
+    time_end: endTime,
+    ...dynamicFields
+  };
+
+  await savePlanToDatabase(finalPlan);
+
   router.push("/HomePage");
 }
 
@@ -764,13 +861,13 @@ const rideInterval = () => {
     return (userSchedule.length);
 }
 const selectedRide = userInput[2][2];
-console.log("Chosen ride:", selectedRide);
+//console.log("Chosen ride:", selectedRide);
 //console.log("All ride names:", data.map(d => d.ride_name));
 const rideHolder = [
   ...parkData.filter(item=> item.ride_name === selectedRide),
   ...parkData.filter(item => item.ride_name !== selectedRide)
 ];
-console.log(rideHolder);
+//console.log(rideHolder);
   return(
     <View style={styles.container}>
       
@@ -860,14 +957,143 @@ function ItineraryScreen({navigation}: itineraryProps){
       fetchRideData();
     }, []);
 
-    /* based on research the best method would a foreach loop or .map operation through the arrays loop
-    rides are saved to reorderedRides. Information needed start time (userInput[0][1]), leave time (userInput[0][2]), and date (userInput[0][0]). Information for table is the id and the table name from the database.
-    Use the foreign key in the databse to connect park_information to the other rides */
-    const submitPlan = () => {
-      const rideIds = reorderedRides.map(ride => ride.id)
-      console.log(rideIds);
-      router.push("/HomePage");
+
+    const savePlanToDatabase = async (finalPlan: any) => {
+      const { data: updateInformation, error: updateError} = await supabase 
+      .from("Plans")
+      .update({ current_plan: false})
+      .eq("user_id", finalPlan.user_id);
+    
+      if (updateError){
+        console.log(updateError.message);
+      }
+    
+      const { data: insertInformation, error: insertError} = await supabase 
+      .from("Plans")
+      .insert([finalPlan]);
+    
+      if (insertError){
+        console.log(insertError.message);
+      }
     }
+
+const submitPlan = async () => {
+  let date = userInput[0][0];
+  //convert time to 24 hour format
+  function timeConversion(timeStr: any){
+    const unfilteredTime = timeStr.split(" ");
+    const parsedTime = unfilteredTime[0];
+    const fullTime = new Date (`${date} ${parsedTime}`);
+    let hours = fullTime.getHours();
+    let minutes = fullTime.getMinutes();
+    let seconds = fullTime.getSeconds();
+    var timeSuffix = unfilteredTime[1].toLowerCase();
+    if (hours < 12 && timeSuffix == "pm"){
+      hours = hours + 12
+    }
+    let newTime = (`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
+    return newTime;
+  }
+  let startTime = timeConversion(userInput[0][1]);
+  let endTime = timeConversion(userInput[0][2]);
+  //const rideTypes = rideHolder.map(ride => ride.ride_type);
+  const rideTypes: string[] = [];
+  const rideIds = reorderedRides.map(ride => ride.id);
+  let tableNames = "";
+  const idHolder = await Promise.all(reorderedRides.map(async (ride, index) => {
+  if (ride.ride_type === "Thrill Ride" || ride.ride_type === "Family Friendly"){
+    tableNames = "Rides";
+    rideTypes.push(tableNames);
+      } else if (ride.ride_type === "Shows & Entertainment" || ride.ride_type === "Animal Encounter"){
+        tableNames = "Shows";
+        rideTypes.push(tableNames);
+      } 
+
+      //rideTypes.push(tableNames);
+
+      const { data: correctIds, error } = await supabase
+      .from(tableNames)
+      .select("*")
+      .eq("foreign_id", ride.id)
+      .single();
+
+      if (error){
+        console.log(error.message);
+      }
+
+      return correctIds?.id
+    }
+  )
+)
+const generateColumnNames = (startHour: number, startMinutes: number, count: number): string[] => {
+  const result = [];
+  let hour = startHour;
+  let minutes = startMinutes;
+
+  for (let i = 0; i < count; i++) {
+    const paddedHour = hour.toString().padStart(2, "0");
+    const paddedMinutes = minutes.toString().padStart(2, "0");
+    result.push(`event_${paddedHour}${paddedMinutes}`);
+
+    minutes += 45;
+    if (minutes >= 60) {
+      hour += Math.floor(minutes / 60);
+      minutes = minutes % 60;
+    }
+  }
+
+  return result;
+};
+
+
+const columnNames = generateColumnNames(10, 0, idHolder.length);
+
+
+const dynamicFields: Record<string, any> = {};
+columnNames.forEach((col, index) => {
+  dynamicFields[col] = {
+    id: idHolder[index],
+    type: rideTypes[index]
+  };
+});
+
+const { data: { user }, error } = await supabase.auth.getUser();
+
+if (error || !user) {
+  console.error("User not logged in");
+  return;
+}
+
+const systemUserId = user.id;
+
+const  { data: userData, error: userError } = await supabase 
+.from("Users")
+.select("id")
+.eq("auth_id", systemUserId)
+.single();
+
+const userId = userData?.id;
+console.log(userId);
+  /*console.log("idHolder is:", idHolder);
+  console.log(rideTypes);
+  console.log("original ride ids are:", rideIds);
+  console.log(date);
+  console.log(startTime);
+  console.log(endTime);
+  console.log(dynamicFields);*/
+  const finalPlan = {
+    user_id: userId,
+    current_plan: true,
+    date: date,
+    time_start: startTime, 
+    time_end: endTime,
+    ...dynamicFields
+  };
+
+  await savePlanToDatabase(finalPlan);
+
+  router.push("/HomePage");
+}
 
     const heightFilter = (): { column: string; value: number } | undefined => {
       let userHeight = userInput[1][2];
