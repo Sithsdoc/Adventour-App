@@ -1,4 +1,4 @@
-import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput, AppState, Dimensions } from "react-native";
+import { StyleSheet, View, Button, Text, Image, TouchableOpacity, TextInput, AppState, Dimensions, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import React, {useState} from "react";
 import { useRouter } from "expo-router";
 import { createNativeStackNavigator, NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -59,6 +59,8 @@ function login({navigation}: loginProps){
     };
 
     return(
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : "height"} style={ {flex: 1} }>
+            <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <Image source={require("../image/logo.png")}/>
@@ -93,7 +95,9 @@ function login({navigation}: loginProps){
                 </TouchableOpacity>
             </View>
 
-        </View>        
+        </View> 
+          </ScrollView>
+          </KeyboardAvoidingView>     
     );
 }
 
