@@ -228,6 +228,14 @@ const UserProfile = () => {
     }
   }
 
+  async function handleDeleteAccount() {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Logout failed: ", error.message);
+    }
+    router.replace("/LoginPage");
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Profile</Text>
@@ -299,7 +307,8 @@ const UserProfile = () => {
           </View>
         </View>
       </View>
-
+      
+      {/*
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Payment Information</Text>
         <TouchableOpacity style={styles.pMethod} onPress={() => router.navigate("/PaymentPage")}>
@@ -309,6 +318,7 @@ const UserProfile = () => {
           </View>
         </TouchableOpacity>
       </View>
+      */}
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Security</Text>
@@ -334,7 +344,7 @@ const UserProfile = () => {
           <Text style={styles.editButtonText}>Log Out</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.pMethod, styles.deleteButton]} onPress={() => router.push("/LoginPage")}>
+        <TouchableOpacity style={[styles.pMethod, styles.deleteButton]} onPress={handleDeleteAccount}>
           <Text style={styles.editButtonText}>Delete My Account</Text>
         </TouchableOpacity>
       </View>
