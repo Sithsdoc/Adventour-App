@@ -480,6 +480,7 @@ function RideScreen({navigation}: rideProps) {
       const skipRide = () => {
         userInput[2][1] = ("");
         //console.log(userInput);
+        delete userInput[2][2];
         navigation.navigate("AttractionScreen");
       }
 
@@ -551,7 +552,7 @@ function AttractionScreen({navigation}: attractionProps){
       }
 
       const nextPage = () => {
-        //console.log(userInput);
+        console.log(userInput);
         navigation.navigate("ItineraryScreen");
       }
 
@@ -667,19 +668,48 @@ useEffect(() => {
     /* based on research the best method would a foreach loop or .map operation through the arrays loop
     rides are saved to reorderedRides. Information needed start time (userInput[0][1]), leave time (userInput[0][2]), and date (userInput[0][0]). Information for table is the id and the table name from the database.
     Use the foreign key in the databse to connect park_information to the other rides */
-const submitPlan = () => {
-  const rideIds = reorderedRides.map(ride => ride.id);
-  const rideTypes = reorderedRides.map(rides => rides.ride_type);
-  const tableNames = reorderedRides.map(ride => {
-  if (rideTypes.includes("Thrill Ride") || rideTypes.includes("Family Friendly")){
+const submitPlan = async () => {
+  let date = userInput[0][0];
+  let startTime = userInput[0][1];
+  //need to convert end time to 24 hour format
+  let endTime = userInput[0][2];
+
+
+  /*This is about to get real annoying, so I will explain as best I can
+  1. await Promise.all runs multiple aysnc operations in parallel, the await portion just tells the system to wait until all the calculations are completed before continuing , promises themselves are just async operations in general 
+  2. The point of this ugly a** code  is to filter through the different ride types in park_information and relate them to the correct database (Rides or Shows)
+  3. After that using .eq you compare the values stored in rideIds (which is the primary key of the rides in park_information) and compare them to the foreign_id column in the Rides and Shows database. The point of this is to have the system grab the primary id of the rides in the Rides and Shows database
+  4. Once all the values are grabbed for the database: date, time_start, time_end,current_plan and the values for the rides they are put in the return statement and the function submitPlan is plugged into the insert statement .insert(submitPlan())
+  5. The only thing left to figure out after that would be how to turn the other value false
+
+  That is what my current plan is good luck!!!!
+   */
+  const rideIds = rideHolder.map(ride => ride.id);
+  const tableNames = await Promise.all(rideHolder.map(async (ride) => {
+  if (ride.ride_type === "Thrill Ride" || ride.ride_type === "Family Friendly"){
     return "Rides";
-      } else if (rideTypes.includes("Shows & Entertainment")){
+      } else if (ride.ride_type === "Shows & Entertainment" || ride.ride_type === "Animal Encounter"){
         return "Shows";
-      }
+      } 
+
+      const { data, error } = await supabase
+      .from("Rides")
+      .select("*")
+      .eq("foreign_id", rideIds);
+
+      return ();
     }
   )
+)
+
+  
+  console.log(tableNames);
   console.log(rideIds);
   router.push("/HomePage");
+}
+
+const backPage = () => {
+  navigation.navigate("TimeScreen");
 }
 
 const rideInterval = () => {
@@ -730,22 +760,22 @@ const rideInterval = () => {
     userSchedule.push(iteration);
     setParkTime(lastTime => [...lastTime, iteration]);
   }
-  //console.log("Schedule is:", userSchedule);
+  console.log("Schedule is:", userSchedule);
     return (userSchedule.length);
 }
-const chosenRide = userInput[2][2];
-//console.log("Chosen ride:", chosenRide);
+const selectedRide = userInput[2][2];
+console.log("Chosen ride:", selectedRide);
 //console.log("All ride names:", data.map(d => d.ride_name));
-const reorderedRides = [
-  ...parkData.filter(item=> item.ride_name === chosenRide),
-  ...parkData.filter(item => item.ride_name !== chosenRide)
+const rideHolder = [
+  ...parkData.filter(item=> item.ride_name === selectedRide),
+  ...parkData.filter(item => item.ride_name !== selectedRide)
 ];
-console.log(reorderedRides);
+console.log(rideHolder);
   return(
     <View style={styles.container}>
       
     <View style={styles.itintopSection}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.backButton} onPress={() => backPage()}>
         <Icon name="arrow-back" style={styles.backIcon}/>
       </TouchableOpacity>
       <Text style={styles.suggestheaderText}>Awesome! Here is the suggested plan</Text>
@@ -756,7 +786,7 @@ console.log(reorderedRides);
         <ActivityIndicator />
       ) : (
         <FlatList 
-        data={reorderedRides}
+        data={rideHolder}
         keyExtractor={(item) => item.id}
         renderItem={({item, index}) => (
          <View key={index} style={styles.itineraryContainer}>
@@ -964,12 +994,12 @@ function ItineraryScreen({navigation}: itineraryProps){
       schedule.push(iterator);
       setTime(prevTime => [...prevTime, iterator]);
     }
-    //console.log("Schedule is:", schedule);
+    console.log("Schedule is:", schedule);
       return (schedule.length);
   }
 
   const chosenRide = userInput[2][2];
-  //console.log("Chosen ride:", chosenRide);
+  console.log("Chosen ride:", chosenRide);
   //console.log("All ride names:", data.map(d => d.ride_name));
   const reorderedRides = [
     ...data.filter(item=> item.ride_name === chosenRide),
